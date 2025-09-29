@@ -3,6 +3,11 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:equatable/equatable.dart';
 import 'package:intl/intl.dart';
+<<<<<<< HEAD
+=======
+
+// Hola! Soy Miriam
+>>>>>>> 72340e9086db4246d4d451644aa03caf5760758b
 void main() {
   runApp(const MyApp());
 }
