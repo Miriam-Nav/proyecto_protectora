@@ -1,10 +1,14 @@
 import 'package:flutter/material.dart';
-// import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
+import 'package:equatable/equatable.dart';
+import 'package:intl/intl.dart';
 
 // Hola! Soy Miriam
 void main() {
   runApp(const MyApp());
 }
+
 // hola soy sandra
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
