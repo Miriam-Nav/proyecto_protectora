@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:proyecto_protectora/features/auth/presentation/pages/demostracion_page.dart';
-
+import 'package:proyecto_protectora/catalog/catalog_pages.dart';
+import 'package:proyecto_protectora/catalog/demos/buttons_demo.dart';
+import 'package:proyecto_protectora/catalog/widgets/button_demo.dart' show buttons_claro, buttons_oscuro;
+//pagina principal 
 class PaginaAjustes extends StatefulWidget {
   final bool modoOscuro;
   final ValueChanged<bool> onCambioModoOscuro;
@@ -53,12 +56,15 @@ class _EstadoPaginaAjustes extends State<PaginaAjustes> {
           const SizedBox(height: 24),
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 16.0),
-            child: FilledButton(
-              onPressed: () => Navigator.of(context).push(
-                MaterialPageRoute(builder: (_) => const PaginaDemostracion()),
-              ),
-              child: const Text('Ir a pantalla de demostración'),
-            ),
+            child: 
+            // FilledButton(
+            //   onPressed: () => Navigator.of(context).push(
+            //     MaterialPageRoute(builder: (_) => const PaginaDemostracion()),
+            //   ),
+            //   child: const Text('Ir a pantalla de demostración'),
+            // ),
+            // buttons_claro(),
+            buttons_claro(),
           ),
         ],
       ),
