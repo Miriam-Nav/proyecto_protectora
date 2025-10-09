@@ -12,7 +12,9 @@ class ButtonsDemo extends StatelessWidget {
         // Text("Botones"),
         // const Text("Tema Claro"),
         // Theme(data: ThemeData.light(), child: _buttonsRow()),
+        Text('hola claro'),
         buttons_claro(),
+        Text('hola oscuro'),
         buttons_oscuro()
       ],
     );

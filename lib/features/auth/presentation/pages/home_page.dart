@@ -64,7 +64,7 @@ class _EstadoPaginaAjustes extends State<PaginaAjustes> {
             //   child: const Text('Ir a pantalla de demostración'),
             // ),
             // buttons_claro(),
-            buttons_claro(),
+            ButtonsDemo(),
           ),
         ],
       ),
