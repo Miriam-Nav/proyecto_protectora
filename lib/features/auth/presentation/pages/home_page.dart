@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:proyecto_protectora/features/auth/presentation/pages/demostracion_page.dart';
 import 'package:proyecto_protectora/catalog/catalog_pages.dart';
-import 'package:proyecto_protectora/catalog/demos/buttons_demo.dart';
-import 'package:proyecto_protectora/catalog/widgets/button_demo.dart' show buttons_claro, buttons_oscuro;
-//pagina principal 
+
 class PaginaAjustes extends StatefulWidget {
   final bool modoOscuro;
   final ValueChanged<bool> onCambioModoOscuro;
@@ -35,9 +33,7 @@ class _EstadoPaginaAjustes extends State<PaginaAjustes> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('Ajustes'),
-      ),
+      appBar: AppBar(title: const Text('Ajustes')),
       body: ListView(
         children: [
           const SizedBox(height: 8),
@@ -65,6 +61,26 @@ class _EstadoPaginaAjustes extends State<PaginaAjustes> {
             // ),
             // buttons_claro(),
             ButtonsDemo(),
+          ),
+          const SizedBox(height: 24),
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 16.0),
+            child: FilledButton(
+              onPressed: () => Navigator.of(context).push(
+                MaterialPageRoute(builder: (_) => const PaginaDemostracion()),
+              ),
+              child: const Text('Ir a pantalla de demostración'),
+            ),
+          ),
+          const SizedBox(height: 24),
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 16.0),
+            child: FilledButton(
+              onPressed: () => Navigator.of(
+                context,
+              ).push(MaterialPageRoute(builder: (_) => const CatalogPage())),
+              child: const Text('Ir a pantalla Catalogo'),
+            ),
           ),
         ],
       ),
