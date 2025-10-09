@@ -52,6 +52,19 @@ class _EstadoPaginaAjustes extends State<PaginaAjustes> {
           const SizedBox(height: 24),
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 16.0),
+            child: 
+            // FilledButton(
+            //   onPressed: () => Navigator.of(context).push(
+            //     MaterialPageRoute(builder: (_) => const PaginaDemostracion()),
+            //   ),
+            //   child: const Text('Ir a pantalla de demostración'),
+            // ),
+            // buttons_claro(),
+            buttons_claro(),
+          ),
+          const SizedBox(height: 24),
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 16.0),
             child: FilledButton(
               onPressed: () => Navigator.of(context).push(
                 MaterialPageRoute(builder: (_) => const PaginaDemostracion()),

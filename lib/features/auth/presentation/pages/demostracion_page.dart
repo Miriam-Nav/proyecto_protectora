@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-
+//pagina que se muestra del boton del home
 class PaginaDemostracion extends StatelessWidget {
   const PaginaDemostracion({super.key});
 
