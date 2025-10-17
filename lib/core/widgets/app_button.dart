@@ -50,17 +50,21 @@ class AppButton extends StatelessWidget {
 /// icono inicial, texto centrado y flecha final.
 /// ----------------------------------------------------------------------
 class AppRoundedActionButton extends StatelessWidget {
-  final IconData leadingIcon;
+  final IconData? leadingIcon;
   final String label;
-  final VoidCallback? onPressed;
+  // final VoidCallback? onPressed;
   final AppButtonVariant variant;
+  final Widget? onPressed;
+  
+  
 
   const AppRoundedActionButton({
     super.key,
-    required this.leadingIcon,
+    this.leadingIcon,
     required this.label,
-    required this.onPressed,
+    this.onPressed,
     this.variant = AppButtonVariant.primary,
+ 
   });
 
   @override
@@ -79,7 +83,9 @@ class AppRoundedActionButton extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 6),
       child: ElevatedButton(
-        onPressed: onPressed,
+        onPressed: () => Navigator.of(
+            context,
+          ).push(MaterialPageRoute(builder: (_) => onPressed!)),
         style: ElevatedButton.styleFrom(
           backgroundColor: bg,
           foregroundColor: fg,
@@ -114,3 +120,4 @@ class AppRoundedActionButton extends StatelessWidget {
     );
   }
 }
+

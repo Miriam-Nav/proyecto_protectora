@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:proyecto_protectora/core/widgets/app_button.dart' show AppRoundedActionButton;
 import 'package:proyecto_protectora/core/widgets/button_demo.dart';
 import 'package:proyecto_protectora/features/auth/presentation/pages/demostracion_page.dart';
 import 'package:proyecto_protectora/catalog/catalog_pages.dart';
@@ -86,7 +87,8 @@ class _EstadoPaginaAjustes extends State<PaginaAjustes> {
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 16.0),
               child:
-                button_Paginademostracion( pantallaDestino: LoginScreen(), texto: "Logeate/Registrate"),
+                AppRoundedActionButton( label: 'loging', onPressed: LoginScreen(),),
+                // button_Paginademostracion( pantallaDestino: LoginScreen(), texto: "Logeate/Registrate"),
                 // child: FilledButton(
                 // onPressed: () => Navigator.of(context).push(
                 //   MaterialPageRoute(builder: (_) => const PaginaDemostracion()),

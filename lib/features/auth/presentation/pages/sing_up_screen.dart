@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:proyecto_protectora/core/widgets/app_button.dart' show AppRoundedActionButton;
 import 'package:proyecto_protectora/core/widgets/button_demo.dart';
 import 'package:proyecto_protectora/features/auth/presentation/pages/demostracion_page.dart';
 import 'package:proyecto_protectora/features/auth/presentation/pages/login_page.dart';
@@ -193,7 +194,8 @@ class _SingUpScreenState extends State<SingUpScreen> {
                     width: 329,
                     height: 56,
                     child:
-                    button_Paginademostracion(pantallaDestino: PaginaDemostracion(), texto: "registrado",),
+                    AppRoundedActionButton( label: 'registrado', onPressed: PaginaDemostracion(),),
+                    // button_Paginademostracion(pantallaDestino: PaginaDemostracion(), texto: "registrado",),
                   ),
                 ),
                 const SizedBox(
@@ -214,7 +216,8 @@ class _SingUpScreenState extends State<SingUpScreen> {
                     const SizedBox(
                       width: 2.5,
                     ),
-                     button_Paginademostracion( pantallaDestino: LoginScreen(), texto: "Registrate"),
+                    AppRoundedActionButton( label: 'registrate', onPressed: LoginScreen(),),
+                    //  button_Paginademostracion( pantallaDestino: LoginScreen(), texto: "Registrate"),
                     InkWell(
                       // onTap: () {
                       //   widget.controller.animateToPage(0,
