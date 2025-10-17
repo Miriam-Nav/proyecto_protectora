@@ -52,9 +52,9 @@ class AppButton extends StatelessWidget {
 class AppRoundedActionButton extends StatelessWidget {
   final IconData? leadingIcon;
   final String label;
-  // final VoidCallback? onPressed;
+  final VoidCallback? onPressed;
   final AppButtonVariant variant;
-  final Widget? onPressed;
+  // final Widget? onPressed;
   
   
 
@@ -83,9 +83,7 @@ class AppRoundedActionButton extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 6),
       child: ElevatedButton(
-        onPressed: () => Navigator.of(
-            context,
-          ).push(MaterialPageRoute(builder: (_) => onPressed!)),
+        onPressed: onPressed,
         style: ElevatedButton.styleFrom(
           backgroundColor: bg,
           foregroundColor: fg,

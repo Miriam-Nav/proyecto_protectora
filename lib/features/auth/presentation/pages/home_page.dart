@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:proyecto_protectora/core/widgets/app_button.dart' show AppRoundedActionButton;
+import 'package:proyecto_protectora/core/widgets/app_button.dart'
+    show AppRoundedActionButton, AppButton;
 import 'package:proyecto_protectora/core/widgets/button_demo.dart';
 import 'package:proyecto_protectora/features/auth/presentation/pages/demostracion_page.dart';
 import 'package:proyecto_protectora/catalog/catalog_pages.dart';
@@ -39,75 +40,76 @@ class _EstadoPaginaAjustes extends State<PaginaAjustes> {
 
   @override
   Widget build(BuildContext context) {
-   
     return Scaffold(
-      
       // body: PageView.builder(
-        
-        // physics: const NeverScrollableScrollPhysics(),
-        // itemCount: 3,
-        // controller: controller,
-        // itemBuilder: (context, index) {
-        //   if (index == 0) {
-        //     return LoginScreen(controller: controller);
-        //   } else if (index == 1) {
-        //     return SingUpScreen(controller: controller);
-        //   } else {
-        //     return VerifyScreen(controller: controller);
-        //   }
-        // },
-      // ),
-/////////////////////////////////////////////
-        // appBar: AppBar(title: const Text('Ajustes')),
-        body: ListView(
-          children: [
-            const SizedBox(height: 8),
-            SwitchListTile(
-              title: const Text('Modo oscuro'),
-              subtitle: const Text('Guarda la preferencia en el dispositivo'),
-              value: _modoOscuroLocal,
-              onChanged: _alternarModoOscuro,
-            ),
-            // const Divider(),
-            Text('Biembenido', textDirection: TextDirection.ltr),
 
-           
-            // ListTile(
-            //   leading: const Icon(Icons.info_outline),
-            //   title: const Text('Estado actual del tema'),
-            //   subtitle: Text(_modoOscuroLocal ? 'Oscuro' : 'Claro'),
+      // physics: const NeverScrollableScrollPhysics(),
+      // itemCount: 3,
+      // controller: controller,
+      // itemBuilder: (context, index) {
+      //   if (index == 0) {
+      //     return LoginScreen(controller: controller);
+      //   } else if (index == 1) {
+      //     return SingUpScreen(controller: controller);
+      //   } else {
+      //     return VerifyScreen(controller: controller);
+      //   }
+      // },
+      // ),
+      /////////////////////////////////////////////
+      // appBar: AppBar(title: const Text('Ajustes')),
+      body: ListView(
+        children: [
+          const SizedBox(height: 8),
+          SwitchListTile(
+            title: const Text('Modo oscuro'),
+            subtitle: const Text('Guarda la preferencia en el dispositivo'),
+            value: _modoOscuroLocal,
+            onChanged: _alternarModoOscuro,
+          ),
+          // const Divider(),
+          Text('Biembenido', textDirection: TextDirection.ltr),
+
+          // ListTile(
+          //   leading: const Icon(Icons.info_outline),
+          //   title: const Text('Estado actual del tema'),
+          //   subtitle: Text(_modoOscuroLocal ? 'Oscuro' : 'Claro'),
+          // ),
+          // const SizedBox(height: 24),
+          // Padding(
+          //   padding: const EdgeInsets.symmetric(horizontal: 16.0),
+          //   child:
+          //   // buttons_claro(),
+          // ),
+          // const SizedBox(height: 24),
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 16.0),
+            child: AppButton(
+              label: 'loging',
+              onPressed: () => Navigator.of(
+                context,
+              ).push(MaterialPageRoute(builder: (_) => LoginScreen())),
+            ),
+            // button_Paginademostracion( pantallaDestino: LoginScreen(), texto: "Logeate/Registrate"),
+            // child: FilledButton(
+            // onPressed: () => Navigator.of(context).push(
+            //   MaterialPageRoute(builder: (_) => const PaginaDemostracion()),
             // ),
-            // const SizedBox(height: 24),
-            // Padding(
-            //   padding: const EdgeInsets.symmetric(horizontal: 16.0),
-            //   child:
-            //   // buttons_claro(),
-            // ),
-            // const SizedBox(height: 24),
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 16.0),
-              child:
-                AppRoundedActionButton( label: 'loging', onPressed: LoginScreen(),),
-                // button_Paginademostracion( pantallaDestino: LoginScreen(), texto: "Logeate/Registrate"),
-                // child: FilledButton(
-                // onPressed: () => Navigator.of(context).push(
-                //   MaterialPageRoute(builder: (_) => const PaginaDemostracion()),
-                // ),
-                // child: const Text('Ir a pantalla de demostración'),
-              ),
-            // ),
-            // const SizedBox(height: 24),
-            // Padding(
-            //   padding: const EdgeInsets.symmetric(horizontal: 16.0),
-            //   child: FilledButton(
-            //     onPressed: () => Navigator.of(
-            //       context,
-            //     ).push(MaterialPageRoute(builder: (_) => const CatalogPage())),
-            //     child: const Text('Ir a pantalla Catalogo'),
-            //   ),
-            // ),
-          ],
-        ),
+            // child: const Text('Ir a pantalla de demostración'),
+          ),
+          // ),
+          // const SizedBox(height: 24),
+          // Padding(
+          //   padding: const EdgeInsets.symmetric(horizontal: 16.0),
+          //   child: FilledButton(
+          //     onPressed: () => Navigator.of(
+          //       context,
+          //     ).push(MaterialPageRoute(builder: (_) => const CatalogPage())),
+          //     child: const Text('Ir a pantalla Catalogo'),
+          //   ),
+          // ),
+        ],
+      ),
     );
   }
 }

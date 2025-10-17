@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:proyecto_protectora/core/widgets/app_button.dart' show AppRoundedActionButton;
+import 'package:proyecto_protectora/core/widgets/app_button.dart'
+    show AppButton, AppRoundedActionButton;
 import 'package:proyecto_protectora/core/widgets/button_demo.dart';
 import 'package:proyecto_protectora/features/auth/presentation/pages/demostracion_page.dart';
 import 'package:proyecto_protectora/features/auth/presentation/pages/login_page.dart';
@@ -7,7 +8,7 @@ import 'package:proyecto_protectora/features/auth/presentation/pages/login_page.
 class SingUpScreen extends StatefulWidget {
   // const SingUpScreen();
   // final PageController controller;
-  
+
   @override
   State<SingUpScreen> createState() => _SingUpScreenState();
 }
@@ -32,9 +33,7 @@ class _SingUpScreenState extends State<SingUpScreen> {
             //   height: 457,
             // ),
           ),
-          const SizedBox(
-            height: 18,
-          ),
+          const SizedBox(height: 18),
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 50),
             child: Column(
@@ -50,9 +49,7 @@ class _SingUpScreenState extends State<SingUpScreen> {
                     fontWeight: FontWeight.w500,
                   ),
                 ),
-                const SizedBox(
-                  height: 40,
-                ),
+                const SizedBox(height: 40),
                 SizedBox(
                   height: 56,
                   child: TextField(
@@ -89,9 +86,7 @@ class _SingUpScreenState extends State<SingUpScreen> {
                     ),
                   ),
                 ),
-                const SizedBox(
-                  height: 17,
-                ),
+                const SizedBox(height: 17),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
@@ -185,56 +180,23 @@ class _SingUpScreenState extends State<SingUpScreen> {
                     ),
                   ],
                 ),
-                const SizedBox(
-                  height: 25,
-                ),
+                const SizedBox(height: 25),
                 ClipRRect(
                   borderRadius: const BorderRadius.all(Radius.circular(10)),
                   child: SizedBox(
                     width: 329,
                     height: 56,
                     child:
-                    AppRoundedActionButton( label: 'registrado', onPressed: PaginaDemostracion(),),
-                    // button_Paginademostracion(pantallaDestino: PaginaDemostracion(), texto: "registrado",),
-                  ),
-                ),
-                const SizedBox(
-                  height: 15,
-                ),
-                Row(
-                  children: [
-                    const Text(
-                      ' have an account?',
-                      textAlign: TextAlign.center,
-                      style: TextStyle(
-                        color: Color(0xFF837E93),
-                        fontSize: 13,
-                        fontFamily: 'Poppins',
-                        fontWeight: FontWeight.w500,
-                      ),
-                    ),
-                    const SizedBox(
-                      width: 2.5,
-                    ),
-                    AppRoundedActionButton( label: 'registrate', onPressed: LoginScreen(),),
-                    //  button_Paginademostracion( pantallaDestino: LoginScreen(), texto: "Registrate"),
-                    InkWell(
-                      // onTap: () {
-                      //   widget.controller.animateToPage(0,
-                      //       duration: const Duration(milliseconds: 500),
-                      //       curve: Curves.ease);
-                      // },
-                      child: const Text(
-                        'Log In ',
-                        style: TextStyle(
-                          color: Color(0xFF755DC1),
-                          fontSize: 13,
-                          fontFamily: 'Poppins',
-                          fontWeight: FontWeight.w500,
+                        // button_Paginademostracion( pantallaDestino: PaginaDemostracion(), texto: "hola"),
+                        AppButton(
+                          label: "registrate",
+                          onPressed: () => Navigator.of(context).push(
+                            MaterialPageRoute(
+                              builder: (_) => PaginaDemostracion(),
+                            ),
+                          ),
                         ),
-                      ),
-                    ),
-                  ],
+                  ),
                 ),
               ],
             ),

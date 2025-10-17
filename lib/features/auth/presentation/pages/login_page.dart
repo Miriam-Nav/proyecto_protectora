@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:proyecto_protectora/core/widgets/app_button.dart'
-    show AppRoundedActionButton;
+    show AppButton, AppRoundedActionButton;
 import 'package:proyecto_protectora/core/widgets/button_demo.dart';
 import 'package:proyecto_protectora/features/auth/presentation/pages/demostracion_page.dart';
 import 'package:proyecto_protectora/features/auth/presentation/pages/home_page.dart';
@@ -20,187 +20,139 @@ class _LoginScreenState extends State<LoginScreen> {
   @override
   Widget build(BuildContext context) {
     final brillo = Theme.of(context).brightness;
-    // return Scaffold(
-    //   body: Column(
-    //     crossAxisAlignment: CrossAxisAlignment.start,
-    //     children: [
-    //       // Padding(
-    //       //   padding: const EdgeInsets.only(left: 15, top: 15),
-    //       //   // child: Image.asset(
-    //       //   //   "assets/images/vector-1.png",
-    //       //   //   width: 413,
-    //       //   //   height: 457,
-    //       //   // ),
-    //       // ),
-    //       const SizedBox(height: 18),
-    //       Padding(
-    //         padding: const EdgeInsets.symmetric(horizontal: 50),
-    //         child: Column(
-    //           textDirection: TextDirection.ltr,
-    //           crossAxisAlignment: CrossAxisAlignment.start,
-    //           children: [
-    //             // const Text(
-    //             //   'Log In',
-    //             //   style: TextStyle(
-    //             //     color: Color(0xFF755DC1),
-    //             //     fontSize: 27,
-    //             //     fontFamily: 'Poppins',
-    //             //     fontWeight: FontWeight.w500,
-    //             //   ),
-    //             // ),
-    //             // const SizedBox(height: 50),
-    //             // TextField(
-    //             //   controller: _emailController,
-    //             //   textAlign: TextAlign.center,
-    //             //   style: const TextStyle(
-    //             //     color: Color(0xFF393939),
-    //             //     fontSize: 13,
-    //             //     fontFamily: 'Poppins',
-    //             //     fontWeight: FontWeight.w400,
-    //             //   ),
-    //             //   decoration: const InputDecoration(
-    //             //     labelText: 'Email',
-    //             //     labelStyle: TextStyle(
-    //             //       color: Color(0xFF755DC1),
-    //             //       fontSize: 15,
-    //             //       fontFamily: 'Poppins',
-    //             //       fontWeight: FontWeight.w600,
-    //             //     ),
-    //             //     enabledBorder: OutlineInputBorder(
-    //             //       borderRadius: BorderRadius.all(Radius.circular(10)),
-    //             //       borderSide: BorderSide(
-    //             //         width: 1,
-    //             //         color: Color(0xFF837E93),
-    //             //       ),
-    //             //     ),
-    //             //     focusedBorder: OutlineInputBorder(
-    //             //       borderRadius: BorderRadius.all(Radius.circular(10)),
-    //             //       borderSide: BorderSide(
-    //             //         width: 1,
-    //             //         color: Color(0xFF9F7BFF),
-    //             //       ),
-    //             //     ),
-    //             //   ),
-    //             // ),
-    //             // const SizedBox(height: 30),
-    //             // TextField(
-    //             //   controller: _passController,
-    //             //   textAlign: TextAlign.center,
-    //             //   style: const TextStyle(
-    //             //     color: Color(0xFF393939),
-    //             //     fontSize: 13,
-    //             //     fontFamily: 'Poppins',
-    //             //     fontWeight: FontWeight.w400,
-    //             //   ),
-    //             //   decoration: const InputDecoration(
-    //             //     labelText: 'Password',
-    //             //     labelStyle: TextStyle(
-    //             //       color: Color(0xFF755DC1),
-    //             //       fontSize: 15,
-    //             //       fontFamily: 'Poppins',
-    //             //       fontWeight: FontWeight.w600,
-    //             //     ),
-    //             //     enabledBorder: OutlineInputBorder(
-    //             //       borderRadius: BorderRadius.all(Radius.circular(10)),
-    //             //       borderSide: BorderSide(
-    //             //         width: 1,
-    //             //         color: Color(0xFF837E93),
-    //             //       ),
-    //             //     ),
-    //             //     focusedBorder: OutlineInputBorder(
-    //             //       borderRadius: BorderRadius.all(Radius.circular(10)),
-    //             //       borderSide: BorderSide(
-    //             //         width: 1,
-    //             //         color: Color(0xFF9F7BFF),
-    //             //       ),
-    //             //     ),
-    //             //   ),
-    //             // ),
-    //             // const SizedBox(height: 25),
-    //             Padding(
-    //               padding: EdgeInsets.all(8.0),
-    //               child:
-    //               AppRoundedActionButton(
-    //                 label: 'loging',
-    //                 onPressed: PaginaDemostracion(),
-    //               ),
-    //               // button_Paginademostracion( pantallaDestino: LoginScreen(), texto: "Logeate/Registrate"),
-    //               // child: FilledButton(
-    //               // onPressed: () => Navigator.of(context).push(
-    //               //   MaterialPageRoute(builder: (_) => const PaginaDemostracion()),
-    //               // ),
-    //               // child: const Text('Ir a pantalla de demostración'),
-    //             ),
-    //             // ClipRRect(
-    //             //   borderRadius: const BorderRadius.all(Radius.circular(10)),
-    //             //   child: SizedBox(
-    //             //     // width: 329,
-    //             //     // height: 56,
-    //             //     child:
-    //             //     // button_Paginademostracion( pantallaDestino: PaginaDemostracion(), texto: "hola"),
-    //             //     AppRoundedActionButton( label: 'loging', onPressed: PaginaDemostracion()),
-    //             //   ),
-    //             // ),
-    //             // const SizedBox(
-    //             //   height: 15,
-    //             // ),
-    //             // Row(
-    //             //   children: [
-    //             //     const Text(
-    //             //       'Don’t have an account?',
-    //             //       style: TextStyle(
-    //             //         color: Color(0xFF837E93),
-    //             //         fontSize: 13,
-    //             //         fontFamily: 'Poppins',
-    //             //         fontWeight: FontWeight.w500,
-    //             //       ),
-    //             //     ),
-    //             //     const SizedBox(width: 2.5),
-    //             //     // button_Paginademostracion( pantallaDestino: SingUpScreen(), texto: "Registrate"),
-    //             //     InkWell(
-    //             //       // onTap: () {
-    //             //       //   widget.controller.animateToPage(1,
-    //             //       //       duration: const Duration(milliseconds: 500),
-    //             //       //       curve: Curves.ease);
-    //             //       // },
-    //             //       child: const Text(
-    //             //         'Sign Up',
-    //             //         style: TextStyle(
-    //             //           color: Color(0xFF755DC1),
-    //             //           fontSize: 13,
-    //             //           fontFamily: 'Poppins',
-    //             //           fontWeight: FontWeight.w500,
-    //             //         ),
-    //             //       ),
-    //             //     ),
-    //             //   ],
-    //             // ),
-    //             // const SizedBox(height: 15),
-    //             // const Text(
-    //             //   'Forget Password?',
-    //             //   style: TextStyle(
-    //             //     color: Color(0xFF755DC1),
-    //             //     fontSize: 13,
-    //             //     fontFamily: 'Poppins',
-    //             //     fontWeight: FontWeight.w500,
-    //             //   ),
-    //             // ),
-    //           ],
-    //         ),
-    //       ),
-    //     ],
-    //   ),
-    // );
     return Scaffold(
-      body: ListView(
+      body: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          const SizedBox(height: 8),
-          Text('Biembenido', textDirection: TextDirection.ltr),
+          // Padding(
+          //   padding: const EdgeInsets.only(left: 15, top: 15),
+          //   // child: Image.asset(
+          //   //   "assets/images/vector-1.png",
+          //   //   width: 413,
+          //   //   height: 457,
+          //   // ),
+          // ),
+          const SizedBox(height: 18),
           Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 16.0),
-            child: AppRoundedActionButton(
-              label: 'loging',
-              onPressed: PaginaDemostracion(),
+            padding: const EdgeInsets.symmetric(horizontal: 5),
+            child: Column(
+              textDirection: TextDirection.ltr,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                const Text(
+                  'Log In',
+                  style: TextStyle(
+                    color: Color(0xFF755DC1),
+                    fontSize: 27,
+                    fontFamily: 'Poppins',
+                    fontWeight: FontWeight.w500,
+                  ),
+                ),
+                const SizedBox(height: 50),
+                TextField(
+                  controller: _emailController,
+                  textAlign: TextAlign.center,
+                  style: const TextStyle(
+                    color: Color(0xFF393939),
+                    fontSize: 13,
+                    fontFamily: 'Poppins',
+                    fontWeight: FontWeight.w400,
+                  ),
+                  decoration: const InputDecoration(
+                    labelText: 'Email',
+                    labelStyle: TextStyle(
+                      color: Color(0xFF755DC1),
+                      fontSize: 15,
+                      fontFamily: 'Poppins',
+                      fontWeight: FontWeight.w600,
+                    ),
+                    enabledBorder: OutlineInputBorder(
+                      borderRadius: BorderRadius.all(Radius.circular(10)),
+                      borderSide: BorderSide(
+                        width: 1,
+                        color: Color(0xFF837E93),
+                      ),
+                    ),
+                    focusedBorder: OutlineInputBorder(
+                      borderRadius: BorderRadius.all(Radius.circular(10)),
+                      borderSide: BorderSide(
+                        width: 1,
+                        color: Color(0xFF9F7BFF),
+                      ),
+                    ),
+                  ),
+                ),
+                const SizedBox(height: 30),
+                TextField(
+                  controller: _passController,
+                  textAlign: TextAlign.center,
+                  style: const TextStyle(
+                    color: Color(0xFF393939),
+                    fontSize: 13,
+                    fontFamily: 'Poppins',
+                    fontWeight: FontWeight.w400,
+                  ),
+                  decoration: const InputDecoration(
+                    labelText: 'Password',
+                    labelStyle: TextStyle(
+                      color: Color(0xFF755DC1),
+                      fontSize: 15,
+                      fontFamily: 'Poppins',
+                      fontWeight: FontWeight.w600,
+                    ),
+                    enabledBorder: OutlineInputBorder(
+                      borderRadius: BorderRadius.all(Radius.circular(10)),
+                      borderSide: BorderSide(
+                        width: 1,
+                        color: Color(0xFF837E93),
+                      ),
+                    ),
+                    focusedBorder: OutlineInputBorder(
+                      borderRadius: BorderRadius.all(Radius.circular(10)),
+                      borderSide: BorderSide(
+                        width: 1,
+                        color: Color(0xFF9F7BFF),
+                      ),
+                    ),
+                  ),
+                ),
+                const SizedBox(height: 25),
+                ClipRRect(
+                  borderRadius: const BorderRadius.all(Radius.circular(10)),
+                  child: SizedBox(
+                    width: 329,
+                    height: 56,
+                    child: AppButton(
+                      label: "Login",
+                      onPressed: () => Navigator.of(context).push(
+                        MaterialPageRoute(builder: (_) => PaginaDemostracion()),
+                      ),
+                    ),
+                  ),
+                ),
+
+                Row(
+                  children: [
+                    const Text(
+                      'Don’t have an account?',
+                      style: TextStyle(
+                        color: Color(0xFF837E93),
+                        fontSize: 13,
+                        fontFamily: 'Poppins',
+                        fontWeight: FontWeight.w500,
+                      ),
+                    ),
+                    const SizedBox(width: 2.5),
+
+                    AppButton(
+                      label: "Register",
+                      onPressed: () => Navigator.of(
+                        context,
+                      ).push(MaterialPageRoute(builder: (_) => SingUpScreen())),
+                    ),
+                  ],
+                ),
+              ],
             ),
           ),
         ],

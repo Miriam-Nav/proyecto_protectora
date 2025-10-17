@@ -2,7 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:proyecto_protectora/catalog/demos/buttons_demo.dart';
 import 'package:proyecto_protectora/core/widgets/app_button.dart';
 import 'package:proyecto_protectora/core/widgets/button_demo.dart';
-import 'package:proyecto_protectora/features/auth/presentation/pages/login_page.dart' show LoginScreen;
+import 'package:proyecto_protectora/features/auth/presentation/pages/login_page.dart'
+    show LoginScreen;
 
 //pagina que se muestra del boton del home
 class PaginaDemostracion extends StatelessWidget {
@@ -43,50 +44,44 @@ class PaginaDemostracion extends StatelessWidget {
             ///
             /////////////////////////////////////////
             Text('Acciones', textDirection: TextDirection.ltr),
+          
             Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.end,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  AppRoundedActionButton( label: 'Registrar nuevo animal'),
-                  // button_Paginademostracion(texto: "Registrar nuevo animal"),
-                  
-                ],
+              padding: EdgeInsets.all(1.0),
+              child: AppRoundedActionButton(
+                label: "Registrar nuevo animal",
+                onPressed: () => Navigator.of(
+                  context,
+                ).push(MaterialPageRoute(builder: (_) => LoginScreen())),
               ),
             ),
             Padding(
-              padding: EdgeInsets.all(8.0),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.end,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  AppRoundedActionButton( label: 'Registrar nueva adopcion'),
-                  // button_Paginademostracion(texto: "Registrar nueva adopcion"),
-                ],
+              padding: EdgeInsets.all(1.0),
+              child: AppRoundedActionButton(
+                label: "Registrar nueva adopcion",
+                onPressed: () => Navigator.of(
+                  context,
+                ).push(MaterialPageRoute(builder: (_) => LoginScreen())),
               ),
             ),
             Padding(
-              padding: EdgeInsets.all(8.0),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.end,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  AppRoundedActionButton( label: 'Registrar visita veterinario'),
-                  // button_Paginademostracion(texto: "Registrar visita veterinario"),
-                ],
+              padding: EdgeInsets.all(1.0),
+              child: AppRoundedActionButton(
+                label: "Registrar visita veterinario",
+                onPressed: () => Navigator.of(
+                  context,
+                ).push(MaterialPageRoute(builder: (_) => LoginScreen())),
               ),
             ),
-             Padding(
-              padding: EdgeInsets.all(8.0),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.end,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  // ButtonsDemo()
-                ],
-              ),
-            ),
+            //  Padding(
+            //   padding: EdgeInsets.all(8.0),
+            //   child: Row(
+            //     mainAxisAlignment: MainAxisAlignment.end,
+            //     crossAxisAlignment: CrossAxisAlignment.start,
+            //     children: [
+            //       // ButtonsDemo()
+            //     ],
+            //   ),
+            // ),
           ],
         ),
       ),
