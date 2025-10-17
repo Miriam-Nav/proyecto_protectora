@@ -3,7 +3,6 @@ import 'package:proyecto_protectora/core/widgets/button_demo.dart';
 import 'package:proyecto_protectora/features/auth/presentation/pages/demostracion_page.dart';
 import 'package:proyecto_protectora/catalog/catalog_pages.dart';
 import 'package:proyecto_protectora/catalog/demos/buttons_demo.dart';
-import 'package:proyecto_protectora/catalog/widgets/button_demo.dart'show buttons_claro, buttons_oscuro;
 import 'package:proyecto_protectora/features/auth/presentation/pages/login_page.dart';
 import 'package:proyecto_protectora/features/auth/presentation/pages/sing_up_screen.dart';
 import 'package:proyecto_protectora/features/auth/presentation/pages/veri_screen.dart';

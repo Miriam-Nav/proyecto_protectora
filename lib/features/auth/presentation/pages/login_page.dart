@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:proyecto_protectora/catalog/widgets/button_demo.dart';
 import 'package:proyecto_protectora/core/widgets/button_demo.dart';
 import 'package:proyecto_protectora/features/auth/presentation/pages/demostracion_page.dart';
 import 'package:proyecto_protectora/features/auth/presentation/pages/home_page.dart';
