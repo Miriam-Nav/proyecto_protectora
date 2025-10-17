@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:proyecto_protectora/catalog/demos/buttons_demo.dart';
 import 'package:proyecto_protectora/core/widgets/app_button.dart';
+import 'package:proyecto_protectora/core/widgets/app_card.dart';
 import 'package:proyecto_protectora/core/widgets/button_demo.dart';
 import 'package:proyecto_protectora/features/auth/presentation/pages/login_page.dart'
     show LoginScreen;
@@ -14,6 +15,7 @@ class PaginaDemostracion extends StatelessWidget {
     final brillo = Theme.of(context).brightness;
     return Scaffold(
       appBar: AppBar(title: const Text('Inicio')),
+      bottomNavigationBar:Text("hola"), //posible solucion para el scroll de pantalla para los botones de la barra de navegacion
       body: Center(
         child: Column(
           mainAxisAlignment:
@@ -24,29 +26,18 @@ class PaginaDemostracion extends StatelessWidget {
             ////////////////////////////////////////
             ///
             Text('Protectora-Gestion', textDirection: TextDirection.ltr),
-            Card(
-              elevation: 5,
-              margin: EdgeInsets.all(10),
-              child: Column(
-                children: [
-                  // Image.network(
-                  //   'https://flutter.dev/images/catalog-widget-card.png',
-                  //   fit: BoxFit.cover,
-                  // ),
-                  ListTile(
-                    title: Text('Título de la Card'),
-                    subtitle: Text('Subtítulo de la Card'),
-                  ),
-                ],
-              ),
+            Padding(
+              padding: EdgeInsets.all(5),
+              child: 
+              AppInfoCard(title: "hola", subtitle: "prueba", badgeText: "notificacion", variant: AppCardVariant.cardBlue,),
             ),
 
             ///
             /////////////////////////////////////////
             Text('Acciones', textDirection: TextDirection.ltr),
-          
+
             Padding(
-              padding: EdgeInsets.all(1.0),
+              padding: EdgeInsets.all(7),
               child: AppRoundedActionButton(
                 label: "Registrar nuevo animal",
                 onPressed: () => Navigator.of(
@@ -55,7 +46,7 @@ class PaginaDemostracion extends StatelessWidget {
               ),
             ),
             Padding(
-              padding: EdgeInsets.all(1.0),
+              padding: EdgeInsets.all(7),
               child: AppRoundedActionButton(
                 label: "Registrar nueva adopcion",
                 onPressed: () => Navigator.of(
@@ -64,7 +55,7 @@ class PaginaDemostracion extends StatelessWidget {
               ),
             ),
             Padding(
-              padding: EdgeInsets.all(1.0),
+              padding: EdgeInsets.all(7),
               child: AppRoundedActionButton(
                 label: "Registrar visita veterinario",
                 onPressed: () => Navigator.of(
@@ -72,16 +63,17 @@ class PaginaDemostracion extends StatelessWidget {
                 ).push(MaterialPageRoute(builder: (_) => LoginScreen())),
               ),
             ),
-            //  Padding(
-            //   padding: EdgeInsets.all(8.0),
-            //   child: Row(
-            //     mainAxisAlignment: MainAxisAlignment.end,
-            //     crossAxisAlignment: CrossAxisAlignment.start,
-            //     children: [
-            //       // ButtonsDemo()
-            //     ],
-            //   ),
-            // ),
+            Text('Actividad reciente', textDirection: TextDirection.ltr),
+            Padding(
+              padding: EdgeInsets.all(5),
+              child: 
+              AppInfoCard(title: "hola", subtitle: "prueba", badgeText: "notificacion", variant: AppCardVariant.cardBlue,),
+            ),
+             Padding(
+              padding: EdgeInsets.all(5),
+              child: 
+              AppInfoCard(title: "hola", subtitle: "prueba", badgeText: "notificacion", variant: AppCardVariant.cardGreen,),
+            ),
           ],
         ),
       ),
