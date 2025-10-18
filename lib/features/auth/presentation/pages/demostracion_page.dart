@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:proyecto_protectora/catalog/demos/buttons_demo.dart';
 import 'package:proyecto_protectora/core/widgets/app_button.dart';
-import 'package:proyecto_protectora/core/widgets/button_demo.dart';
 import 'package:proyecto_protectora/features/auth/presentation/pages/login_page.dart'
     show LoginScreen;
 
@@ -44,9 +43,9 @@ class PaginaDemostracion extends StatelessWidget {
             ///
             /////////////////////////////////////////
             Text('Acciones', textDirection: TextDirection.ltr),
-          
+
             Padding(
-              padding: EdgeInsets.all(1.0),
+              padding: EdgeInsets.only(left: 16.0, right: 16.0, top: 0.0),
               child: AppRoundedActionButton(
                 label: "Registrar nuevo animal",
                 onPressed: () => Navigator.of(
@@ -55,7 +54,7 @@ class PaginaDemostracion extends StatelessWidget {
               ),
             ),
             Padding(
-              padding: EdgeInsets.all(1.0),
+              padding: EdgeInsets.only(left: 16.0, right: 16.0, top: 0.0),
               child: AppRoundedActionButton(
                 label: "Registrar nueva adopcion",
                 onPressed: () => Navigator.of(
@@ -64,7 +63,7 @@ class PaginaDemostracion extends StatelessWidget {
               ),
             ),
             Padding(
-              padding: EdgeInsets.all(1.0),
+              padding: EdgeInsets.only(left: 16.0, right: 16.0, top: 0.0),
               child: AppRoundedActionButton(
                 label: "Registrar visita veterinario",
                 onPressed: () => Navigator.of(
