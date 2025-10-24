@@ -197,6 +197,36 @@ class _SingUpScreenState extends State<SingUpScreen> {
                           ),
                         ),
                   ),
+                  
+                ),
+                Row(
+                  children: [
+                    const Text(
+                      'Don’t have an account?',
+                      style: TextStyle(
+                        color: Color(0xFF837E93),
+                        fontSize: 13,
+                        fontFamily: 'Poppins',
+                        fontWeight: FontWeight.w500,
+                      ),
+                    ),
+                    const SizedBox(width: 2.5),
+
+                    AppButton(
+                      label: "Register",
+                      onPressed: () => Navigator.of(
+                        context,
+                      ).push(MaterialPageRoute(builder: (_) => SingUpScreen())),
+                    ),
+                  ],
+                ),
+                Padding(
+                  padding: const EdgeInsets.only(left: 15, top: 15),
+                  child: Image.asset(
+                    "assets/images/gato_conn_perro_login.png",
+                    width: 213,
+                    height: 257,
+                  ),
                 ),
               ],
             ),
