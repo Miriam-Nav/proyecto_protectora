@@ -60,7 +60,7 @@ class CardsDemo extends StatelessWidget {
           AppCard(
             title: 'Card con imagen',
             subtitle: 'Muestra una foto en lugar del icono',
-            image: Image.asset('assets/images/perrito.jpg', fit: BoxFit.cover),
+            image: Image.asset('assets/images/gatito.jpg', fit: BoxFit.cover),
             variant: AppCardVariant.primary,
             onTap: () => print('Card con imagen pulsada'),
           ),
@@ -95,6 +95,8 @@ class CardsDemo extends StatelessWidget {
             variant: AppCardVariant.cardBlue,
             onTap: () => print('Card de veterinario pulsada'),
           ),
+
+          
         ],
       ),
     );
