@@ -5,6 +5,7 @@ import 'package:proyecto_protectora/core/widgets/app_card.dart';
 import 'package:proyecto_protectora/features/auth/presentation/pages/login_page.dart'
     show LoginScreen;
 import 'package:proyecto_protectora/features/auth/presentation/widgets/drawer_page.dart';
+import 'package:proyecto_protectora/features/auth/presentation/widgets/login_form.dart';
 
 //pagina que se muestra del boton del home
 class PaginaDemostracion extends StatelessWidget {
@@ -12,7 +13,6 @@ class PaginaDemostracion extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final brillo = Theme.of(context).brightness;
     return Scaffold(
       appBar: AppBar(
         leading: Builder(
@@ -25,9 +25,8 @@ class PaginaDemostracion extends StatelessWidget {
         backgroundColor: Theme.of(context).appBarTheme.backgroundColor,
       ),
       drawer: ProtectoraDrawer(),
-      bottomNavigationBar: Text(
-        "hola",
-      ), //posible solucion para el scroll de pantalla para los botones de la barra de navegacion
+      bottomNavigationBar:
+          Menu_buttons(), //posible solucion para el scroll de pantalla para los botones de la barra de navegacion
       body: Center(
         child: Column(
           mainAxisAlignment:
@@ -40,12 +39,6 @@ class PaginaDemostracion extends StatelessWidget {
             Text('Protectora-Gestion', textDirection: TextDirection.ltr),
             Padding(
               padding: EdgeInsets.all(5),
-              child: AppInfoCard(
-                title: "hola",
-                subtitle: "prueba",
-                badgeText: "notificacion",
-                variant: AppCardVariant.cardBlue,
-              ),
               child: AppInfoCard(
                 title: "hola",
                 subtitle: "prueba",
@@ -94,14 +87,7 @@ class PaginaDemostracion extends StatelessWidget {
                 badgeText: "notificacion",
                 variant: AppCardVariant.cardBlue,
               ),
-              child: AppInfoCard(
-                title: "hola",
-                subtitle: "prueba",
-                badgeText: "notificacion",
-                variant: AppCardVariant.cardBlue,
-              ),
             ),
-            Padding(
             Padding(
               padding: EdgeInsets.all(5),
               child: AppInfoCard(
@@ -110,14 +96,7 @@ class PaginaDemostracion extends StatelessWidget {
                 badgeText: "notificacion",
                 variant: AppCardVariant.cardGreen,
               ),
-              child: AppInfoCard(
-                title: "hola",
-                subtitle: "prueba",
-                badgeText: "notificacion",
-                variant: AppCardVariant.cardGreen,
-              ),
             ),
-           
           ],
         ),
       ),
