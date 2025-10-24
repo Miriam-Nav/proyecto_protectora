@@ -12,15 +12,14 @@ enum AppCardVariant {
   cardGreen,
 }
 
-/// Crea una card reutilizable que puede mostrar un icono o una imagen,
-/// junto con título, subtítulo y una acción al pulsar.
+/// Crea una card reutilizable que puede mostrar un icono o una imagen
 class AppCard extends StatelessWidget {
-  final String title; // Texto principal
-  final String? subtitle; // Texto secundario opcional
-  final IconData? icon; // Icono opcional
-  final Image? image; // Imagen opcional
-  final Color? color; // Color de fondo opcional
-  final VoidCallback? onTap; // Acción al pulsar
+  final String title;
+  final String? subtitle;
+  final IconData? icon;
+  final Image? image;
+  final Color? color;
+  final VoidCallback? onTap;
   final AppCardVariant variant;
   const AppCard({
     super.key,
@@ -42,8 +41,8 @@ class AppCard extends StatelessWidget {
       AppCardVariant.primary => (palette.primary, palette.onPrimary),
       AppCardVariant.secondary => (palette.secondary, palette.onSecondary),
       AppCardVariant.danger => (palette.danger, palette.onDanger),
-      AppCardVariant.success => (palette.danger, palette.onDanger),
-      AppCardVariant.warning => (palette.danger, palette.onDanger),
+      AppCardVariant.success => (palette.success, palette.onSuccess),
+      AppCardVariant.warning => (palette.warning, palette.onWarning),
       AppCardVariant.cardBlue => (palette.cardBlue, palette.onCardBlue),
       AppCardVariant.cardGreen => (palette.cardGreen, palette.onCardGreen),
     };
@@ -52,9 +51,11 @@ class AppCard extends StatelessWidget {
       onTap: onTap,
       borderRadius: BorderRadius.circular(16),
       child: Card(
-        color: color ?? bg, // Usa color personalizado o el del tema
+        // Usa color personalizado o el del tema
+        color: color ?? bg,
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
-        elevation: 4, // Da una pequeña sombra
+        // Da una pequeña sombra
+        elevation: 4,
         child: Padding(
           padding: const EdgeInsets.all(16),
           child: Row(
@@ -97,104 +98,6 @@ class AppCard extends StatelessWidget {
               ),
             ],
           ),
-        ),
-      ),
-    );
-  }
-}
-
-// Card informativa con borde de color y una etiqueta (badge) arriba a la derecha.
-class AppNotiCard extends StatelessWidget {
-  final String title; // Ej: "Max - Adoptado"
-  final String text; // Ej: "11/10/2025 - 16:32"
-  final String badgeText; // Ej: "Adopción"
-  final VoidCallback? onTap; // Acción al pulsar
-  final AppCardVariant variant;
-
-  const AppNotiCard({
-    super.key,
-    required this.title,
-    required this.text,
-    required this.badgeText,
-    this.onTap,
-    this.variant = AppCardVariant.primary,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    final palette = appPaletteOf(context);
-
-    // Derivamos los colores de la variante
-    final (baseColor, textColor) = switch (variant) {
-      AppCardVariant.primary => (palette.primary, palette.onPrimary),
-      AppCardVariant.secondary => (palette.secondary, palette.onSecondary),
-      AppCardVariant.danger => (palette.danger, palette.onDanger),
-      AppCardVariant.success => (palette.success, palette.onSuccess),
-      AppCardVariant.warning => (palette.warning, palette.onWarning),
-      AppCardVariant.cardBlue => (palette.cardBlue, palette.onCardBlue),
-      AppCardVariant.cardGreen => (palette.cardGreen, palette.onCardGreen),
-    };
-
-    final esModoOscuro = Theme.of(context).brightness == Brightness.dark;
-
-    // Capa blanca muy ligera
-    final Color lightBackground = esModoOscuro
-        ? baseColor.withAlpha((0.60 * 255).round())
-        : baseColor.withAlpha((0.08 * 255).round()); // modo claro
-
-    final Color darkerColor = esModoOscuro
-        ? textColor
-        : Color.alphaBlend(
-            Colors.black.withAlpha(128), // 0.5 opacidad
-            baseColor,
-          );
-
-    return InkWell(
-      onTap: onTap,
-      borderRadius: BorderRadius.circular(12),
-      child: Container(
-        margin: const EdgeInsets.symmetric(vertical: 6),
-        padding: const EdgeInsets.all(12),
-        decoration: BoxDecoration(
-          color: lightBackground, // color de fondo muy suave
-          border: Border.all(color: baseColor, width: 1.2),
-          borderRadius: BorderRadius.circular(12),
-        ),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            // Fila con título y badge a la derecha
-            Row(
-              children: [
-                // Icono
-                Icon(Icons.info, color: darkerColor, size: 20),
-                SizedBox(width: 6),
-                // Título en negrita
-                Text(
-                  title,
-                  style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                    fontWeight: FontWeight.bold,
-                    color: darkerColor,
-                  ),
-                ),
-              ],
-            ),
-
-            const SizedBox(height: 8),
-            // Texto inferior (fecha y hora, u otra info)
-            Text(text, style: Theme.of(context).textTheme.bodyMedium),
-
-            const SizedBox(height: 8),
-            // Badge con fondo de color y bordes redondeados
-            Container(
-              padding: const EdgeInsets.symmetric(horizontal: 3, vertical: 4),
-              child: AppButton(
-                label: 'Revisar',
-                onPressed: () {},
-                variant: AppButtonVariant.secondary,
-              ),
-            ),
-          ],
         ),
       ),
     );
@@ -244,7 +147,7 @@ class AppInfoCard extends StatelessWidget {
 
     final Color baseFuerte = baseColor.withAlpha((0.55 * 255).round()); // ≈217
 
-    // Capa blanca muy ligera
+    // Fondo con capa blanca muy ligera
     final Color lightBackground = esModoOscuro
         ? Color.alphaBlend(
             Colors.white.withAlpha((0.00 * 255).round()),
@@ -323,6 +226,106 @@ class AppInfoCard extends StatelessWidget {
                 style: Theme.of(
                   context,
                 ).textTheme.bodyMedium?.copyWith(color: textColor),
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+// Card de notificacion.
+class AppNotiCard extends StatelessWidget {
+  final String title;
+  final String text;
+  final String badgeText;
+  final VoidCallback? onTap;
+  final AppCardVariant variant;
+
+  const AppNotiCard({
+    super.key,
+    required this.title,
+    required this.text,
+    required this.badgeText,
+    this.onTap,
+    this.variant = AppCardVariant.primary,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    final palette = appPaletteOf(context);
+
+    // Derivamos los colores de la variante
+    final (baseColor, textColor) = switch (variant) {
+      AppCardVariant.primary => (palette.primary, palette.onPrimary),
+      AppCardVariant.secondary => (palette.secondary, palette.onSecondary),
+      AppCardVariant.danger => (palette.danger, palette.onDanger),
+      AppCardVariant.success => (palette.success, palette.onSuccess),
+      AppCardVariant.warning => (palette.warning, palette.onWarning),
+      AppCardVariant.cardBlue => (palette.cardBlue, palette.onCardBlue),
+      AppCardVariant.cardGreen => (palette.cardGreen, palette.onCardGreen),
+    };
+
+    final esModoOscuro = Theme.of(context).brightness == Brightness.dark;
+
+    // Capa blanca muy ligera
+    final Color lightBackground = esModoOscuro
+        ? baseColor.withAlpha((0.60 * 255).round())
+        : baseColor.withAlpha((0.08 * 255).round()); // modo claro
+
+    final Color darkerColor = esModoOscuro
+        ? textColor
+        : Color.alphaBlend(
+            // 0.5 opacidad
+            Colors.black.withAlpha(128),
+            baseColor,
+          );
+
+    return InkWell(
+      onTap: onTap,
+      borderRadius: BorderRadius.circular(12),
+      child: Container(
+        margin: const EdgeInsets.symmetric(vertical: 6),
+        padding: const EdgeInsets.all(12),
+        decoration: BoxDecoration(
+          // color de fondo muy suave
+          color: lightBackground,
+          border: Border.all(color: baseColor, width: 1.2),
+          borderRadius: BorderRadius.circular(12),
+        ),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            // Fila con título y badge a la derecha
+            Row(
+              children: [
+                // Icono
+                Icon(Icons.info, color: darkerColor, size: 20),
+                SizedBox(width: 6),
+                // Título en negrita
+                Text(
+                  title,
+                  style: Theme.of(context).textTheme.titleMedium?.copyWith(
+                    fontWeight: FontWeight.bold,
+                    color: darkerColor,
+                  ),
+                ),
+              ],
+            ),
+
+            const SizedBox(height: 8),
+            // Texto inferior
+            Text(text, style: Theme.of(context).textTheme.bodyMedium),
+
+            const SizedBox(height: 8),
+            // Etiqueta
+            Container(
+              padding: const EdgeInsets.symmetric(horizontal: 3, vertical: 4),
+              child: AppButton(
+                label: 'Revisar',
+                onPressed: () {},
+                variant: AppButtonVariant.secondary,
               ),
             ),
           ],

@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:proyecto_protectora/core/widgets/app_button.dart'
-    show AppRoundedActionButton, AppButton;
-import 'package:proyecto_protectora/core/widgets/button_demo.dart';
+import 'package:proyecto_protectora/core/widgets/app_button.dart';
 import 'package:proyecto_protectora/features/auth/presentation/pages/demostracion_page.dart';
 import 'package:proyecto_protectora/catalog/catalog_pages.dart';
 import 'package:proyecto_protectora/catalog/demos/buttons_demo.dart';
@@ -68,7 +66,7 @@ class _EstadoPaginaAjustes extends State<PaginaAjustes> {
             onChanged: _alternarModoOscuro,
           ),
           // const Divider(),
-          Text('Biembenido', textDirection: TextDirection.ltr),
+          Text('Bienvenido', textDirection: TextDirection.ltr),
 
           // ListTile(
           //   leading: const Icon(Icons.info_outline),
@@ -85,7 +83,7 @@ class _EstadoPaginaAjustes extends State<PaginaAjustes> {
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 16.0),
             child: AppButton(
-              label: 'loging',
+              label: 'Loging',
               onPressed: () => Navigator.of(
                 context,
               ).push(MaterialPageRoute(builder: (_) => LoginScreen())),
@@ -97,6 +95,18 @@ class _EstadoPaginaAjustes extends State<PaginaAjustes> {
             // ),
             // child: const Text('Ir a pantalla de demostración'),
           ),
+
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 10),
+            child: AppButton(
+              label: 'Página de Catálogo',
+              onPressed: () => Navigator.of(
+                context,
+              ).push(MaterialPageRoute(builder: (_) => CatalogPage())),
+              variant: AppButtonVariant.success,
+            ),
+          ),
+
           // ),
           // const SizedBox(height: 24),
           // Padding(

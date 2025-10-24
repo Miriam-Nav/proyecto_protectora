@@ -42,7 +42,7 @@ class PaginaDemostracion extends StatelessWidget {
             Text('Acciones', textDirection: TextDirection.ltr),
 
             Padding(
-              padding: EdgeInsets.all(7),
+              padding: EdgeInsets.only(left: 16.0, right: 16.0, top: 0.0),
               child: AppRoundedActionButton(
                 label: "Registrar nuevo animal",
                 onPressed: () => Navigator.of(
@@ -51,7 +51,7 @@ class PaginaDemostracion extends StatelessWidget {
               ),
             ),
             Padding(
-              padding: EdgeInsets.all(7),
+              padding: EdgeInsets.only(left: 16.0, right: 16.0, top: 0.0),
               child: AppRoundedActionButton(
                 label: "Registrar nueva adopcion",
                 onPressed: () => Navigator.of(
@@ -60,7 +60,7 @@ class PaginaDemostracion extends StatelessWidget {
               ),
             ),
             Padding(
-              padding: EdgeInsets.all(7),
+              padding: EdgeInsets.only(left: 16.0, right: 16.0, top: 0.0),
               child: AppRoundedActionButton(
                 label: "Registrar visita veterinario",
                 onPressed: () => Navigator.of(

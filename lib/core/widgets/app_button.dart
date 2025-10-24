@@ -29,8 +29,8 @@ class AppButton extends StatelessWidget {
       AppButtonVariant.primary => (palette.primary, palette.onPrimary),
       AppButtonVariant.secondary => (palette.secondary, palette.onSecondary),
       AppButtonVariant.danger => (palette.danger, palette.onDanger),
-      AppButtonVariant.success => (palette.danger, palette.onDanger),
-      AppButtonVariant.warning => (palette.danger, palette.onDanger),
+      AppButtonVariant.success => (palette.success, palette.onSuccess),
+      AppButtonVariant.warning => (palette.warning, palette.onWarning),
     };
 
     return ElevatedButton(
@@ -45,26 +45,19 @@ class AppButton extends StatelessWidget {
   }
 }
 
-/// ----------------------------------------------------------------------
-/// NUEVO: Botón ancho con bordes redondeados a la izquierda,
-/// icono inicial, texto centrado y flecha final.
-/// ----------------------------------------------------------------------
+/// Botón ancho con bordes redondeados a la izquierda
 class AppRoundedActionButton extends StatelessWidget {
   final IconData? leadingIcon;
   final String label;
   final VoidCallback? onPressed;
   final AppButtonVariant variant;
-  // final Widget? onPressed;
-  
-  
 
   const AppRoundedActionButton({
     super.key,
     this.leadingIcon,
     required this.label,
-    this.onPressed,
+    required this.onPressed,
     this.variant = AppButtonVariant.primary,
- 
   });
 
   @override
@@ -81,14 +74,14 @@ class AppRoundedActionButton extends StatelessWidget {
     };
 
     return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 0),
+      padding: const EdgeInsets.symmetric(vertical: 6),
       child: ElevatedButton(
         onPressed: onPressed,
         style: ElevatedButton.styleFrom(
           backgroundColor: bg,
           foregroundColor: fg,
           elevation: 3,
-          padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 16),
+          padding: const EdgeInsets.symmetric(vertical: 16, horizontal: 16),
           shape: const RoundedRectangleBorder(
             borderRadius: BorderRadius.only(
               topLeft: Radius.circular(50),
@@ -118,4 +111,3 @@ class AppRoundedActionButton extends StatelessWidget {
     );
   }
 }
-
