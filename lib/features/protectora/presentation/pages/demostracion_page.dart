@@ -46,6 +46,12 @@ class PaginaDemostracion extends StatelessWidget {
                 badgeText: "notificacion",
                 variant: AppCardVariant.cardBlue,
               ),
+              child: AppInfoCard(
+                title: "hola",
+                subtitle: "prueba",
+                badgeText: "notificacion",
+                variant: AppCardVariant.cardBlue,
+              ),
             ),
 
             ///
@@ -88,7 +94,14 @@ class PaginaDemostracion extends StatelessWidget {
                 badgeText: "notificacion",
                 variant: AppCardVariant.cardBlue,
               ),
+              child: AppInfoCard(
+                title: "hola",
+                subtitle: "prueba",
+                badgeText: "notificacion",
+                variant: AppCardVariant.cardBlue,
+              ),
             ),
+            Padding(
             Padding(
               padding: EdgeInsets.all(5),
               child: AppInfoCard(
@@ -97,7 +110,14 @@ class PaginaDemostracion extends StatelessWidget {
                 badgeText: "notificacion",
                 variant: AppCardVariant.cardGreen,
               ),
+              child: AppInfoCard(
+                title: "hola",
+                subtitle: "prueba",
+                badgeText: "notificacion",
+                variant: AppCardVariant.cardGreen,
+              ),
             ),
+           
           ],
         ),
       ),

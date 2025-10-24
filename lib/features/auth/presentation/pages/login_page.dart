@@ -24,14 +24,7 @@ class _LoginScreenState extends State<LoginScreen> {
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          // Padding(
-          //   padding: const EdgeInsets.only(left: 15, top: 15),
-          //   // child: Image.asset(
-          //   //   "assets/images/vector-1.png",
-          //   //   width: 413,
-          //   //   height: 457,
-          //   // ),
-          // ),
+         
           const SizedBox(height: 18),
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 5),
@@ -155,12 +148,13 @@ class _LoginScreenState extends State<LoginScreen> {
               ],
             ),
           ),
-          const SizedBox(width: 2.5),
-          AppButton(
-            label: 'Página de Catálogo',
-            onPressed: () => Navigator.of(
-              context,
-            ).push(MaterialPageRoute(builder: (_) => CatalogPage())),
+           Padding(
+            padding: const EdgeInsets.only(left: 15, top: 15),
+            child: Image.asset(
+              "assets/images/gato_conn_perro_login.png",
+              width: 213,
+              height: 257,
+            ),
           ),
         ],
       ),
