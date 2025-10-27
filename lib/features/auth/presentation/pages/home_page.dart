@@ -79,7 +79,8 @@ class _EstadoPaginaAjustes extends State<PaginaAjustes> {
           //   child:
           //   // buttons_claro(),
           // ),
-          // const SizedBox(height: 24),
+          // const SizedBox(height: 24), 
+          //
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 16.0),
             child: AppButton(
