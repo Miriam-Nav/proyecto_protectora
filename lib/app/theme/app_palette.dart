@@ -11,6 +11,8 @@ class AppPalette {
   final Color onSuccess;
   final Color warning;
   final Color onWarning;
+  final Color menuButton;
+  final Color onMenuButton;
   final Color cardBlue;
   final Color onCardBlue;
   final Color cardGreen;
@@ -27,6 +29,8 @@ class AppPalette {
     required this.onSuccess,
     required this.warning,
     required this.onWarning,
+    required this.menuButton,
+    required this.onMenuButton,
     required this.cardBlue,
     required this.onCardBlue,
     required this.cardGreen,
@@ -46,6 +50,8 @@ const appPaletteLight = AppPalette(
   onSuccess: Colors.white,
   warning: Color.fromARGB(237, 238, 231, 43),
   onWarning: Colors.white,
+  menuButton: Colors.white,
+  onMenuButton: Colors.black87,
   cardBlue: Color.fromARGB(255, 26, 135, 225),
   onCardBlue: Colors.black87,
   cardGreen: Color.fromARGB(255, 60, 197, 65),
@@ -64,6 +70,8 @@ const appPaletteDark = AppPalette(
   onSuccess: Colors.white,
   warning: Color.fromARGB(236, 249, 244, 84),
   onWarning: Colors.white,
+  menuButton: Color.fromARGB(238, 238, 124, 43),
+  onMenuButton: Colors.white,
   cardBlue: Color.fromARGB(255, 27, 121, 197),
   onCardBlue: Colors.white,
   cardGreen: Color.fromARGB(255, 18, 173, 23),

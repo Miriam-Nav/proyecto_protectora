@@ -12,6 +12,21 @@ enum AppCardVariant {
   cardGreen,
 }
 
+(Color, Color) eleccionColoresVariante(
+  AppPalette palette,
+  AppCardVariant variant,
+) {
+  return switch (variant) {
+    AppCardVariant.primary => (palette.primary, palette.onPrimary),
+    AppCardVariant.secondary => (palette.secondary, palette.onSecondary),
+    AppCardVariant.danger => (palette.danger, palette.onDanger),
+    AppCardVariant.success => (palette.success, palette.onSuccess),
+    AppCardVariant.warning => (palette.warning, palette.onWarning),
+    AppCardVariant.cardBlue => (palette.cardBlue, palette.onCardBlue),
+    AppCardVariant.cardGreen => (palette.cardGreen, palette.onCardGreen),
+  };
+}
+
 /// Crea una card reutilizable que puede mostrar un icono o una imagen
 class AppCard extends StatelessWidget {
   final String title;
@@ -37,15 +52,7 @@ class AppCard extends StatelessWidget {
     final palette = appPaletteOf(context);
     final esModoOscuro = Theme.of(context).brightness == Brightness.dark;
 
-    final (bg, fg) = switch (variant) {
-      AppCardVariant.primary => (palette.primary, palette.onPrimary),
-      AppCardVariant.secondary => (palette.secondary, palette.onSecondary),
-      AppCardVariant.danger => (palette.danger, palette.onDanger),
-      AppCardVariant.success => (palette.success, palette.onSuccess),
-      AppCardVariant.warning => (palette.warning, palette.onWarning),
-      AppCardVariant.cardBlue => (palette.cardBlue, palette.onCardBlue),
-      AppCardVariant.cardGreen => (palette.cardGreen, palette.onCardGreen),
-    };
+    final (bg, fg) = eleccionColoresVariante(palette, variant);
     // Usa InkWell para permitir el efecto de pulsación
     return InkWell(
       onTap: onTap,
@@ -126,16 +133,7 @@ class AppInfoCard extends StatelessWidget {
     final palette = appPaletteOf(context);
 
     // Derivamos los colores de la variante
-    final (baseColor, textColor) = switch (variant) {
-      AppCardVariant.primary => (palette.primary, palette.onPrimary),
-      AppCardVariant.secondary => (palette.secondary, palette.onSecondary),
-      AppCardVariant.danger => (palette.danger, palette.onDanger),
-      AppCardVariant.success => (palette.success, palette.onSuccess),
-      AppCardVariant.warning => (palette.warning, palette.onWarning),
-      AppCardVariant.cardBlue => (palette.cardBlue, palette.onCardBlue),
-      AppCardVariant.cardGreen => (palette.cardGreen, palette.onCardGreen),
-    };
-
+    final (baseColor, textColor) = eleccionColoresVariante(palette, variant);
     final esModoOscuro = Theme.of(context).brightness == Brightness.dark;
     final aclarado = esModoOscuro
         ? Color.alphaBlend(
@@ -256,16 +254,7 @@ class AppNotiCard extends StatelessWidget {
   Widget build(BuildContext context) {
     final palette = appPaletteOf(context);
 
-    // Derivamos los colores de la variante
-    final (baseColor, textColor) = switch (variant) {
-      AppCardVariant.primary => (palette.primary, palette.onPrimary),
-      AppCardVariant.secondary => (palette.secondary, palette.onSecondary),
-      AppCardVariant.danger => (palette.danger, palette.onDanger),
-      AppCardVariant.success => (palette.success, palette.onSuccess),
-      AppCardVariant.warning => (palette.warning, palette.onWarning),
-      AppCardVariant.cardBlue => (palette.cardBlue, palette.onCardBlue),
-      AppCardVariant.cardGreen => (palette.cardGreen, palette.onCardGreen),
-    };
+    final (baseColor, textColor) = eleccionColoresVariante(palette, variant);
 
     final esModoOscuro = Theme.of(context).brightness == Brightness.dark;
 

@@ -2,9 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:proyecto_protectora/catalog/demos/buttons_demo.dart';
 import 'package:proyecto_protectora/core/widgets/app_button.dart';
 import 'package:proyecto_protectora/core/widgets/app_card.dart';
-import 'package:proyecto_protectora/core/widgets/button_demo.dart';
 import 'package:proyecto_protectora/features/auth/presentation/pages/login_page.dart'
     show LoginScreen;
+import 'package:proyecto_protectora/features/auth/presentation/widgets/drawer_page.dart';
 import 'package:proyecto_protectora/features/auth/presentation/widgets/login_form.dart';
 
 //pagina que se muestra del boton del home
@@ -13,10 +13,20 @@ class PaginaDemostracion extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final brillo = Theme.of(context).brightness;
     return Scaffold(
-      appBar: AppBar(title: const Text('Inicio')),
-      bottomNavigationBar: Menu_buttons(), //posible solucion para el scroll de pantalla para los botones de la barra de navegacion
+      appBar: AppBar(
+        leading: Builder(
+          builder: (context) => IconButton(
+            icon: Icon(Icons.menu),
+            onPressed: () => Scaffold.of(context).openDrawer(),
+          ),
+        ),
+        title: Text('Inicio'),
+        backgroundColor: Theme.of(context).appBarTheme.backgroundColor,
+      ),
+      drawer: ProtectoraDrawer(),
+      bottomNavigationBar:
+          Menu_buttons(), //posible solucion para el scroll de pantalla para los botones de la barra de navegacion
       body: Center(
         child: Column(
           mainAxisAlignment:
@@ -87,7 +97,6 @@ class PaginaDemostracion extends StatelessWidget {
                 variant: AppCardVariant.cardGreen,
               ),
             ),
-           
           ],
         ),
       ),
