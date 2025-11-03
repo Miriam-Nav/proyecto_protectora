@@ -1,19 +1,13 @@
-import 'package:equatable/equatable.dart';
+import 'dart:ui';
 
-class Preferences extends Equatable {
-  static const darkModeConst = 'DARKMODE';
-  static const languageConst = 'LANGUAGE';
-
+class Preferences {
   final bool darkmode;
-  final String language;
+  final Locale language;
 
   const Preferences({required this.darkmode, required this.language});
 
-  Preferences copyWith({bool? darkmode, String? language}) => Preferences(
+  Preferences copyWith({bool? darkmode, Locale? language}) => Preferences(
     darkmode: darkmode ?? this.darkmode,
     language: language ?? this.language,
   );
-
-  @override
-  List<Object?> get props => [darkmode, language];
 }

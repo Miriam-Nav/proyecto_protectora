@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:proyecto_protectora/core/widgets/app_animal_card.dart';
 // import 'package:proyecto_protectora/catalog/widgets/showcase_scaffold.dart';
 import 'package:proyecto_protectora/core/widgets/app_card.dart';
 
@@ -96,7 +97,29 @@ class CardsDemo extends StatelessWidget {
             onTap: () => print('Card de veterinario pulsada'),
           ),
 
-          
+          const SizedBox(height: 16),
+          const Text('Mascota Mini Card'),
+          const SizedBox(height: 8),
+          MascotaMiniCard(
+            image: 'assets/images/gatito.jpg',
+            title: "Leon",
+            text: "Cariñoso y tranquilo.",
+            onPressed: () {},
+          ),
+
+          const SizedBox(height: 16),
+          const Text('Mascota Card'),
+          const SizedBox(height: 8),
+          MascotaCard(
+            image: 'assets/images/gatito.jpg',
+            nombre: 'Coco',
+            sexo: 'Hembra',
+            raza: 'Siames',
+            fNacimiento: '2021-03-10',
+            esterilizado: 'Sí',
+            chip: '1234A',
+            text: 'Inteligente y activo',
+          ),
         ],
       ),
     );

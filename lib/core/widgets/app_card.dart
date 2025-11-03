@@ -10,6 +10,7 @@ enum AppCardVariant {
   warning,
   cardBlue,
   cardGreen,
+  menuButton,
 }
 
 (Color, Color) eleccionColoresVariante(
@@ -24,6 +25,7 @@ enum AppCardVariant {
     AppCardVariant.warning => (palette.warning, palette.onWarning),
     AppCardVariant.cardBlue => (palette.cardBlue, palette.onCardBlue),
     AppCardVariant.cardGreen => (palette.cardGreen, palette.onCardGreen),
+    AppCardVariant.menuButton => (palette.menuButton, palette.onMenuButton),
   };
 }
 
@@ -50,7 +52,6 @@ class AppCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final palette = appPaletteOf(context);
-    final esModoOscuro = Theme.of(context).brightness == Brightness.dark;
 
     final (bg, fg) = eleccionColoresVariante(palette, variant);
     // Usa InkWell para permitir el efecto de pulsación
@@ -206,11 +207,7 @@ class AppInfoCard extends StatelessWidget {
                     ),
                     child: Text(
                       badgeText,
-                      style: TextStyle(
-                        color: textColor,
-                        fontSize: 12,
-                        fontWeight: FontWeight.w500,
-                      ),
+                      style: Theme.of(context).textTheme.labelLarge,
                     ),
                   ),
                 ],

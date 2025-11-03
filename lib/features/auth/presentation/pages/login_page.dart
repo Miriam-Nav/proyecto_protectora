@@ -1,9 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:proyecto_protectora/catalog/catalog_pages.dart';
-import 'package:proyecto_protectora/core/widgets/app_button.dart'
-    show AppButton, AppRoundedActionButton;
-import 'package:proyecto_protectora/features/protectora/presentation/pages/demostracion_page.dart';
-import 'package:proyecto_protectora/features/protectora/presentation/pages/home_page.dart';
+import 'package:proyecto_protectora/core/widgets/app_button.dart';
+import 'package:proyecto_protectora/features/auth/presentation/widgets/menu_buttons.dart';
 import 'package:proyecto_protectora/features/auth/presentation/pages/sing_up_screen.dart';
 
 class LoginScreen extends StatefulWidget {
@@ -19,12 +16,11 @@ class _LoginScreenState extends State<LoginScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final brillo = Theme.of(context).brightness;
+    // final brillo = Theme.of(context).brightness;
     return Scaffold(
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-         
           const SizedBox(height: 18),
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 5),
@@ -117,9 +113,9 @@ class _LoginScreenState extends State<LoginScreen> {
                     height: 56,
                     child: AppButton(
                       label: "Login",
-                      onPressed: () => Navigator.of(context).push(
-                        MaterialPageRoute(builder: (_) => PaginaDemostracion()),
-                      ),
+                      onPressed: () => Navigator.of(
+                        context,
+                      ).push(MaterialPageRoute(builder: (_) => MenuButtons())),
                     ),
                   ),
                 ),
@@ -148,7 +144,7 @@ class _LoginScreenState extends State<LoginScreen> {
               ],
             ),
           ),
-           Padding(
+          Padding(
             padding: const EdgeInsets.only(left: 15, top: 15),
             child: Image.asset(
               "assets/images/gato_conn_perro_login.png",

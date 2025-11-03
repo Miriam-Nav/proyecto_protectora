@@ -21,18 +21,23 @@ class AppTheme {
   static ThemeData light = ThemeData(
     useMaterial3: true,
     brightness: Brightness.light,
-    scaffoldBackgroundColor: const Color(0xFFF8F7F6),
-    appBarTheme: const AppBarTheme(
-      backgroundColor: Color(0xFFF8F7F6),
+    scaffoldBackgroundColor: appPaletteLight.background,
+    appBarTheme: AppBarTheme(
+      backgroundColor: appPaletteLight.background,
       // Color del texto y los íconos
-      foregroundColor: Colors.black,
+      foregroundColor: appPaletteLight.onMenuButton,
       // Sin sombra
       elevation: 0,
-      // Título centrado
-      centerTitle: true,
+      // Título centrado = false
+      centerTitle: false,
       // Reaccion del AppBar al scroll
       surfaceTintColor: Color.fromARGB(255, 98, 89, 84),
+
+      titleTextStyle: _textTheme.headlineLarge?.copyWith(
+        color: appPaletteLight.onMenuButton,
+      ),
     ),
+
     colorScheme: ColorScheme.light(
       primary: appPaletteLight.primary,
       onPrimary: appPaletteLight.onPrimary,
@@ -47,6 +52,14 @@ class AppTheme {
   static ThemeData dark = ThemeData(
     useMaterial3: true,
     brightness: Brightness.dark,
+    scaffoldBackgroundColor: appPaletteDark.background,
+    appBarTheme: AppBarTheme(
+      backgroundColor: appPaletteDark.background,
+      centerTitle: false,
+      titleTextStyle: _textTheme.headlineLarge?.copyWith(
+        color: appPaletteDark.onMenuButton,
+      ),
+    ),
     colorScheme: ColorScheme.dark(
       primary: appPaletteDark.primary,
       onPrimary: appPaletteDark.onPrimary,

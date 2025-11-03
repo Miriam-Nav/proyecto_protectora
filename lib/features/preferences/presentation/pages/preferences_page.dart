@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:proyecto_protectora/features/preferences/controllers/preferences_controller.dart';
 import 'package:proyecto_protectora/features/preferences/data/models/preferences.dart';
-import 'package:proyecto_protectora/features/auth/presentation/providers/preferences_providers.dart';
 
 class PreferencesPage extends ConsumerStatefulWidget {
   const PreferencesPage({super.key});
@@ -20,7 +20,7 @@ class _PreferencesPageState extends ConsumerState<PreferencesPage> {
     final prefs = ref.read(preferencesProvider).value;
     if (prefs != null) {
       _selDarkMode = prefs.darkmode;
-      _selLanguage = prefs.language;
+      _selLanguage = prefs.language.languageCode;
     }
   }
 
@@ -40,6 +40,7 @@ class _PreferencesPageState extends ConsumerState<PreferencesPage> {
                 'Apariencia',
                 style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
               ),
+              // --- Modo claro/oscuro ---
               Row(
                 children: [
                   Icon(Icons.light_mode),
@@ -57,6 +58,7 @@ class _PreferencesPageState extends ConsumerState<PreferencesPage> {
             ],
           ),
           SizedBox(height: 10),
+          // --- Selección de idioma ---
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
@@ -88,7 +90,10 @@ class _PreferencesPageState extends ConsumerState<PreferencesPage> {
           await ref
               .read(preferencesProvider.notifier)
               .updatePreferences(
-                Preferences(darkmode: _selDarkMode, language: _selLanguage),
+                Preferences(
+                  darkmode: _selDarkMode,
+                  language: Locale(_selLanguage),
+                ),
               );
           messenger.showSnackBar(
             SnackBar(
