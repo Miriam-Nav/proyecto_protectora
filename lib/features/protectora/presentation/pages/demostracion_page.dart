@@ -25,8 +25,7 @@ class PaginaDemostracion extends StatelessWidget {
         backgroundColor: Theme.of(context).appBarTheme.backgroundColor,
       ),
       drawer: ProtectoraDrawer(),
-      bottomNavigationBar:
-          Menu_buttons(), //posible solucion para el scroll de pantalla para los botones de la barra de navegacion
+      bottomNavigationBar: Menu_buttons(), //posible solucion para el scroll de pantalla para los botones de la barra de navegacion
       body: Center(
         child: Column(
           mainAxisAlignment:

@@ -15,28 +15,29 @@ class Menu_buttons extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Row(
+    return Column(
       children: [
-        AppButton(
+        MenuButton(
           label: "Inicio",
           onPressed: () => Navigator.of(
             context,
           ).push(MaterialPageRoute(builder: (_) => LoginScreen())),
         ),
-         AppButton(
+         MenuButton(
           label: "Animales",
           onPressed: () => Navigator.of(
             context,
           ).push(MaterialPageRoute(builder: (_) => LoginScreen())),
         ),
-         AppButton(
+         MenuButton(
           label: "Gestion",
           onPressed: () => Navigator.of(
             context,
           ).push(MaterialPageRoute(builder: (_) => LoginScreen())),
         ),
-         AppButton(
+         MenuButton(
           label: "Tareas",
+          leadingIcon: Icons.star,
           onPressed: () => Navigator.of(
             context,
           ).push(MaterialPageRoute(builder: (_) => LoginScreen())),

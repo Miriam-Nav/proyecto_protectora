@@ -24,29 +24,11 @@ class HomePage extends ConsumerWidget {
 
     return Scaffold(
       /////////////////////////////////////////////
-      // appBar: AppBar(title: const Text('Ajustes')),
       appBar: AppBar(title: const Text('Inicio')),
       body: ListView(
         children: [
           const SizedBox(height: 8),
-
-          // const Divider(),
           Text('Bienvenido', textDirection: TextDirection.ltr),
-
-          // ListTile(
-          //   leading: const Icon(Icons.info_outline),
-          //   title: const Text('Estado actual del tema'),
-          //   subtitle: Text(modoOscuro ? 'Oscuro' : 'Claro'),
-          // ),
-          // const SizedBox(height: 24),
-          // Padding(
-          //   padding: const EdgeInsets.symmetric(horizontal: 16.0),
-          //   child:
-          //   // buttons_claro(),
-          // ),
-          // const SizedBox(height: 24),
-
-          // botón para ir a la pantalla de login
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 16.0),
             child: AppButton(
@@ -55,15 +37,8 @@ class HomePage extends ConsumerWidget {
                 context,
               ).push(MaterialPageRoute(builder: (_) => LoginScreen())),
             ),
-            // button_Paginademostracion( pantallaDestino: LoginScreen(), texto: "Logeate/Registrate"),
-            // child: FilledButton(
-            // onPressed: () => Navigator.of(context).push(
-            //   MaterialPageRoute(builder: (_) => const PaginaDemostracion()),
-            // ),
-            // child: const Text('Ir a pantalla de demostración'),
           ),
 
-          // botón para ir a la pantalla de catálogo
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 10),
             child: AppButton(
@@ -74,18 +49,6 @@ class HomePage extends ConsumerWidget {
               variant: AppButtonVariant.success,
             ),
           ),
-
-          // ),
-          // const SizedBox(height: 24),
-          // Padding(
-          //   padding: const EdgeInsets.symmetric(horizontal: 16.0),
-          //   child: FilledButton(
-          //     onPressed: () => Navigator.of(
-          //       context,
-          //     ).push(MaterialPageRoute(builder: (_) => const CatalogPage())),
-          //     child: const Text('Ir a pantalla Catalogo'),
-          //   ),
-          // ),
         ],
       ),
     );
