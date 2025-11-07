@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:proyecto_protectora/core/widgets/app_button.dart'
-    show AppButton, AppRoundedActionButton;
-import 'package:proyecto_protectora/features/protectora/presentation/pages/demostracion_page.dart';
-import 'package:proyecto_protectora/features/auth/presentation/pages/login_page.dart';
+import 'package:proyecto_protectora/core/widgets/app_button.dart';
+import 'package:proyecto_protectora/features/protectora/presentation/pages/inicio_page.dart';
 
 class SingUpScreen extends StatefulWidget {
   // const SingUpScreen();
@@ -19,7 +17,7 @@ class _SingUpScreenState extends State<SingUpScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final brillo = Theme.of(context).brightness;
+    // final brillo = Theme.of(context).brightness;
     return Scaffold(
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -191,12 +189,11 @@ class _SingUpScreenState extends State<SingUpScreen> {
                           label: "registrate",
                           onPressed: () => Navigator.of(context).push(
                             MaterialPageRoute(
-                              builder: (_) => PaginaDemostracion(),
+                              builder: (_) => InicioPage(),
                             ),
                           ),
                         ),
                   ),
-                  
                 ),
                 Row(
                   children: [

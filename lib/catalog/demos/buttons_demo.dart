@@ -82,16 +82,6 @@ class ButtonsDemo extends StatelessWidget {
             onPressed: () {},
             variant: AppButtonVariant.menuButton,
           ),
-
-          const SizedBox(height: 16),
-          const Text('MenuButton'),
-          const SizedBox(height: 8),
-          MascotaButton(
-            image: Image.asset('assets/images/gatito.jpg', fit: BoxFit.cover),
-            title: "Leon",
-            text: "Cariñoso y tranquilo.",
-            onPressed: () {},
-          ),
         ],
       ),
     );

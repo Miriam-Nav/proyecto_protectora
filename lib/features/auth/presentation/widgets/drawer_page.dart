@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:proyecto_protectora/features/preferences/presentation/pages/preferences_page.dart';
+import 'package:proyecto_protectora/features/protectora/presentation/pages/home_page.dart';
 
 class ProtectoraDrawer extends ConsumerWidget {
   const ProtectoraDrawer({super.key});
@@ -61,7 +62,14 @@ class ProtectoraDrawer extends ConsumerWidget {
             ListTile(
               leading: const Icon(Icons.logout),
               title: const Text('Cerrar sesión'),
-              onTap: () {},
+              onTap: () async {
+                Navigator.pop(context);
+                //await ref.read(todosProvider.notifier).refresh();
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (ref) => HomePage()),
+                );
+              },
             ),
           ],
         ),

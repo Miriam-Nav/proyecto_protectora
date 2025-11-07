@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:proyecto_protectora/core/l10n/app_localizations.dart';
+import 'package:proyecto_protectora/features/preferences/controllers/preferences_controller.dart';
 import 'package:proyecto_protectora/features/protectora/presentation/pages/home_page.dart';
-import 'package:proyecto_protectora/features/auth/presentation/providers/preferences_providers.dart';
 import 'package:proyecto_protectora/app/theme/app_theme.dart';
 
 void main() async {
@@ -14,19 +16,45 @@ class MainApp extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    // Obten el estado async de las preferencias
     final prefsAsync = ref.watch(preferencesProvider);
 
-    final modoOscuro = prefsAsync.maybeWhen(
-      data: (p) => p.darkmode,
-      orElse: () => false,
+    // Valores por defecto
+    Locale selectedLocale = const Locale('es');
+    bool modoOscuro = false;
+
+    // Si las preferencias ya cargaron correctamente, actualiza
+    prefsAsync.when(
+      data: (prefs) {
+        selectedLocale = prefs.language;
+        modoOscuro = prefs.darkmode;
+      },
+      loading: () {
+        // Valor por defecto mientras carga
+        selectedLocale = const Locale('es');
+        modoOscuro = false;
+      },
+      error: (_, __) {
+        // Valores por defecto en caso de error
+        selectedLocale = const Locale('es');
+        modoOscuro = false;
+      },
     );
 
     return MaterialApp(
-      title: 'Protectora utilizando Riverpod',
+      title: 'Protectora App',
       debugShowCheckedModeBanner: false,
       theme: AppTheme.light,
       darkTheme: AppTheme.dark,
       themeMode: modoOscuro ? ThemeMode.dark : ThemeMode.light,
+      locale: selectedLocale,
+      supportedLocales: const [Locale('en'), Locale('es'), Locale('it')],
+      localizationsDelegates: const [
+        AppLocalizations.delegate,
+        GlobalMaterialLocalizations.delegate,
+        GlobalWidgetsLocalizations.delegate,
+        GlobalCupertinoLocalizations.delegate,
+      ],
       home: const HomePage(),
     );
   }

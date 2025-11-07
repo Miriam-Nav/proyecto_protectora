@@ -136,7 +136,7 @@ class MenuButton extends StatelessWidget {
     this.leadingIcon,
     required this.label,
     required this.onPressed,
-    this.variant = AppButtonVariant.primary,
+    this.variant = AppButtonVariant.menuButton,
     this.backgroundColorOverride,
     this.foregroundColorOverride,
   });
@@ -158,7 +158,7 @@ class MenuButton extends StatelessWidget {
       style: ElevatedButton.styleFrom(
         backgroundColor: backgroundColorOverride ?? bg,
         foregroundColor: foregroundColorOverride ?? fg,
-        padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 12),
+        padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 12),
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
       ),
       onPressed: onPressed,
@@ -167,65 +167,6 @@ class MenuButton extends StatelessWidget {
           Icon(leadingIcon, size: 28),
           const SizedBox(height: 5),
           Text(label, textAlign: TextAlign.center),
-        ],
-      ),
-    );
-  }
-}
-
-class MascotaButton extends StatelessWidget {
-  final Image image;
-  final String title;
-  final String text;
-  final VoidCallback? onPressed;
-  final AppButtonVariant variant;
-
-  /// Overrides opcionales por si queremos forzar colores puntuales.
-  final Color? backgroundColorOverride;
-  final Color? foregroundColorOverride;
-
-  const MascotaButton({
-    super.key,
-    required this.image,
-    required this.title,
-    required this.text,
-    required this.onPressed,
-    this.variant = AppButtonVariant.primary,
-    this.backgroundColorOverride,
-    this.foregroundColorOverride,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    final palette = appPaletteOf(context);
-
-    final (bg, fg) = switch (variant) {
-      AppButtonVariant.primary => (palette.primary, palette.onPrimary),
-      AppButtonVariant.secondary => (palette.secondary, palette.onSecondary),
-      AppButtonVariant.danger => (palette.danger, palette.onDanger),
-      AppButtonVariant.success => (palette.success, palette.onSuccess),
-      AppButtonVariant.warning => (palette.warning, palette.onWarning),
-      AppButtonVariant.menuButton => (palette.menuButton, palette.onMenuButton),
-    };
-
-    return ElevatedButton(
-      style: ElevatedButton.styleFrom(
-        backgroundColor: backgroundColorOverride ?? bg,
-        foregroundColor: foregroundColorOverride ?? fg,
-        padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 12),
-        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
-      ),
-      onPressed: onPressed,
-      child: Column(
-        children: [
-          ClipRRect(
-            borderRadius: BorderRadius.circular(12),
-            child: SizedBox(width: 60, height: 60, child: image),
-          ),
-          const SizedBox(height: 5),
-          Text(title, textAlign: TextAlign.center),
-          const SizedBox(height: 5),
-          Text(text, textAlign: TextAlign.center),
         ],
       ),
     );
