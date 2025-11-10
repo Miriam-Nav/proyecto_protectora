@@ -5,6 +5,7 @@ import 'package:proyecto_protectora/core/l10n/app_localizations.dart';
 import 'package:proyecto_protectora/core/widgets/app_animal_card.dart';
 import 'package:proyecto_protectora/features/auth/presentation/widgets/drawer_page.dart';
 import 'package:proyecto_protectora/features/protectora/data/animales_datafake.dart';
+import 'package:proyecto_protectora/features/protectora/presentation/pages/formulario_adopcion.dart';
 
 class AnimalListPage extends StatelessWidget {
   const AnimalListPage({super.key});
@@ -12,7 +13,7 @@ class AnimalListPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context)!;
-    
+   
     return Scaffold(
       appBar: AppBar(
         leading: Builder(
@@ -30,12 +31,12 @@ class AnimalListPage extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            // TITULO
-            Text(
-              'Protectora-Adopción',
-              style: Theme.of(context).textTheme.headlineSmall,
-            ),
-            const SizedBox(height: 14),
+            // // TITULO
+            // Text(
+            //   'Protectora-Adopción',
+            //   style: Theme.of(context).textTheme.headlineSmall,
+            // ),
+            // const SizedBox(height: 14),
 
             // SUBTITULO
             Text('Animales', style: Theme.of(context).textTheme.headlineLarge),
@@ -51,7 +52,12 @@ class AnimalListPage extends StatelessWidget {
                     padding: const EdgeInsets.only(bottom: 16.0),
                     child: MascotaFavCard(
                       animal: animal,
-                      onAdoptPressed: () {},
+                      onAdoptPressed: () => Navigator.of(context).push(
+                        MaterialPageRoute(
+                          builder: (_) =>
+                              FormularioAdopcion(sleccionado: animalesFake[index].idAnimal),
+                        ),
+                      ),
                     ),
                   );
                 },

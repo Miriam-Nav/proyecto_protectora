@@ -19,14 +19,14 @@ class _LoginScreenState extends State<LoginScreen> {
     // final brillo = Theme.of(context).brightness;
     return Scaffold(
       body: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
+        crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           const SizedBox(height: 18),
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 5),
             child: Column(
               textDirection: TextDirection.ltr,
-              crossAxisAlignment: CrossAxisAlignment.start,
+              // crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 const Text(
                   'Log In',
@@ -110,7 +110,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   borderRadius: const BorderRadius.all(Radius.circular(10)),
                   child: SizedBox(
                     width: 329,
-                    height: 56,
+                    height: 36,
                     child: AppButton(
                       label: "Login",
                       onPressed: () => Navigator.of(
@@ -119,7 +119,7 @@ class _LoginScreenState extends State<LoginScreen> {
                     ),
                   ),
                 ),
-
+                Padding(padding: const EdgeInsets.only(top: 25)),
                 Row(
                   children: [
                     const Text(

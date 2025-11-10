@@ -230,11 +230,14 @@ class MascotaCard extends StatelessWidget {
   final String esterilizado;
   final String chip;
   final String text;
+  final String? tipo;
   final AppMascotaCardVariant variant;
 
   /// Overrides opcionales por si queremos forzar colores puntuales.
   final Color? backgroundColorOverride;
   final Color? foregroundColorOverride;
+  
+  
 
   const MascotaCard({
     super.key,
@@ -246,6 +249,7 @@ class MascotaCard extends StatelessWidget {
     required this.esterilizado,
     required this.chip,
     required this.text,
+    this.tipo,
     this.variant = AppMascotaCardVariant.menuButton,
     this.backgroundColorOverride,
     this.foregroundColorOverride,
@@ -310,6 +314,16 @@ class MascotaCard extends StatelessWidget {
                         style: Theme.of(context).textTheme.titleSmall,
                       ),
                       Text(raza, style: Theme.of(context).textTheme.bodyLarge),
+                    ],
+                  ),
+                  const SizedBox(height: 5),
+                  Row(
+                    children: [
+                      Text(
+                        '🟠 Tipo: ',
+                        style: Theme.of(context).textTheme.titleSmall,
+                      ),
+                      Text(tipo!, style: Theme.of(context).textTheme.bodyLarge),
                     ],
                   ),
                   const SizedBox(height: 5),

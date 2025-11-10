@@ -5,7 +5,6 @@ import 'package:proyecto_protectora/features/protectora/presentation/pages/clien
 import 'package:proyecto_protectora/features/protectora/presentation/pages/formulario_adopcion.dart';
 import 'package:proyecto_protectora/features/protectora/presentation/pages/inicio_page.dart';
 import 'package:proyecto_protectora/app/theme/app_palette.dart';
-import 'package:proyecto_protectora/features/protectora/presentation/pages/formulario_adopcion.dart';
 class MenuButtons extends StatefulWidget {
   const MenuButtons({super.key});
   @override
@@ -19,7 +18,6 @@ class _MenuButtonsState extends State<MenuButtons> {
     AnimalListPage(),
     CatalogPage(),
     ClientPage(),
-    FormularioAdopcion()
   ];
 
   void _onItemTapped(int index) {
@@ -60,7 +58,7 @@ class _MenuButtonsState extends State<MenuButtons> {
               icon: Icon(Icons.dashboard),
               label: 'Client Page',
             ),
-            BottomNavigationBarItem(icon: Icon(Icons.pets), label: 'Adoptar'),
+           
 
           ],
           currentIndex: _selectedIndex,

@@ -35,7 +35,7 @@ class _SingUpScreenState extends State<SingUpScreen> {
             padding: const EdgeInsets.symmetric(horizontal: 50),
             child: Column(
               textDirection: TextDirection.ltr,
-              crossAxisAlignment: CrossAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.center,
               children: [
                 const Text(
                   'Sign up',
@@ -182,7 +182,7 @@ class _SingUpScreenState extends State<SingUpScreen> {
                   borderRadius: const BorderRadius.all(Radius.circular(10)),
                   child: SizedBox(
                     width: 329,
-                    height: 56,
+                    height: 36,
                     child:
                         // button_Paginademostracion( pantallaDestino: PaginaDemostracion(), texto: "hola"),
                         AppButton(
@@ -195,6 +195,7 @@ class _SingUpScreenState extends State<SingUpScreen> {
                         ),
                   ),
                 ),
+                Padding(padding: const EdgeInsets.only(top: 25)),
                 Row(
                   children: [
                     const Text(
