@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:proyecto_protectora/catalog/catalog_pages.dart';
 import 'package:proyecto_protectora/features/protectora/presentation/pages/animal_list_page.dart';
 import 'package:proyecto_protectora/features/protectora/presentation/pages/client_page.dart';
-import 'package:proyecto_protectora/features/protectora/presentation/pages/formulario_adopcion.dart';
 import 'package:proyecto_protectora/features/protectora/presentation/pages/inicio_page.dart';
 import 'package:proyecto_protectora/app/theme/app_palette.dart';
 class MenuButtons extends StatefulWidget {

@@ -1,22 +1,23 @@
-import 'dart:ui';
-
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:proyecto_protectora/core/l10n/app_localizations.dart';
 import 'package:proyecto_protectora/core/widgets/app_animal_card.dart';
 import 'package:proyecto_protectora/core/widgets/app_button.dart';
 import 'package:proyecto_protectora/features/auth/presentation/widgets/drawer_page.dart';
-import 'package:proyecto_protectora/features/protectora/data/animales_datafake.dart';
+import 'package:proyecto_protectora/features/protectora/controllers/animal_controller.dart';
 import 'package:proyecto_protectora/features/protectora/presentation/pages/datos_usurio.dart';
 import 'package:proyecto_protectora/features/protectora/presentation/pages/demostracion_page.dart';
 import 'package:proyecto_protectora/features/protectora/presentation/pages/detalle_animal.dart';
 
 // Pagina que se muestra del boton del home
-class ClientPage extends StatelessWidget {
+class ClientPage extends ConsumerWidget {
   const ClientPage({super.key});
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     final l10n = AppLocalizations.of(context)!;
+    final animalesAsync = ref.watch(animalesProvider);
+
     return Scaffold(
       appBar: AppBar(
         leading: Builder(
@@ -30,58 +31,49 @@ class ClientPage extends StatelessWidget {
       ),
 
       drawer: ProtectoraDrawer(),
-
       body: ListView(
         padding: const EdgeInsets.symmetric(horizontal: 24.0, vertical: 16.0),
-
         children: [
-          Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text(
-                'Novedades',
-                style: Theme.of(context).textTheme.headlineSmall,
+          Text('Novedades', style: Theme.of(context).textTheme.headlineSmall),
+          const SizedBox(height: 15),
+
+          animalesAsync.when(
+            loading: () => const Center(child: CircularProgressIndicator()),
+            error: (e, _) => Center(child: Text('Error: $e')),
+            data: (animales) => SizedBox(
+              height: 170,
+              child: ListView.builder(
+                scrollDirection: Axis.horizontal,
+                itemCount: animales.length,
+                itemBuilder: (context, index) {
+                  final animal = animales[index];
+                  return SizedBox(
+                    height: 200,
+                    width: 150,
+                    child: Container(
+                      margin: const EdgeInsets.only(right: 12),
+                      child: MascotaMiniCard(
+                        image: animal.foto,
+                        title: animal.nombre,
+                        text: animal.descripcion,
+                        onPressed: () {
+                          Navigator.of(context).push(
+                            MaterialPageRoute(
+                              builder: (_) => DetalleAnimal(
+                                seleccionado: animal.idAnimal,
+                                nombreAnimal: animal.nombre,
+                              ),
+                            ),
+                          );
+                        },
+                      ),
+                    ),
+                  );
+                },
               ),
-              SizedBox(height: 15),
-              ScrollConfiguration(
-                // Añade un comportamiento de desplazamiento
-                // personalizado que permite que todos los
-                // dispositivos puedan arrastrar la lista.
-                behavior: const MaterialScrollBehavior().copyWith(
-                  dragDevices: {...PointerDeviceKind.values},
-                ),
-                child: SizedBox(
-                  height: 170,
-                  child: ListView.builder(
-                    scrollDirection: Axis.horizontal,
-                    itemCount: animalesFake.length,
-                    itemBuilder: (context, index) {
-                      final animal = animalesFake[index];
-                      return SizedBox(
-                        height: 200,
-                        width: 150,
-                        child: Container(
-                          margin: const EdgeInsets.only(right: 12),
-                          child: MascotaMiniCard(
-                            image: animal.foto,
-                            title: animal.nombre,
-                            text: animal.descripcion,
-                            onPressed: () {
-                              Navigator.of(context).push(
-                                MaterialPageRoute(
-                                  builder: (_) => DetalleAnimal(seleccionado: animalesFake[index].idAnimal,),
-                                ),
-                              );
-                            },
-                          ),
-                        ),
-                      );
-                    },
-                  ),
-                ),
-              ),
-            ],
+            ),
           ),
+
           Padding(padding: const EdgeInsets.only(top: 30, bottom: 25)),
           AppRoundedActionButton(
             label: 'Noticias y Eventos',

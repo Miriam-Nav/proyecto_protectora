@@ -131,29 +131,59 @@ class AnimalesRepository {
     return _animalesList;
   }
 
-  Future<List<Animales>> fetchOne(String idAnimal) async {
-    final oneAnimal = _animalesList.map((animal) {
-      if (animal.idAnimal == idAnimal) {
-        return Animales(idAnimal: animal.idAnimal, nombre: animal.nombre, sexo: animal.sexo,raza: animal.raza, tipo: animal.tipo, fNacimiento: animal.fNacimiento, estereilizado: animal.estereilizado, chip:animal.chip, descripcion: animal.descripcion, foto: animal.foto);
-      }
-      return animal;
-    }).toList();
-    return oneAnimal;
-  }
+  Future<Animales> fetchOne(int idAnimal) async {
+  final animal = _animalesList.firstWhere(
+    (a) => a.idAnimal == idAnimal,
+  );
+  return animal;
+}
+
 
   Future<void> updateAnimal(String idAnimal) async {
     final updatedModels = _animalesList.map((animal) {
       if (animal.idAnimal == idAnimal) {
-        return Animales(idAnimal: animal.idAnimal, nombre: animal.nombre, sexo: animal.sexo,raza: animal.raza, tipo: animal.tipo, fNacimiento: animal.fNacimiento, estereilizado: animal.estereilizado, chip:animal.chip, descripcion: animal.descripcion, foto: animal.foto);
+        return Animales(
+          idAnimal: animal.idAnimal,
+          nombre: animal.nombre,
+          sexo: animal.sexo,
+          raza: animal.raza,
+          tipo: animal.tipo,
+          fNacimiento: animal.fNacimiento,
+          estereilizado: animal.estereilizado,
+          chip: animal.chip,
+          descripcion: animal.descripcion,
+          foto: animal.foto,
+        );
       }
       return animal;
     }).toList();
     _animalesList = updatedModels;
   }
 
-  Future<Animales> addAnimal(String nombre, String sexo,String raza,String tipo, String fNacimiento, String estereilizado, String chip, String descripcion, String foto) async {
+  Future<Animales> addAnimal(
+    String nombre,
+    String sexo,
+    String raza,
+    String tipo,
+    String fNacimiento,
+    String estereilizado,
+    String chip,
+    String descripcion,
+    String foto,
+  ) async {
     final models = await fetchAll();
-    final model = Animales(idAnimal: _uuid.v4(), nombre: nombre.trim(), sexo: sexo.trim(),raza: raza.trim(), tipo: tipo.trim(), fNacimiento: fNacimiento.trim(), estereilizado: estereilizado.trim(), chip: chip.trim(), descripcion: descripcion.trim(), foto: foto.trim());
+    final model = Animales(
+      idAnimal: _uuid.v4(),
+      nombre: nombre.trim(),
+      sexo: sexo.trim(),
+      raza: raza.trim(),
+      tipo: tipo.trim(),
+      fNacimiento: fNacimiento.trim(),
+      estereilizado: estereilizado.trim(),
+      chip: chip.trim(),
+      descripcion: descripcion.trim(),
+      foto: foto.trim(),
+    );
     _animalesList = [...models, model];
     return model;
   }

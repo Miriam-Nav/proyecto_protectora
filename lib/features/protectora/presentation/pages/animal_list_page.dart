@@ -1,19 +1,18 @@
-import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:proyecto_protectora/core/l10n/app_localizations.dart';
 import 'package:proyecto_protectora/core/widgets/app_animal_card.dart';
 import 'package:proyecto_protectora/features/auth/presentation/widgets/drawer_page.dart';
-import 'package:proyecto_protectora/features/protectora/data/animales_datafake.dart';
+import 'package:proyecto_protectora/features/protectora/controllers/animal_controller.dart';
 import 'package:proyecto_protectora/features/protectora/presentation/pages/formulario_adopcion.dart';
 
-class AnimalListPage extends StatelessWidget {
+class AnimalListPage extends ConsumerWidget {
   const AnimalListPage({super.key});
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     final l10n = AppLocalizations.of(context)!;
-   
+    final animales = ref.watch(animalesProvider);
     return Scaffold(
       appBar: AppBar(
         leading: Builder(
@@ -26,44 +25,28 @@ class AnimalListPage extends StatelessWidget {
         backgroundColor: Theme.of(context).appBarTheme.backgroundColor,
       ),
       drawer: const ProtectoraDrawer(),
-      body: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 24.0, vertical: 16.0),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            // // TITULO
-            // Text(
-            //   'Protectora-Adopción',
-            //   style: Theme.of(context).textTheme.headlineSmall,
-            // ),
-            // const SizedBox(height: 14),
-
-            // SUBTITULO
-            Text('Animales', style: Theme.of(context).textTheme.headlineLarge),
-            const SizedBox(height: 15),
-
-            // LISTA
-            Expanded(
-              child: ListView.builder(
-                itemCount: animalesFake.length,
-                itemBuilder: (context, index) {
-                  final animal = animalesFake[index];
-                  return Padding(
-                    padding: const EdgeInsets.only(bottom: 16.0),
-                    child: MascotaFavCard(
-                      animal: animal,
-                      onAdoptPressed: () => Navigator.of(context).push(
-                        MaterialPageRoute(
-                          builder: (_) =>
-                              FormularioAdopcion(sleccionado: animalesFake[index].idAnimal),
-                        ),
-                      ),
-                    ),
-                  );
-                },
+      body: animales.when(
+        loading: () => const Center(child: CircularProgressIndicator()),
+        error: (err, _) => Center(child: Text('Error: $err')),
+        data: (items) => ListView.separated(
+          itemCount: items.length,
+          padding: const EdgeInsets.only(left: 15, right: 15),
+          separatorBuilder: (_, _) => const Divider(height: 25),
+          itemBuilder: (context, i) {
+            final animal = items[i];
+            return MascotaFavCard(
+              animal: animal,
+              // onChanged: (_) {
+              //   ref.watch(animalesProvider.notifier).getOne(animal.idAnimal);
+              // },
+              onAdoptPressed: () => Navigator.of(context).push(
+                MaterialPageRoute(
+                  builder: (_) =>
+                      FormularioAdopcion(sleccionado: animal.idAnimal),
+                ),
               ),
-            ),
-          ],
+            );
+          },
         ),
       ),
     );

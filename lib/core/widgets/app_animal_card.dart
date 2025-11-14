@@ -1,9 +1,10 @@
+import 'dart:ffi';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:proyecto_protectora/app/theme/app_palette.dart';
 import 'package:proyecto_protectora/core/widgets/app_button.dart';
-import 'package:proyecto_protectora/features/auth/data/models/animal_model.dart';
 import 'package:proyecto_protectora/features/auth/presentation/providers/fav_animal_provider.dart';
+import 'package:proyecto_protectora/features/protectora/data/models/animales.dart';
 
 enum AppMascotaCardVariant {
   primary,
@@ -36,17 +37,22 @@ enum AppMascotaCardVariant {
 }
 
 class MascotaFavCard extends ConsumerWidget {
-  final Animal animal;
+  
   final AppMascotaCardVariant variant;
-  final VoidCallback? onAdoptPressed; // callback desde AnimalListPage
+  final VoidCallback? onAdoptPressed;
+  final Animales animal;
+  
+  // final dynamic onChanged;
+  
 
-  const MascotaFavCard({
+   const MascotaFavCard({
     super.key,
     required this.animal,
     this.variant = AppMascotaCardVariant.menuButton,
     this.onAdoptPressed,
+    // required this.onChanged,
   });
-
+   
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final palette = appPaletteOf(context);
@@ -222,34 +228,17 @@ class MascotaFavCard extends ConsumerWidget {
 }
 
 class MascotaCard extends StatelessWidget {
-  final String image;
-  final String nombre;
-  final String sexo;
-  final String raza;
-  final String fNacimiento;
-  final String esterilizado;
-  final String chip;
-  final String text;
-  final String? tipo;
   final AppMascotaCardVariant variant;
 
   /// Overrides opcionales por si queremos forzar colores puntuales.
   final Color? backgroundColorOverride;
   final Color? foregroundColorOverride;
-  
+  final Animales animal;
   
 
   const MascotaCard({
     super.key,
-    required this.image,
-    required this.nombre,
-    required this.sexo,
-    required this.raza,
-    required this.fNacimiento,
-    required this.esterilizado,
-    required this.chip,
-    required this.text,
-    this.tipo,
+    required this.animal,
     this.variant = AppMascotaCardVariant.menuButton,
     this.backgroundColorOverride,
     this.foregroundColorOverride,
@@ -283,14 +272,14 @@ class MascotaCard extends StatelessWidget {
                       child: SizedBox(
                         width: 410,
                         height: 290,
-                        child: Image.asset(image, fit: BoxFit.cover),
+                        child: Image.asset(animal.foto, fit: BoxFit.cover),
                       ),
                     ),
                   ),
                   const SizedBox(height: 15),
 
                   Text(
-                    nombre,
+                    animal.nombre,
                     textAlign: TextAlign.left,
                     style: Theme.of(
                       context,
@@ -303,7 +292,7 @@ class MascotaCard extends StatelessWidget {
                         '🟠 Sexo: ',
                         style: Theme.of(context).textTheme.titleSmall,
                       ),
-                      Text(sexo, style: Theme.of(context).textTheme.bodyLarge),
+                      Text(animal.sexo, style: Theme.of(context).textTheme.bodyLarge),
                     ],
                   ),
                   const SizedBox(height: 5),
@@ -313,7 +302,7 @@ class MascotaCard extends StatelessWidget {
                         '🟠 Raza: ',
                         style: Theme.of(context).textTheme.titleSmall,
                       ),
-                      Text(raza, style: Theme.of(context).textTheme.bodyLarge),
+                      Text(animal.raza, style: Theme.of(context).textTheme.bodyLarge),
                     ],
                   ),
                   const SizedBox(height: 5),
@@ -323,7 +312,7 @@ class MascotaCard extends StatelessWidget {
                         '🟠 Tipo: ',
                         style: Theme.of(context).textTheme.titleSmall,
                       ),
-                      Text(tipo!, style: Theme.of(context).textTheme.bodyLarge),
+                      Text(animal.tipo, style: Theme.of(context).textTheme.bodyLarge),
                     ],
                   ),
                   const SizedBox(height: 5),
@@ -334,7 +323,7 @@ class MascotaCard extends StatelessWidget {
                         style: Theme.of(context).textTheme.titleSmall,
                       ),
                       Text(
-                        fNacimiento,
+                        animal.fNacimiento,
                         style: Theme.of(context).textTheme.bodyLarge,
                       ),
                     ],
@@ -347,7 +336,7 @@ class MascotaCard extends StatelessWidget {
                         style: Theme.of(context).textTheme.titleSmall,
                       ),
                       Text(
-                        esterilizado,
+                        animal.estereilizado,
                         style: Theme.of(context).textTheme.bodyLarge,
                       ),
                     ],
@@ -359,7 +348,7 @@ class MascotaCard extends StatelessWidget {
                         '🟠 Chip: ',
                         style: Theme.of(context).textTheme.titleSmall,
                       ),
-                      Text(chip, style: Theme.of(context).textTheme.bodyLarge),
+                      Text(animal.chip, style: Theme.of(context).textTheme.bodyLarge),
                     ],
                   ),
                   const SizedBox(height: 5),
@@ -372,7 +361,7 @@ class MascotaCard extends StatelessWidget {
                       ),
                       Expanded(
                         child: Text(
-                          text,
+                          animal.descripcion,
                           style: Theme.of(context).textTheme.bodyLarge,
                         ),
                       ),

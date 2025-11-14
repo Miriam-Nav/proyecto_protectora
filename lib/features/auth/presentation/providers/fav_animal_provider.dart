@@ -1,26 +1,26 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:proyecto_protectora/features/auth/data/models/animal_model.dart';
+import 'package:proyecto_protectora/features/protectora/data/models/animales.dart';
 
-class FavAnimalNotifier extends Notifier<Set<Animal>> {
+class FavAnimalNotifier extends Notifier<Set<Animales>> {
   @override
-  Set<Animal> build() {
+  Set<Animales> build() {
     return const {};
   }
 
-  void addAnimal(Animal animal) {
+  void addAnimal(Animales animal) {
     if (!state.contains(animal)) {
       state = {...state, animal};
     }
   }
 
-  void removeAnimal(Animal animal) {
+  void removeAnimal(Animales animal) {
     if (state.contains(animal)) {
       state = state.where((a) => a.idAnimal != animal.idAnimal).toSet();
     }
   }
 }
 
-final favAnimalProvider = NotifierProvider<FavAnimalNotifier, Set<Animal>>(() {
+final favAnimalProvider = NotifierProvider<FavAnimalNotifier, Set<Animales>>(() {
   return FavAnimalNotifier();
 });
 
