@@ -1,142 +1,218 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:proyecto_protectora/core/widgets/app_button.dart';
 import 'package:proyecto_protectora/core/widgets/app_input_text.dart';
-import 'package:proyecto_protectora/features/auth/presentation/widgets/menu_buttons.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:proyecto_protectora/features/protectora/controllers/animal_controller.dart';
-import 'package:proyecto_protectora/features/protectora/data/models/animales.dart';
+import 'package:proyecto_protectora/features/protectora/data/models/adopcion_model.dart';
+import 'package:proyecto_protectora/features/protectora/presentation/providers/adopcion_provider.dart';
+import 'package:proyecto_protectora/features/protectora/presentation/providers/animal_provider.dart';
+import 'package:proyecto_protectora/features/protectora/presentation/widgets/appbar.dart';
 
-class FormularioAdopcion extends ConsumerWidget {
-  final dynamic sleccionado;
+class FormularioAdopcion extends ConsumerStatefulWidget {
+  final String seleccionado;
 
-  const FormularioAdopcion({super.key, required this.sleccionado});
+  const FormularioAdopcion({super.key, required this.seleccionado});
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
+  ConsumerState<FormularioAdopcion> createState() => _FormularioAdopcionState();
+}
 
-    final repo = AnimalController(); 
+class _FormularioAdopcionState extends ConsumerState<FormularioAdopcion> {
+  final _nombreCtrl = TextEditingController();
+  final _apellido1Ctrl = TextEditingController();
+  final _apellido2Ctrl = TextEditingController();
+  final _dniCtrl = TextEditingController();
+  final _telefonoCtrl = TextEditingController();
+  final _emailCtrl = TextEditingController();
+  final _direccionCtrl = TextEditingController();
+  final _cpCtrl = TextEditingController();
+  final _localidadCtrl = TextEditingController();
+  final _provinciaCtrl = TextEditingController();
+
+  @override
+  void dispose() {
+    _nombreCtrl.dispose();
+    _apellido1Ctrl.dispose();
+    _apellido2Ctrl.dispose();
+    _dniCtrl.dispose();
+    _telefonoCtrl.dispose();
+    _emailCtrl.dispose();
+    _direccionCtrl.dispose();
+    _cpCtrl.dispose();
+    _localidadCtrl.dispose();
+    _provinciaCtrl.dispose();
+    super.dispose();
+  }
+
+  Future<void> _guardarAdopcion(animal) async {
+    final nuevaAdopcion = Adopcion(
+      idAnimal: int.parse(animal.idAnimal),
+      nombreAnimal: animal.nombre,
+      chip: animal.chip,
+      usuarioNombre:
+          "${_nombreCtrl.text} ${_apellido1Ctrl.text} ${_apellido2Ctrl.text}",
+      usuarioEmail: _emailCtrl.text,
+      usuarioTelefono: _telefonoCtrl.text,
+      fechaAdopcion: DateTime.now(),
+    );
+
+    await ref.read(adopcionesProvider.notifier).addAdopcion(nuevaAdopcion);
+
+    ScaffoldMessenger.of(context).showSnackBar(
+      const SnackBar(content: Text('Solicitud guardada correctamente')),
+    );
+
+    Navigator.pop(context);
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final animalesAsync = ref.watch(animalesProvider);
 
     return Scaffold(
-      appBar: AppBar(
-        title: Text('Formulario de adopcion', textAlign: TextAlign.center),
-      ),
-      body: FutureBuilder<Animales?>(
-        future: repo.getOne(sleccionado),
-        builder: (context, snapshot) {
-          if (!snapshot.hasData || snapshot.data == null) {
-            return const Center(child: Text('Animal no encontrado'));
-          }
+      appBar: customAppBar(context, "Formulario Adopción"),
+      body: animalesAsync.when(
+        loading: () => const Center(child: CircularProgressIndicator()),
+        error: (e, _) => Center(child: Text('Error: $e')),
+        data: (animales) {
+          final animal = animales.firstWhere(
+            (animal) => animal.idAnimal == widget.seleccionado,
+            orElse: () => throw Exception('Animal no encontrado'),
+          );
 
-          final animal = snapshot.data!;
+          return Padding(
+            padding: const EdgeInsets.symmetric(
+              horizontal: 24.0,
+              vertical: 16.0,
+            ),
+            child: ListView(
+              children: [
+                Image.network(animal.foto, width: 213, height: 257),
+                const SizedBox(height: 20),
 
-          return ListView(
-            children: [
-              // const SizedBox(height: 18),
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 5),
-                child: Column(
-                  textDirection: TextDirection.ltr,
-                  children: [
-                    //imagen del gato
-                    Image.asset(animal.foto, width: 213, height: 257),
-                    const Text(
-                      'Datos del animal',
-                      style: TextStyle(
-                        fontSize: 20,
-                        fontFamily: 'Poppins',
-                        fontWeight: FontWeight.w500,
-                      ),
-                    ),
-                    Padding(padding: const EdgeInsets.only(top: 15)),
-                    AppInputText(
-                      label: 'Nombre del animal',
-                      seleccion: animal.nombre,
-                    ),
-                    Padding(padding: const EdgeInsets.only(top: 5)),
-                    AppInputText(
-                      label: 'chip del animal',
-                      seleccion: animal.chip,
-                    ),
-                    Padding(padding: const EdgeInsets.only(top: 25)),
-                    const Text(
-                      'Datos del adoptante',
-                      style: TextStyle(
-                        fontSize: 20,
-                        fontFamily: 'Poppins',
-                        fontWeight: FontWeight.w500,
-                      ),
-                    ),
-                    Padding(padding: const EdgeInsets.only(top: 15)),
-                    AppInputText(label: 'Nombre del adoptante'),
-                    Padding(padding: const EdgeInsets.only(top: 5)),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                // Datos del animal
+                Card(
+                  elevation: 3,
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(12),
+                  ),
+                  child: Padding(
+                    padding: const EdgeInsets.all(16.0),
+                    child: Column(
                       children: [
-                        SizedBox(
-                          width: 247,
-                          height: 56,
-                          child: AppInputText(label: 'Primer apellido'),
+                        AppInputText(
+                          label: 'Nombre del animal',
+                          seleccion: animal.nombre,
+                          readOnly: true,
                         ),
-                        SizedBox(
-                          width: 247,
-                          height: 56,
-                          child: AppInputText(label: 'Segundo apellido'),
+                        const SizedBox(height: 12),
+                        AppInputText(
+                          label: 'Chip',
+                          seleccion: animal.chip,
+                          readOnly: true,
                         ),
                       ],
                     ),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  ),
+                ),
+
+                const SizedBox(height: 25),
+
+                // Datos del adoptante
+                Card(
+                  elevation: 3,
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(12),
+                  ),
+                  child: Padding(
+                    padding: const EdgeInsets.all(16.0),
+                    child: Column(
                       children: [
-                        SizedBox(
-                          width: 247,
-                          height: 56,
-                          child: AppInputText(label: 'DNI'),
+                        AppInputText(
+                          label: 'Nombre del Adoptante',
+                          controller: _nombreCtrl,
                         ),
-                        SizedBox(
-                          width: 247,
-                          height: 56,
-                          child: AppInputText(label: 'Numero de telefono'),
+                        const SizedBox(height: 12),
+                        Row(
+                          children: [
+                            Expanded(
+                              child: AppInputText(
+                                label: 'Primer apellido',
+                                controller: _apellido1Ctrl,
+                              ),
+                            ),
+                            const SizedBox(width: 12),
+                            Expanded(
+                              child: AppInputText(
+                                label: 'Segundo apellido',
+                                controller: _apellido2Ctrl,
+                              ),
+                            ),
+                          ],
                         ),
-                      ],
-                    ),
-                    AppInputText(label: 'Correo electronico'),
-                    Padding(padding: const EdgeInsets.only(top: 25)),
-                    AppInputText(label: 'Direccion'),
-                    Padding(padding: const EdgeInsets.only(top: 5)),
-                    AppInputText(label: 'Codigo postal'),
-                    Padding(padding: const EdgeInsets.only(top: 5)),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        SizedBox(
-                          width: 247,
-                          height: 56,
-                          child: AppInputText(label: 'Localidad'),
+                        const SizedBox(height: 12),
+                        Row(
+                          children: [
+                            Expanded(
+                              child: AppInputText(
+                                label: 'DNI',
+                                controller: _dniCtrl,
+                              ),
+                            ),
+                            const SizedBox(width: 12),
+                            Expanded(
+                              child: AppInputText(
+                                label: 'Teléfono',
+                                controller: _telefonoCtrl,
+                              ),
+                            ),
+                          ],
                         ),
-                        SizedBox(
-                          width: 247,
-                          height: 56,
-                          child: AppInputText(label: 'Provincia'),
+                        const SizedBox(height: 12),
+                        AppInputText(
+                          label: 'Correo electrónico',
+                          controller: _emailCtrl,
                         ),
-                      ],
-                    ),
-                    Padding(padding: const EdgeInsets.only(top: 5, bottom: 5)),
-                    ClipRRect(
-                      borderRadius: const BorderRadius.all(Radius.circular(5)),
-                      child: Center(
-                        child: AppButton(
-                          label: "Adoptar",
-                          onPressed: () => Navigator.of(context).push(
-                            MaterialPageRoute(builder: (_) => MenuButtons()),
+                        const SizedBox(height: 12),
+                        AppInputText(
+                          label: 'Dirección',
+                          controller: _direccionCtrl,
+                        ),
+                        const SizedBox(height: 12),
+                        AppInputText(
+                          label: 'Código postal',
+                          controller: _cpCtrl,
+                        ),
+                        const SizedBox(height: 12),
+                        Row(
+                          children: [
+                            Expanded(
+                              child: AppInputText(
+                                label: 'Localidad',
+                                controller: _localidadCtrl,
+                              ),
+                            ),
+                            const SizedBox(width: 12),
+                            Expanded(
+                              child: AppInputText(
+                                label: 'Provincia',
+                                controller: _provinciaCtrl,
+                              ),
+                            ),
+                          ],
+                        ),
+                        const SizedBox(height: 20),
+                        Center(
+                          child: AppButton(
+                            label: "Enviar Solicitud",
+                            onPressed: () => _guardarAdopcion(animal),
                           ),
                         ),
-                      ),
+                      ],
                     ),
-                    Padding(padding: const EdgeInsets.only(top: 5, bottom: 15)),
-                  ],
+                  ),
                 ),
-              ),
-            ],
+              ],
+            ),
           );
         },
       ),

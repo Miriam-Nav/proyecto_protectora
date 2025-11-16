@@ -40,6 +40,9 @@ abstract class AppLocalizations {
   String get appTitle;
   String hello(String name);
 
+  // --- Textos generales ---
+  String get inicio;
+
   /// Placeholder de fecha formateada según la configuración regional
   String dueDate(DateTime date);
 

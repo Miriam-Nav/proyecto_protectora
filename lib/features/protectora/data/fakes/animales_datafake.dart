@@ -1,4 +1,4 @@
-// import 'package:proyecto_protectora/features/auth/data/models/animal_model.dart';
+// import 'package:proyecto_protectora/features/protectora/data/models/animal_model.dart';
 
 // final List<Animal> animalesFake = [
 //   Animal(
@@ -9,9 +9,9 @@
 //     tipo: 'Perro',
 //     fNacimiento: '2019-08-22',
 //     estereilizado: 'Sí',
-//     chip: 'assets/images/gatito.jpg',
+//     chip: 'CHIP001',
 //     descripcion: 'Dulce y sociable',
-//     foto: 'assets/images/gatito.jpg',
+//     foto: 'https://cataas.com/cat?random=1',
 //   ),
 //   Animal(
 //     idAnimal: 2,
@@ -21,9 +21,9 @@
 //     tipo: 'Perro',
 //     fNacimiento: '2020-01-15',
 //     estereilizado: 'No',
-//     chip: 'assets/images/gatito.jpg',
+//     chip: 'CHIP002',
 //     descripcion: 'Activo y juguetón',
-//     foto: 'assets/images/gatito.jpg',
+//     foto: 'https://cataas.com/cat?random=2',
 //   ),
 //   Animal(
 //     idAnimal: 3,
@@ -33,9 +33,9 @@
 //     tipo: 'Gato',
 //     fNacimiento: '2021-03-10',
 //     estereilizado: 'Sí',
-//     chip: 'assets/images/gatito.jpg',
+//     chip: 'CHIP003',
 //     descripcion: 'Curiosa y trepadora',
-//     foto: 'assets/images/gatito.jpg',
+//     foto: 'https://cataas.com/cat?random=3',
 //   ),
 //   Animal(
 //     idAnimal: 4,
@@ -45,9 +45,9 @@
 //     tipo: 'Perro',
 //     fNacimiento: '2018-07-05',
 //     estereilizado: 'No',
-//     chip: 'assets/images/gatito.jpg',
+//     chip: 'CHIP004',
 //     descripcion: 'Cariñoso y familiar',
-//     foto: 'assets/images/gatito.jpg',
+//     foto: 'https://cataas.com/cat?random=4',
 //   ),
 //   Animal(
 //     idAnimal: 5,
@@ -57,9 +57,9 @@
 //     tipo: 'Gato',
 //     fNacimiento: '2020-11-30',
 //     estereilizado: 'Sí',
-//     chip: 'assets/images/gatito.jpg',
+//     chip: 'CHIP005',
 //     descripcion: 'Tranquila y dormilona',
-//     foto: 'assets/images/gatito.jpg',
+//     foto: 'https://cataas.com/cat?random=5',
 //   ),
 //   Animal(
 //     idAnimal: 6,
@@ -69,9 +69,9 @@
 //     tipo: 'Perro',
 //     fNacimiento: '2017-04-18',
 //     estereilizado: 'Sí',
-//     chip: 'assets/images/gatito.jpg',
+//     chip: 'CHIP006',
 //     descripcion: 'Protector y obediente',
-//     foto: 'assets/images/gatito.jpg',
+//     foto: 'https://cataas.com/cat?random=6',
 //   ),
 //   Animal(
 //     idAnimal: 7,
@@ -81,9 +81,9 @@
 //     tipo: 'Gato',
 //     fNacimiento: '2022-01-08',
 //     estereilizado: 'No',
-//     chip: 'assets/images/gatito.jpg',
+//     chip: 'CHIP007',
 //     descripcion: 'Juguetona y curiosa',
-//     foto: 'assets/images/gatito.jpg',
+//     foto: 'https://cataas.com/cat?random=7',
 //   ),
 //   Animal(
 //     idAnimal: 8,
@@ -93,9 +93,9 @@
 //     tipo: 'Gato',
 //     fNacimiento: '2019-09-25',
 //     estereilizado: 'Sí',
-//     chip: 'assets/images/gatito.jpg',
+//     chip: 'CHIP008',
 //     descripcion: 'Grande y tranquilo',
-//     foto: 'assets/images/gatito.jpg',
+//     foto: 'https://cataas.com/cat?random=8',
 //   ),
 //   Animal(
 //     idAnimal: 9,
@@ -105,9 +105,9 @@
 //     tipo: 'Perro',
 //     fNacimiento: '2020-06-12',
 //     estereilizado: 'No',
-//     chip: '1234aa',
+//     chip: 'CHIP009',
 //     descripcion: 'Inteligente y activo',
-//     foto: 'assets/images/gatito.jpg',
+//     foto: 'https://cataas.com/cat?random=9',
 //   ),
 //   Animal(
 //     idAnimal: 10,
@@ -117,8 +117,8 @@
 //     tipo: 'Gato',
 //     fNacimiento: '2021-12-03',
 //     estereilizado: 'Sí',
-//     chip: 'assets/images/gatito.jpg',
+//     chip: 'CHIP010',
 //     descripcion: 'Cariñosa y tranquila',
-//     foto: 'assets/images/gatito.jpg',
+//     foto: 'https://cataas.com/cat?random=10',
 //   ),
 // ];

@@ -8,9 +8,12 @@ import 'app_localizations.dart';
 class AppLocalizationsEs extends AppLocalizations {
   AppLocalizationsEs([String locale = 'es']) : super(locale);
 
-// --- Textos generales ---
+  // --- Textos generales ---
   @override
   String get appTitle => 'Protectora';
+
+  @override
+  String get inicio => 'Inicio';
 
   @override
   String get openLanguagePicker => 'Cambiar idioma';

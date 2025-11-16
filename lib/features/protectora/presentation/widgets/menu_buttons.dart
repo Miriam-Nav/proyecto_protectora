@@ -1,22 +1,30 @@
 import 'package:flutter/material.dart';
 import 'package:proyecto_protectora/catalog/catalog_pages.dart';
+import 'package:proyecto_protectora/features/auth/data/models/user_model.dart';
+import 'package:proyecto_protectora/features/auth/presentation/pages/login_page.dart';
+import 'package:proyecto_protectora/features/protectora/presentation/pages/formulario_adopcion.dart';
 import 'package:proyecto_protectora/features/protectora/presentation/pages/animal_list_page.dart';
+import 'package:proyecto_protectora/features/protectora/presentation/pages/animalfav_page.dart';
 import 'package:proyecto_protectora/features/protectora/presentation/pages/client_page.dart';
-import 'package:proyecto_protectora/features/protectora/presentation/pages/inicio_page.dart';
+import 'package:proyecto_protectora/features/protectora/presentation/pages/home_page.dart';
 import 'package:proyecto_protectora/app/theme/app_palette.dart';
+
 class MenuButtons extends StatefulWidget {
-  const MenuButtons({super.key});
+  final User user;
+  const MenuButtons({super.key, required this.user});
   @override
   _MenuButtonsState createState() => _MenuButtonsState();
 }
 
 class _MenuButtonsState extends State<MenuButtons> {
   int _selectedIndex = 0;
-  final List<Widget> widgetOptions = const [
-    InicioPage(),
-    AnimalListPage(),
-    CatalogPage(),
+  List<Widget> get widgetOptions => [
+    // InicioPage(),
+    HomePage(user: widget.user),
     ClientPage(),
+    AnimalListPage(),
+    FavAnimalesPage(),
+    // FormularioAdopcion(),
   ];
 
   void _onItemTapped(int index) {
@@ -45,20 +53,19 @@ class _MenuButtonsState extends State<MenuButtons> {
           backgroundColor: palette.menuButton,
           items: const [
             BottomNavigationBarItem(icon: Icon(Icons.home), label: 'Profile'),
+            BottomNavigationBarItem(
+              icon: Icon(Icons.new_releases_sharp),
+              label: 'Novedades',
+            ),
             BottomNavigationBarItem(icon: Icon(Icons.pets), label: 'Animales'),
-
-
             BottomNavigationBarItem(
-              icon: Icon(Icons.dashboard),
-              label: 'Catálogo',
+              icon: Icon(Icons.favorite_border),
+              label: 'Favorito',
             ),
-
-            BottomNavigationBarItem(
-              icon: Icon(Icons.dashboard),
-              label: 'Client Page',
-            ),
-           
-
+            // BottomNavigationBarItem(
+            //   icon: Icon(Icons.dashboard),
+            //   label: 'Adopta',
+            // ),
           ],
           currentIndex: _selectedIndex,
           onTap: _onItemTapped,

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:proyecto_protectora/app/theme/app_palette.dart';
 import 'package:proyecto_protectora/core/widgets/app_button.dart';
+import 'package:proyecto_protectora/features/protectora/data/models/noticia_model.dart';
 
 enum AppCardVariant {
   primary,
@@ -148,18 +149,15 @@ class AppInfoCard extends StatelessWidget {
 
     // Fondo con capa blanca muy ligera
     final Color lightBackground = esModoOscuro
-        ? Color.alphaBlend(
-            Colors.white.withAlpha((0.00 * 255).round()),
-            baseFuerte,
-          )
+        ? baseFuerte.withAlpha((0.20 * 255).round())
         : baseColor.withAlpha((0.0 * 255).round()); // modo claro
 
     // Franja de arriba.
     final Color stripColor = esModoOscuro
         ? Color.alphaBlend(
-            Colors.white.withAlpha((0.35 * 255).round()), // 50% blanco
+            Colors.white.withAlpha((0.15 * 255).round()), // 50% blanco
             baseColor,
-          )
+          ).withAlpha((0.40 * 255).round())
         : baseColor.withAlpha((0.10 * 255).round()); // 18% opacidad directa
 
     return InkWell(
@@ -195,6 +193,7 @@ class AppInfoCard extends StatelessWidget {
                       color: textColor,
                     ),
                   ),
+
                   // Boton de dentro
                   Container(
                     padding: const EdgeInsets.symmetric(
@@ -313,6 +312,78 @@ class AppNotiCard extends StatelessWidget {
                 onPressed: () {},
                 variant: AppButtonVariant.secondary,
               ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+// Card de noticias.
+class NoticiaCard extends StatelessWidget {
+  final Noticia noticia;
+  final AppCardVariant variant;
+
+  /// Overrides opcionales por si queremos forzar colores puntuales.
+  final Color? backgroundColorOverride;
+  final Color? foregroundColorOverride;
+
+  const NoticiaCard({
+    super.key,
+    required this.noticia,
+    this.variant = AppCardVariant.menuButton,
+    this.backgroundColorOverride,
+    this.foregroundColorOverride,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    final palette = appPaletteOf(context);
+    final (baseColor, textColor) = eleccionColoresVariante(palette, variant);
+
+    return Card(
+      color: backgroundColorOverride ?? baseColor,
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(10),
+        side: BorderSide(color: palette.primary, width: 2),
+      ),
+      elevation: 4,
+      child: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 27),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Center(
+                  child: ClipRRect(
+                    borderRadius: BorderRadius.circular(25),
+                    child: SizedBox(
+                      width: 400,
+                      height: 200,
+                      child: Image.network(noticia.imagen, fit: BoxFit.cover),
+                    ),
+                  ),
+                ),
+                const SizedBox(height: 15),
+
+                Text(
+                  noticia.titulo,
+                  textAlign: TextAlign.left,
+                  style: Theme.of(
+                    context,
+                  ).textTheme.titleMedium?.copyWith(color: palette.primary),
+                ),
+                const SizedBox(height: 15),
+
+                Text(
+                  noticia.texto,
+                  textAlign: TextAlign.left,
+                  style: Theme.of(context).textTheme.bodyLarge,
+                ),
+              ],
             ),
           ],
         ),

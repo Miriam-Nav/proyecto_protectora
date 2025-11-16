@@ -1,99 +1,135 @@
-// Infra
+import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:proyecto_protectora/features/protectora/data/models/animales.dart';
-import 'package:proyecto_protectora/features/protectora/data/repositories/animales_repository.dart';
+import 'package:proyecto_protectora/features/protectora/presentation/providers/animal_provider.dart';
 
-class AnimalController extends AsyncNotifier<List<Animales>> {
-  late final AnimalesRepository _repo;
+class AnimalController {
+  final nombreCtrl = TextEditingController();
+  final sexoCtrl = TextEditingController();
+  final razaCtrl = TextEditingController();
+  final tipoCtrl = TextEditingController();
+  final fechaCtrl = TextEditingController();
+  final esterilizadoCtrl = TextEditingController();
+  final chipCtrl = TextEditingController();
+  final descripcionCtrl = TextEditingController();
+  final fotoCtrl = TextEditingController();
 
-  @override
-  Future<List<Animales>> build() async {
-    _repo = AnimalesRepository();
-    return _repo.fetchAll();
+  Animales? seleccionado;
+
+  void cargarAnimal(Animales animal) {
+    nombreCtrl.text = animal.nombre;
+    sexoCtrl.text = animal.sexo;
+    razaCtrl.text = animal.raza;
+    tipoCtrl.text = animal.tipo;
+    fechaCtrl.text = animal.fNacimiento;
+    esterilizadoCtrl.text = animal.estereilizado;
+    chipCtrl.text = animal.chip;
+    descripcionCtrl.text = animal.descripcion;
+    fotoCtrl.text = animal.foto;
+    seleccionado = animal;
   }
 
-  Future<void> getall() async {
-    state = const AsyncLoading();
-    state = await AsyncValue.guard(_repo.fetchAll);
+  void limpiar() {
+    seleccionado = null;
+    nombreCtrl.clear();
+    sexoCtrl.clear();
+    razaCtrl.clear();
+    tipoCtrl.clear();
+    fechaCtrl.clear();
+    esterilizadoCtrl.clear();
+    chipCtrl.clear();
+    descripcionCtrl.clear();
+    fotoCtrl.clear();
   }
 
-  Future<Animales?> getOne(int idAnimal) async {
-    _repo = AnimalesRepository();
-    return await _repo.fetchOne(idAnimal);
+  void dispose() {
+    nombreCtrl.dispose();
+    sexoCtrl.dispose();
+    razaCtrl.dispose();
+    tipoCtrl.dispose();
+    fechaCtrl.dispose();
+    esterilizadoCtrl.dispose();
+    chipCtrl.dispose();
+    descripcionCtrl.dispose();
+    fotoCtrl.dispose();
   }
 
-
-  Future<void> refresh() async {
-    state = const AsyncLoading();
-    state = await AsyncValue.guard(_repo.fetchAll);
+  Future<void> crear(WidgetRef ref, BuildContext context) async {
+    await ref
+        .read(animalesProvider.notifier)
+        .addAnimal(
+          nombreCtrl.text,
+          sexoCtrl.text,
+          razaCtrl.text,
+          tipoCtrl.text,
+          fechaCtrl.text,
+          esterilizadoCtrl.text,
+          chipCtrl.text,
+          descripcionCtrl.text,
+          fotoCtrl.text,
+        );
+    ScaffoldMessenger.of(context).showSnackBar(
+      const SnackBar(content: Text('Animal creado correctamente')),
+    );
+    limpiar();
   }
 
-  Future<void> add(
-    String nombre,
-    String sexo,
-    String raza,
-    String tipo,
-    String fNacimiento,
-    String estereilizado,
-    String chip,
-    String descripcion,
-    String foto,
-  ) async {
-    if (nombre.trim().isEmpty &&
-        sexo.trim().isEmpty &&
-        raza.trim().isEmpty &&
-        tipo.trim().isEmpty &&
-        fNacimiento.trim().isEmpty &&
-        estereilizado.trim().isEmpty &&
-        chip.trim().isEmpty &&
-        descripcion.trim().isEmpty &&
-        foto.trim().isEmpty) {
-      return;
-    }
-    final previous = state.value ?? const <Animales>[];
-    try {
-      final created = await _repo.addAnimal(
-        nombre,
-        sexo,
-        raza,
-        tipo,
-        fNacimiento,
-        estereilizado,
-        chip,
-        descripcion,
-        foto,
+  Future<void> guardarCambios(WidgetRef ref, BuildContext context) async {
+    if (seleccionado == null) return;
+    await ref
+        .read(animalesProvider.notifier)
+        .updateAnimal(
+          Animales(
+            idAnimal: seleccionado!.idAnimal,
+            nombre: nombreCtrl.text,
+            sexo: sexoCtrl.text,
+            raza: razaCtrl.text,
+            tipo: tipoCtrl.text,
+            fNacimiento: fechaCtrl.text,
+            estereilizado: esterilizadoCtrl.text,
+            chip: chipCtrl.text,
+            descripcion: descripcionCtrl.text,
+            foto: fotoCtrl.text,
+          ),
+        );
+    ScaffoldMessenger.of(context).showSnackBar(
+      const SnackBar(content: Text('Animal actualizado correctamente')),
+    );
+    limpiar();
+  }
+
+  Future<void> eliminar(WidgetRef ref, BuildContext context) async {
+    if (seleccionado == null) return;
+
+    final confirm = await showDialog<bool>(
+      context: context,
+      builder: (_) => AlertDialog(
+        title: const Text('Confirmar eliminación'),
+        content: Text(
+          '¿Estás seguro de que quieres eliminar a ${seleccionado!.nombre}?',
+        ),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.of(context).pop(false),
+            child: const Text('Cancelar'),
+          ),
+          ElevatedButton(
+            style: ElevatedButton.styleFrom(backgroundColor: Colors.red),
+            onPressed: () => Navigator.of(context).pop(true),
+            child: const Text('Eliminar'),
+          ),
+        ],
+      ),
+    );
+
+    if (confirm == true) {
+      await ref
+          .read(animalesProvider.notifier)
+          .removeAnimal(seleccionado!.idAnimal);
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text('Animal eliminado correctamente')),
       );
-      state = AsyncValue.data([...previous, created]);
-      state = await AsyncValue.guard(_repo.fetchAll);
-    } catch (e, st) {
-      state = AsyncError(e, st);
-    }
-  }
-
-  Future<void> toggle(String id) async {
-    try {
-      await _repo.updateAnimal(id);
-      state = await AsyncValue.guard(_repo.fetchAll);
-    } catch (e, st) {
-      state = AsyncError(e, st);
-    }
-  }
-
-  Future<void> remove(String id) async {
-    try {
-      await _repo.removeAnimal(id);
-      state = await AsyncValue.guard(_repo.fetchAll);
-    } catch (e, st) {
-      state = AsyncError(e, st);
+      limpiar();
     }
   }
 }
-
-final animalesProvider = AsyncNotifierProvider<AnimalController, List<Animales>>(() {
-  return AnimalController();
-});
-
-final totalAnimalesProvider = Provider<int>((ref) {
-  final animales = ref.watch(animalesProvider).value ?? const <Animales>[];
-  return animales.length;
-});

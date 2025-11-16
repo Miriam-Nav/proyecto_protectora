@@ -23,9 +23,9 @@ class AppTheme {
     brightness: Brightness.light,
     scaffoldBackgroundColor: appPaletteLight.background,
     appBarTheme: AppBarTheme(
-      backgroundColor: appPaletteLight.background,
+      backgroundColor: appPaletteLight.primary,
       // Color del texto y los íconos
-      foregroundColor: appPaletteLight.onMenuButton,
+      foregroundColor: appPaletteLight.onPrimary,
       // Sin sombra
       elevation: 0,
       // Título centrado = false
@@ -34,7 +34,7 @@ class AppTheme {
       surfaceTintColor: Color.fromARGB(255, 98, 89, 84),
 
       titleTextStyle: _textTheme.headlineLarge?.copyWith(
-        color: appPaletteLight.onMenuButton,
+        color: appPaletteLight.onPrimary,
       ),
     ),
 
@@ -54,7 +54,7 @@ class AppTheme {
     brightness: Brightness.dark,
     scaffoldBackgroundColor: appPaletteDark.background,
     appBarTheme: AppBarTheme(
-      backgroundColor: appPaletteDark.background,
+      backgroundColor: appPaletteDark.primary,
       centerTitle: false,
       titleTextStyle: _textTheme.headlineLarge?.copyWith(
         color: appPaletteDark.onMenuButton,

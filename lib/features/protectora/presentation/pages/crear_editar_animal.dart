@@ -1,0 +1,177 @@
+import 'dart:ui';
+import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:proyecto_protectora/core/l10n/app_localizations.dart';
+import 'package:proyecto_protectora/core/widgets/app_input_text.dart';
+import 'package:proyecto_protectora/core/widgets/app_button.dart';
+import 'package:proyecto_protectora/features/protectora/controllers/animal_controller.dart';
+import 'package:proyecto_protectora/features/protectora/data/models/animales.dart';
+import 'package:proyecto_protectora/features/protectora/presentation/providers/animal_provider.dart';
+import 'package:proyecto_protectora/features/protectora/presentation/widgets/appbar.dart';
+
+class CrearAnimal extends ConsumerStatefulWidget {
+  const CrearAnimal({super.key});
+
+  @override
+  ConsumerState<CrearAnimal> createState() => _CrearAnimalState();
+}
+
+class _CrearAnimalState extends ConsumerState<CrearAnimal> {
+  final _formKey = GlobalKey<FormState>();
+
+  late final AnimalController controller;
+
+  @override
+  void initState() {
+    super.initState();
+    controller = AnimalController();
+  }
+
+  @override
+  void dispose() {
+    controller.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
+    final animalesAsync = ref.watch(animalesProvider);
+
+    return Scaffold(
+      appBar: customAppBar(context, "Gestional Animales"),
+      body: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 24.0, vertical: 16.0),
+        child: ListView(
+          children: [
+            // Text(
+            //   'Protectora-Adopción',
+            //   style: Theme.of(context).textTheme.headlineSmall,
+            // ),
+            const SizedBox(height: 14),
+
+            animalesAsync.when(
+              loading: () => const CircularProgressIndicator(),
+              error: (e, _) => Text('Error: $e'),
+              data: (animales) {
+                if (animales.isEmpty) {
+                  return const Text('No hay animales registrados');
+                }
+                return DropdownButton<Animales>(
+                  hint: const Text('Selecciona un animal para editar'),
+                  value: controller.seleccionado,
+                  items: animales.map((animal) {
+                    return DropdownMenuItem(
+                      value: animal,
+                      child: Text('${animal.nombre} (${animal.chip})'),
+                    );
+                  }).toList(),
+                  onChanged: (animal) {
+                    if (animal != null) controller.cargarAnimal(animal);
+                  },
+                );
+              },
+            ),
+            const SizedBox(height: 12),
+            Form(
+              key: _formKey,
+              child: Column(
+                children: [
+                  Row(
+                    children: [
+                      Expanded(
+                        child: AppInputText(
+                          label: 'Nombre',
+                          controller: controller.nombreCtrl,
+                        ),
+                      ),
+                      const SizedBox(width: 12),
+                      Expanded(
+                        child: AppInputText(
+                          label: 'Sexo',
+                          controller: controller.sexoCtrl,
+                        ),
+                      ),
+                      const SizedBox(width: 12),
+                      Expanded(
+                        child: AppInputText(
+                          label: 'Fecha nacimiento',
+                          controller: controller.fechaCtrl,
+                        ),
+                      ),
+                    ],
+                  ),
+                  const SizedBox(height: 12),
+                  Row(
+                    children: [
+                      Expanded(
+                        child: AppInputText(
+                          label: 'Raza',
+                          controller: controller.razaCtrl,
+                        ),
+                      ),
+                      const SizedBox(width: 12),
+                      Expanded(
+                        child: AppInputText(
+                          label: 'Tipo',
+                          controller: controller.tipoCtrl,
+                        ),
+                      ),
+                    ],
+                  ),
+                  const SizedBox(height: 12),
+                  Row(
+                    children: [
+                      Expanded(
+                        child: AppInputText(
+                          label: 'Esterilizado',
+                          controller: controller.esterilizadoCtrl,
+                        ),
+                      ),
+                      const SizedBox(width: 12),
+                      Expanded(
+                        child: AppInputText(
+                          label: 'Chip',
+                          controller: controller.chipCtrl,
+                        ),
+                      ),
+                    ],
+                  ),
+                  const SizedBox(height: 12),
+                  AppInputText(label: 'Foto', controller: controller.fotoCtrl),
+                  const SizedBox(height: 12),
+                  AppInputText(
+                    label: 'Descripción',
+                    controller: controller.descripcionCtrl,
+                  ),
+
+                  const SizedBox(height: 12),
+                  Row(
+                    children: [
+                      const SizedBox(width: 12),
+                      AppButton(
+                        label: "Crear Animal",
+                        onPressed: () => controller.crear(ref, context),
+                      ),
+                      const SizedBox(width: 12),
+                      AppButton(
+                        label: "Guardar Cambios",
+                        onPressed: () =>
+                            controller.guardarCambios(ref, context),
+                      ),
+                      const SizedBox(width: 12),
+                      AppButton(
+                        label: "Eliminar Animal",
+                        onPressed: () => controller.eliminar(ref, context),
+                      ),
+                    ],
+                  ),
+                ],
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}

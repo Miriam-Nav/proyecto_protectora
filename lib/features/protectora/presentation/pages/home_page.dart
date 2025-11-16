@@ -1,58 +1,131 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:proyecto_protectora/core/widgets/app_button.dart';
-// import 'package:proyecto_protectora/features/preferences/controllers/preferences_controller.dart';
-import 'package:proyecto_protectora/catalog/catalog_pages.dart';
-import 'package:proyecto_protectora/features/auth/presentation/pages/login_page.dart';
+import 'package:proyecto_protectora/app/theme/app_palette.dart';
 import 'package:proyecto_protectora/core/l10n/app_localizations.dart';
+import 'package:proyecto_protectora/core/widgets/app_button.dart';
+import 'package:proyecto_protectora/core/widgets/app_card.dart';
+import 'package:proyecto_protectora/features/auth/data/models/user_model.dart';
+import 'package:proyecto_protectora/features/auth/presentation/pages/login_page.dart';
+import 'package:proyecto_protectora/features/protectora/presentation/providers/adopcion_provider.dart';
+import 'package:proyecto_protectora/features/protectora/presentation/widgets/appbar.dart';
+import 'package:proyecto_protectora/features/protectora/presentation/widgets/drawer_page.dart';
+import 'package:proyecto_protectora/features/protectora/data/fakes/adopciones_datafake.dart';
+import 'package:proyecto_protectora/features/protectora/presentation/pages/crear_editar_animal.dart';
+import 'package:proyecto_protectora/features/protectora/presentation/pages/formulario_adopcion.dart';
 
-//pagina principal
-class HomePage extends ConsumerWidget {
-  const HomePage({super.key});
+class HomePage extends StatelessWidget {
+  final User user;
+  const HomePage({super.key, required this.user});
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
+  Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context)!;
-    // final prefsAsync = ref.watch(preferencesProvider);
-
-    // // obtiene el valor actual del modo oscuro desde Riverpod
-    // final modoOscuro = prefsAsync.maybeWhen(
-    //   data: (p) => p.darkmode,
-    //   orElse: () => false,
-    // );
-
     return Scaffold(
-      appBar: AppBar(title: Text(l10n.appTitle)),
-      body: ListView(
-        children: [
-          const SizedBox(height: 8),
+      appBar: customAppBar(context, l10n.inicio, showDrawer: true),
 
-          // const Divider(),
-          Text(l10n.welcome, textDirection: TextDirection.ltr),
+      drawer: ProtectoraDrawer(),
 
-          // botón para ir a la pantalla de login
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 16.0),
-            child: AppButton(
-              label: l10n.loginButton,
-              onPressed: () => Navigator.of(
-                context,
-              ).push(MaterialPageRoute(builder: (_) => LoginScreen())),
+      body: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 24.0, vertical: 16.0),
+        child: ListView(
+          children: [
+            const SizedBox(height: 5),
+            Text(
+              'Bienvenido/a, ${user.username}',
+              style: Theme.of(context).textTheme.headlineLarge?.copyWith(
+                fontWeight: FontWeight.bold,
+                color: appPaletteOf(context).secondary,
+              ),
             ),
-          ),
-
-          // botón para ir a la pantalla de catálogo
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 10),
-            child: AppButton(
-              label: l10n.catalogButton,
-              onPressed: () => Navigator.of(
-                context,
-              ).push(MaterialPageRoute(builder: (_) => CatalogPage())),
-              variant: AppButtonVariant.success,
+            const SizedBox(height: 24),
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Padding(
+                  padding: EdgeInsets.all(5),
+                  child: AppNotiCard(
+                    title: "Visita Veterinario",
+                    text: "Tienes 2 visitas al veterniario esta semana.",
+                    badgeText: "Revisar",
+                    variant: AppCardVariant.cardBlue,
+                  ),
+                ),
+              ],
             ),
-          ),
-        ],
+
+            SizedBox(height: 24),
+
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  'Acciones',
+                  style: Theme.of(context).textTheme.headlineLarge,
+                ),
+
+                AppRoundedActionButtonBorde(
+                  leadingIcon: Icons.pets,
+                  label: 'Gestionar Animales',
+                  onPressed: () => Navigator.of(
+                    context,
+                  ).push(MaterialPageRoute(builder: (_) => CrearAnimal())),
+                  borderColor: appPaletteOf(context).primary,
+                ),
+              ],
+            ),
+
+            SizedBox(height: 24),
+
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  'Actividad reciente',
+                  style: Theme.of(context).textTheme.headlineLarge,
+                ),
+
+                Consumer(
+                  builder: (context, ref, _) {
+                    final adopcionesAsync = ref.watch(adopcionesProvider);
+
+                    return adopcionesAsync.when(
+                      loading: () =>
+                          const Center(child: CircularProgressIndicator()),
+                      error: (e, _) => Text('Error: $e'),
+                      data: (adopciones) {
+                        if (adopciones.isEmpty) {
+                          return const Text(
+                            'No hay adopciones registradas todavía.',
+                          );
+                        }
+
+                        return Column(
+                          children: [
+                            for (final adopcion in adopciones)
+                              Padding(
+                                padding: const EdgeInsets.symmetric(
+                                  vertical: 4,
+                                ),
+                                child: AppInfoCard(
+                                  title:
+                                      '${adopcion.nombreAnimal} - Solicitud de Adopción',
+                                  subtitle:
+                                      '${adopcion.fechaAdopcion.day}/${adopcion.fechaAdopcion.month}/${adopcion.fechaAdopcion.year} '
+                                      '- ${adopcion.fechaAdopcion.hour}:${adopcion.fechaAdopcion.minute.toString().padLeft(2, '0')}',
+                                  badgeText: 'Adopción',
+                                  variant: AppCardVariant.cardGreen,
+                                ),
+                              ),
+                          ],
+                        );
+                      },
+                    );
+                  },
+                ),
+              ],
+            ),
+          ],
+        ),
       ),
     );
   }

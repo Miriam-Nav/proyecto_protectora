@@ -3,7 +3,6 @@ import 'package:proyecto_protectora/catalog/demos/buttons_demo.dart';
 import 'package:proyecto_protectora/catalog/demos/cards_demo.dart';
 import 'package:proyecto_protectora/catalog/demos/input_text_demo.dart';
 
-
 class CatalogPage extends StatelessWidget {
   const CatalogPage({super.key});
 
@@ -38,6 +37,7 @@ class CatalogPage extends StatelessWidget {
               ).push(MaterialPageRoute(builder: (_) => const CardsDemo()));
             },
           ),
+
           const SizedBox(height: 8),
           ListTile(
             title: const Text('Inputs'),

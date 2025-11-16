@@ -1,10 +1,9 @@
-import 'dart:ffi';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:proyecto_protectora/app/theme/app_palette.dart';
 import 'package:proyecto_protectora/core/widgets/app_button.dart';
-import 'package:proyecto_protectora/features/auth/presentation/providers/fav_animal_provider.dart';
 import 'package:proyecto_protectora/features/protectora/data/models/animales.dart';
+import 'package:proyecto_protectora/features/protectora/presentation/providers/fav_animal_provider.dart';
 
 enum AppMascotaCardVariant {
   primary,
@@ -37,22 +36,21 @@ enum AppMascotaCardVariant {
 }
 
 class MascotaFavCard extends ConsumerWidget {
-  
-  final AppMascotaCardVariant variant;
-  final VoidCallback? onAdoptPressed;
   final Animales animal;
-  
-  // final dynamic onChanged;
-  
+  final AppMascotaCardVariant variant;
+  final bool showAdoptButton;
+  final bool showFavoriteIcon;
+  final VoidCallback? onAdoptPressed;
 
-   const MascotaFavCard({
+  const MascotaFavCard({
     super.key,
     required this.animal,
     this.variant = AppMascotaCardVariant.menuButton,
     this.onAdoptPressed,
-    // required this.onChanged,
+    this.showAdoptButton = false,
+    this.showFavoriteIcon = false,
   });
-   
+
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final palette = appPaletteOf(context);
@@ -61,11 +59,15 @@ class MascotaFavCard extends ConsumerWidget {
     return Card(
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(10),
-        side: BorderSide(color: palette.primary, width: 2), // borde naranja
+        side: BorderSide(color: palette.primary, width: 2),
       ),
       elevation: 4,
-      child: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 27),
+      child: Container(
+        decoration: BoxDecoration(
+          color: palette.menuButton,
+          borderRadius: BorderRadius.circular(10),
+        ),
+        padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 20),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
@@ -81,7 +83,7 @@ class MascotaFavCard extends ConsumerWidget {
                       child: SizedBox(
                         width: 410,
                         height: 290,
-                        child: Image.asset(animal.foto, fit: BoxFit.cover),
+                        child: Image.network(animal.foto, fit: BoxFit.cover),
                       ),
                     ),
                   ),
@@ -191,180 +193,34 @@ class MascotaFavCard extends ConsumerWidget {
                     ],
                   ),
 
-                  const SizedBox(height: 12),
+                  const SizedBox(height: 15),
 
                   // Botones al final
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      AppButton(
-                        label: 'Adoptar',
-                        onPressed: onAdoptPressed,
-                        variant: AppButtonVariant.primary,
-                      ),
-                      IconButton(
-                        icon: favAnimals.contains(animal)
-                            ? const Icon(Icons.favorite, color: Colors.red)
-                            : const Icon(Icons.favorite_border),
-                        onPressed: () {
-                          final notifier = ref.read(favAnimalProvider.notifier);
-                          if (favAnimals.contains(animal)) {
-                            notifier.removeAnimal(animal);
-                          } else {
-                            notifier.addAnimal(animal);
-                          }
-                        },
-                      ),
-                    ],
-                  ),
-                ],
-              ),
-            ),
-          ],
-        ),
-      ),
-    );
-  }
-}
-
-class MascotaCard extends StatelessWidget {
-  final AppMascotaCardVariant variant;
-
-  /// Overrides opcionales por si queremos forzar colores puntuales.
-  final Color? backgroundColorOverride;
-  final Color? foregroundColorOverride;
-  final Animales animal;
-  
-
-  const MascotaCard({
-    super.key,
-    required this.animal,
-    this.variant = AppMascotaCardVariant.menuButton,
-    this.backgroundColorOverride,
-    this.foregroundColorOverride,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    final palette = appPaletteOf(context);
-    final (baseColor, textColor) = eleccionColoresVariante(palette, variant);
-
-    return Card(
-      color: backgroundColorOverride ?? baseColor,
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(10),
-        side: BorderSide(color: palette.primary, width: 2),
-      ),
-      elevation: 4,
-      child: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 27),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            SizedBox(
-              width: 410,
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Center(
-                    child: ClipRRect(
-                      borderRadius: BorderRadius.circular(25),
-                      child: SizedBox(
-                        width: 410,
-                        height: 290,
-                        child: Image.asset(animal.foto, fit: BoxFit.cover),
-                      ),
-                    ),
-                  ),
-                  const SizedBox(height: 15),
-
-                  Text(
-                    animal.nombre,
-                    textAlign: TextAlign.left,
-                    style: Theme.of(
-                      context,
-                    ).textTheme.headlineLarge?.copyWith(color: palette.primary),
-                  ),
-                  const SizedBox(height: 15),
-                  Row(
-                    children: [
-                      Text(
-                        '🟠 Sexo: ',
-                        style: Theme.of(context).textTheme.titleSmall,
-                      ),
-                      Text(animal.sexo, style: Theme.of(context).textTheme.bodyLarge),
-                    ],
-                  ),
-                  const SizedBox(height: 5),
-                  Row(
-                    children: [
-                      Text(
-                        '🟠 Raza: ',
-                        style: Theme.of(context).textTheme.titleSmall,
-                      ),
-                      Text(animal.raza, style: Theme.of(context).textTheme.bodyLarge),
-                    ],
-                  ),
-                  const SizedBox(height: 5),
-                  Row(
-                    children: [
-                      Text(
-                        '🟠 Tipo: ',
-                        style: Theme.of(context).textTheme.titleSmall,
-                      ),
-                      Text(animal.tipo, style: Theme.of(context).textTheme.bodyLarge),
-                    ],
-                  ),
-                  const SizedBox(height: 5),
-                  Row(
-                    children: [
-                      Text(
-                        '🟠 Fecha de nacimiento: ',
-                        style: Theme.of(context).textTheme.titleSmall,
-                      ),
-                      Text(
-                        animal.fNacimiento,
-                        style: Theme.of(context).textTheme.bodyLarge,
-                      ),
-                    ],
-                  ),
-                  const SizedBox(height: 5),
-                  Row(
-                    children: [
-                      Text(
-                        '🟠 Esterilizado: ',
-                        style: Theme.of(context).textTheme.titleSmall,
-                      ),
-                      Text(
-                        animal.estereilizado,
-                        style: Theme.of(context).textTheme.bodyLarge,
-                      ),
-                    ],
-                  ),
-                  const SizedBox(height: 5),
-                  Row(
-                    children: [
-                      Text(
-                        '🟠 Chip: ',
-                        style: Theme.of(context).textTheme.titleSmall,
-                      ),
-                      Text(animal.chip, style: Theme.of(context).textTheme.bodyLarge),
-                    ],
-                  ),
-                  const SizedBox(height: 5),
-                  Row(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        '🟠 Descripción: ',
-                        style: Theme.of(context).textTheme.titleSmall,
-                      ),
-                      Expanded(
-                        child: Text(
-                          animal.descripcion,
-                          style: Theme.of(context).textTheme.bodyLarge,
+                      if (showAdoptButton)
+                        AppButtonBorde(
+                          label: 'Adoptar',
+                          onPressed: onAdoptPressed,
+                          borderColor: appPaletteOf(context).cardGreen,
                         ),
-                      ),
+                      if (showFavoriteIcon)
+                        IconButton(
+                          icon: favAnimals.contains(animal)
+                              ? const Icon(Icons.favorite, color: Colors.red)
+                              : const Icon(Icons.favorite_border),
+                          onPressed: () {
+                            final notifier = ref.read(
+                              favAnimalProvider.notifier,
+                            );
+                            if (favAnimals.contains(animal)) {
+                              notifier.removeAnimal(animal);
+                            } else {
+                              notifier.addAnimal(animal);
+                            }
+                          },
+                        ),
                     ],
                   ),
                 ],
@@ -422,7 +278,8 @@ class MascotaMiniCard extends StatelessWidget {
               child: SizedBox(
                 width: 110,
                 height: 90,
-                child: Image.asset(image, fit: BoxFit.cover),
+                child: Image.network(image, fit: BoxFit.cover),
+                //Image.asset(image, fit: BoxFit.cover),
               ),
             ),
           ),

@@ -20,9 +20,11 @@ class FavAnimalNotifier extends Notifier<Set<Animales>> {
   }
 }
 
-final favAnimalProvider = NotifierProvider<FavAnimalNotifier, Set<Animales>>(() {
-  return FavAnimalNotifier();
-});
+final favAnimalProvider = NotifierProvider<FavAnimalNotifier, Set<Animales>>(
+  () {
+    return FavAnimalNotifier();
+  },
+);
 
 final totalPerrosProvider = Provider<int>((ref) {
   final totalFav = ref

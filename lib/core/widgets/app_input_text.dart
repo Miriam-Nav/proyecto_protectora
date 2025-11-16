@@ -5,49 +5,50 @@ class AppInputText extends StatelessWidget {
   final IconData? leadingIcon;
   final String label;
   final dynamic seleccion;
-  TextEditingController get nombreController =>
-      TextEditingController(text: seleccion);
+  final TextEditingController? controller;
+  final bool readOnly;
+  final bool obscureText;
 
   const AppInputText({
     super.key,
     this.leadingIcon,
     required this.label,
     this.seleccion,
+    this.controller,
+    this.readOnly = false,
+    this.obscureText = false,
   });
 
   @override
   Widget build(BuildContext context) {
     appPaletteOf(context);
 
-    return TextField(
-      controller: nombreController,
+    return TextFormField(
+      controller: controller ?? TextEditingController(text: seleccion),
+      readOnly: readOnly,
+      obscureText: obscureText,
       textAlign: TextAlign.start,
-      style: const TextStyle(
-        color: Color.fromARGB(238, 238, 124, 43),
-        fontSize: 13,
-        fontFamily: 'Poppins',
-        fontWeight: FontWeight.w400,
-      ),
+      style: Theme.of(
+        context,
+      ).textTheme.labelLarge?.copyWith(color: appPaletteOf(context).secondary),
 
       decoration: InputDecoration(
         labelText: label,
-        labelStyle: TextStyle(
-          fontSize: 15,
-          fontFamily: 'Poppins',
-          fontWeight: FontWeight.w600,
+        labelStyle: Theme.of(context).textTheme.labelLarge?.copyWith(
+          color: appPaletteOf(context).secondary,
         ),
         enabledBorder: OutlineInputBorder(
           borderRadius: BorderRadius.all(Radius.circular(10)),
           borderSide: BorderSide(
             width: 1,
-            color: Color.fromARGB(238, 238, 124, 43),
+            color: Theme.of(context).colorScheme.primary,
           ),
         ),
         focusedBorder: OutlineInputBorder(
           borderRadius: BorderRadius.all(Radius.circular(10)),
           borderSide: BorderSide(
             width: 1,
-            color: Color.fromARGB(238, 238, 124, 43),
+            color: Theme.of(context).colorScheme.primary,
           ),
         ),
       ),
