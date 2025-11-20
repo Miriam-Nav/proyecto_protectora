@@ -3,6 +3,7 @@ import 'package:proyecto_protectora/core/widgets/app_animal_card.dart';
 // import 'package:proyecto_protectora/catalog/widgets/showcase_scaffold.dart';
 import 'package:proyecto_protectora/core/widgets/app_card.dart';
 import 'package:proyecto_protectora/features/protectora/data/fakes/noticias_datafake.dart';
+import 'package:proyecto_protectora/features/protectora/data/models/animales.dart';
 
 /// Pantalla que muestra ejemplos de las AppCards personalizadas
 class CardsDemo extends StatelessWidget {
@@ -112,16 +113,27 @@ class CardsDemo extends StatelessWidget {
           const Text('Mascota Card'),
           const SizedBox(height: 8),
 
-          // MascotaCard(
-          //   image: 'assets/images/gatito.jpg',
-          //   nombre: 'Coco',
-          //   sexo: 'Hembra',
-          //   raza: 'Siames',
-          //   fNacimiento: '2021-03-10',
-          //   esterilizado: 'Sí',
-          //   chip: '1234A',
-          //   text: 'Inteligente y activo',
-          // ),
+          MascotaFavCard(
+            animal: Animales(
+              idAnimal: '1',
+              nombre: 'Nala',
+              sexo: 'Hembra',
+              raza: 'Golden Retriever',
+              tipo: 'Perro',
+              fNacimiento: '2019-08-22',
+              estereilizado: 'Sí',
+              chip: 'CHIP001',
+              descripcion: 'Dulce y sociable',
+              foto: 'https://cataas.com/cat?random=1',
+            ),
+            variant: AppMascotaCardVariant.primary,
+            showAdoptButton: true,
+            showFavoriteIcon: true,
+            onAdoptPressed: () {
+              print("Adoptar a Nala pulsado");
+            },
+          ),
+
           const SizedBox(height: 16),
           const Text('Noticia Card'),
           const SizedBox(height: 8),

@@ -6,8 +6,10 @@ class AppInputText extends StatelessWidget {
   final String label;
   final dynamic seleccion;
   final TextEditingController? controller;
+  final String? Function(String?)? validator;
   final bool readOnly;
   final bool obscureText;
+  final Color? color;
 
   const AppInputText({
     super.key,
@@ -15,16 +17,19 @@ class AppInputText extends StatelessWidget {
     required this.label,
     this.seleccion,
     this.controller,
+    this.validator,
     this.readOnly = false,
     this.obscureText = false,
+    this.color,
   });
 
   @override
   Widget build(BuildContext context) {
-    appPaletteOf(context);
+    final colorSelect = color ?? appPaletteOf(context).primary;
 
     return TextFormField(
       controller: controller ?? TextEditingController(text: seleccion),
+      validator: validator,
       readOnly: readOnly,
       obscureText: obscureText,
       textAlign: TextAlign.start,
@@ -39,17 +44,11 @@ class AppInputText extends StatelessWidget {
         ),
         enabledBorder: OutlineInputBorder(
           borderRadius: BorderRadius.all(Radius.circular(10)),
-          borderSide: BorderSide(
-            width: 1,
-            color: Theme.of(context).colorScheme.primary,
-          ),
+          borderSide: BorderSide(width: 1, color: colorSelect),
         ),
         focusedBorder: OutlineInputBorder(
           borderRadius: BorderRadius.all(Radius.circular(10)),
-          borderSide: BorderSide(
-            width: 1,
-            color: Theme.of(context).colorScheme.primary,
-          ),
+          borderSide: BorderSide(width: 1, color: colorSelect),
         ),
       ),
     );

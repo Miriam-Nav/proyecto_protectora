@@ -100,7 +100,7 @@ class MascotaFavCard extends ConsumerWidget {
                   const SizedBox(height: 15),
 
                   // Datos del animal
-                  Row(
+                  Wrap(
                     children: [
                       Text(
                         '🟠 Sexo: ',
@@ -115,7 +115,7 @@ class MascotaFavCard extends ConsumerWidget {
                     ],
                   ),
                   const SizedBox(height: 5),
-                  Row(
+                  Wrap(
                     children: [
                       Text(
                         '🟠 Raza: ',
@@ -130,7 +130,7 @@ class MascotaFavCard extends ConsumerWidget {
                     ],
                   ),
                   const SizedBox(height: 5),
-                  Row(
+                  Wrap(
                     children: [
                       Text(
                         '🟠 Fecha de nacimiento: ',
@@ -145,7 +145,7 @@ class MascotaFavCard extends ConsumerWidget {
                     ],
                   ),
                   const SizedBox(height: 5),
-                  Row(
+                  Wrap(
                     children: [
                       Text(
                         '🟠 Esterilizado: ',
@@ -160,7 +160,7 @@ class MascotaFavCard extends ConsumerWidget {
                     ],
                   ),
                   const SizedBox(height: 5),
-                  Row(
+                  Wrap(
                     children: [
                       Text(
                         '🟠 Chip: ',
@@ -175,8 +175,7 @@ class MascotaFavCard extends ConsumerWidget {
                     ],
                   ),
                   const SizedBox(height: 5),
-                  Row(
-                    crossAxisAlignment: CrossAxisAlignment.start,
+                  Wrap(
                     children: [
                       Text(
                         '🟠 Descripción: ',
@@ -265,7 +264,12 @@ class MascotaMiniCard extends StatelessWidget {
       style: ElevatedButton.styleFrom(
         backgroundColor: backgroundColorOverride ?? baseColor,
         foregroundColor: foregroundColorOverride ?? textColor,
-        padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 17),
+        padding: const EdgeInsets.only(
+          top: 15,
+          bottom: 5,
+          right: 15,
+          left: 15,
+        ), //const EdgeInsets.symmetric(horizontal: 10, vertical: 17),
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
       ),
       onPressed: onPressed,

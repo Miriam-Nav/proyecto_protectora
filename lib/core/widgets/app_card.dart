@@ -137,32 +137,28 @@ class AppInfoCard extends StatelessWidget {
     // Derivamos los colores de la variante
     final (baseColor, textColor) = eleccionColoresVariante(palette, variant);
     final esModoOscuro = Theme.of(context).brightness == Brightness.dark;
-    final aclarado = esModoOscuro
-        ? Color.alphaBlend(
-            // equivale a 20% opacidad
-            Colors.white.withAlpha((0.2 * 255).toInt()),
-            baseColor,
-          )
-        : baseColor.withAlpha((0.60 * 255).round());
-
     final Color baseFuerte = baseColor.withAlpha((0.55 * 255).round()); // ≈217
+
+    final aclarado = esModoOscuro
+        ? baseColor.withAlpha((0.80 * 255).round())
+        : baseFuerte;
 
     // Fondo con capa blanca muy ligera
     final Color lightBackground = esModoOscuro
-        ? baseFuerte.withAlpha((0.20 * 255).round())
-        : baseColor.withAlpha((0.0 * 255).round()); // modo claro
+        ? baseFuerte.withAlpha((0.05 * 255).round())
+        : appPaletteOf(
+            context,
+          ).menuButton.withAlpha((0.8 * 255).round()); // modo claro
 
     // Franja de arriba.
     final Color stripColor = esModoOscuro
-        ? Color.alphaBlend(
-            Colors.white.withAlpha((0.15 * 255).round()), // 50% blanco
-            baseColor,
-          ).withAlpha((0.40 * 255).round())
-        : baseColor.withAlpha((0.10 * 255).round()); // 18% opacidad directa
+        ? baseColor.withAlpha((0.40 * 255).round())
+        : baseColor.withAlpha((0.20 * 255).round());
 
     return InkWell(
       onTap: onTap,
       borderRadius: BorderRadius.circular(12),
+
       child: Container(
         margin: const EdgeInsets.symmetric(vertical: 6),
         decoration: BoxDecoration(
@@ -175,6 +171,7 @@ class AppInfoCard extends StatelessWidget {
           children: [
             // ---- Franja superior ----
             Container(
+              width: double.infinity,
               decoration: BoxDecoration(
                 color: stripColor,
                 borderRadius: const BorderRadius.vertical(
@@ -182,8 +179,10 @@ class AppInfoCard extends StatelessWidget {
                 ),
               ),
               padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 10),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              child: Wrap(
+                spacing: 8, // espacio horizontal entre elementos
+                runSpacing: 4, // espacio vertical entre líneas
+                alignment: WrapAlignment.spaceBetween,
                 children: [
                   // Título
                   Text(
@@ -263,7 +262,7 @@ class AppNotiCard extends StatelessWidget {
         ? textColor
         : Color.alphaBlend(
             // 0.5 opacidad
-            Colors.black.withAlpha(128),
+            appPaletteDark.background.withAlpha(128),
             baseColor,
           );
 

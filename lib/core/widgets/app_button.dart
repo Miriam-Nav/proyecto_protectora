@@ -30,6 +30,7 @@ class AppButton extends StatelessWidget {
   final String label;
   final VoidCallback? onPressed;
   final AppButtonVariant variant;
+  final IconData? icon;
 
   /// Overrides opcionales por si queremos forzar colores puntuales.
   final Color? backgroundColorOverride;
@@ -40,6 +41,7 @@ class AppButton extends StatelessWidget {
     required this.label,
     required this.onPressed,
     this.variant = AppButtonVariant.primary,
+    this.icon,
     this.backgroundColorOverride,
     this.foregroundColorOverride,
   });
@@ -57,7 +59,16 @@ class AppButton extends StatelessWidget {
         padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 12),
       ),
       onPressed: onPressed,
-      child: Text(label),
+      child: icon != null
+          ? Row(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Icon(icon, size: 28),
+                const SizedBox(width: 8),
+                Text(label),
+              ],
+            )
+          : Text(label),
     );
   }
 }
@@ -172,21 +183,36 @@ class AppRoundedActionButtonBorde extends StatelessWidget {
       padding: const EdgeInsets.symmetric(vertical: 6),
       child: ElevatedButton(
         onPressed: onPressed,
-        style: ElevatedButton.styleFrom(
-          foregroundColor: borderColor,
-          backgroundColor: appPaletteOf(context).menuButton,
-          elevation: 3,
-          padding: const EdgeInsets.symmetric(vertical: 16, horizontal: 16),
-          shape: RoundedRectangleBorder(
-            borderRadius: const BorderRadius.only(
-              topLeft: Radius.circular(50),
-              bottomLeft: Radius.circular(50),
-              topRight: Radius.circular(8),
-              bottomRight: Radius.circular(8),
+        style:
+            ElevatedButton.styleFrom(
+              foregroundColor: borderColor,
+              backgroundColor: appPaletteOf(context).menuButton,
+              elevation: 3,
+              padding: const EdgeInsets.symmetric(vertical: 16, horizontal: 16),
+              shape: RoundedRectangleBorder(
+                borderRadius: const BorderRadius.only(
+                  topLeft: Radius.circular(50),
+                  bottomLeft: Radius.circular(50),
+                  topRight: Radius.circular(8),
+                  bottomRight: Radius.circular(8),
+                ),
+                side: BorderSide(color: borderColor, width: 2),
+              ),
+            ).copyWith(
+              overlayColor: WidgetStateProperty.resolveWith<Color?>((states) {
+                if (states.contains(WidgetState.hovered)) {
+                  return appPaletteOf(
+                    context,
+                  ).onMenuButton.withAlpha((0.05 * 255).toInt());
+                }
+                if (states.contains(WidgetState.pressed)) {
+                  return appPaletteOf(
+                    context,
+                  ).onMenuButton.withAlpha((0.1 * 255).toInt());
+                }
+                return null;
+              }),
             ),
-            side: BorderSide(color: borderColor, width: 2),
-          ),
-        ),
         child: Row(
           children: [
             if (leadingIcon != null) Icon(leadingIcon, size: 28),

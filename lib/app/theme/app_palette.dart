@@ -44,7 +44,7 @@ class AppPalette {
 
 /// Paleta para tema claro
 const appPaletteLight = AppPalette(
-  background: Color(0xFFF8F7F6),
+  background: Color.fromARGB(255, 248, 246, 239),
   primary: Color(0xFFFF6F00),
   onPrimary: Colors.white,
   degradado: Color.fromARGB(255, 253, 176, 10),
@@ -67,19 +67,19 @@ const appPaletteLight = AppPalette(
 /// Paleta para tema oscuro (ajusta los contrastes)
 const appPaletteDark = AppPalette(
   //background: Color.fromARGB(255, 20, 20, 21),
-  background: Color.fromARGB(255, 21, 27, 38),
-  primary: Color.fromARGB(255, 255, 130, 34),
+  background: Color.fromARGB(255, 28, 21, 38),
+  primary: Color.fromARGB(255, 255, 140, 68),
   onPrimary: Colors.white,
-  degradado: Color.fromARGB(255, 253, 176, 10),
+  degradado: Color.fromARGB(255, 195, 10, 0),
   secondary: Colors.white,
   onSecondary: Color.fromARGB(255, 30, 29, 29),
-  danger: Color(0xFFFF7A6E),
-  onDanger: Color.fromARGB(255, 30, 29, 29),
+  danger: Color.fromARGB(255, 208, 56, 42),
+  onDanger: Colors.white,
   success: Color.fromARGB(236, 123, 253, 103),
   onSuccess: Colors.white,
   warning: Color.fromARGB(236, 249, 244, 84),
   onWarning: Colors.white,
-  menuButton: Color.fromARGB(255, 33, 40, 52),
+  menuButton: Color.fromARGB(255, 47, 33, 52),
   onMenuButton: Colors.white,
   cardBlue: Color.fromARGB(255, 27, 121, 197),
   onCardBlue: Colors.white,

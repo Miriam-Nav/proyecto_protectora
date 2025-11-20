@@ -30,11 +30,13 @@ class MainApp extends ConsumerWidget {
         selectedLocale = prefs.language;
         modoOscuro = prefs.darkmode;
       },
+
       loading: () {
         // Valor por defecto mientras carga
         selectedLocale = const Locale('es');
         modoOscuro = false;
       },
+
       error: (_, __) {
         // Valores por defecto en caso de error
         selectedLocale = const Locale('es');

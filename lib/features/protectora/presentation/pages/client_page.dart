@@ -4,6 +4,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:proyecto_protectora/core/l10n/app_localizations.dart';
 import 'package:proyecto_protectora/core/widgets/app_animal_card.dart';
 import 'package:proyecto_protectora/core/widgets/app_card.dart';
+import 'package:proyecto_protectora/core/widgets/gradient_bg.dart';
 import 'package:proyecto_protectora/features/protectora/data/models/noticia_model.dart';
 import 'package:proyecto_protectora/features/protectora/presentation/providers/animal_provider.dart';
 import 'package:proyecto_protectora/features/protectora/presentation/widgets/appbar.dart';
@@ -61,14 +62,14 @@ class ClientPage extends ConsumerWidget {
                       dragDevices: {...PointerDeviceKind.values},
                     ),
                     child: SizedBox(
-                      height: 170,
+                      height: 175,
                       child: ListView.builder(
                         scrollDirection: Axis.horizontal,
                         itemCount: animales.length,
                         itemBuilder: (context, index) {
                           final animal = animales[index];
                           return SizedBox(
-                            height: 200,
+                            height: 175,
                             width: 150,
                             child: Container(
                               margin: const EdgeInsets.only(right: 12),

@@ -31,7 +31,8 @@ class AppTheme {
       // Título centrado = false
       centerTitle: false,
       // Reaccion del AppBar al scroll
-      surfaceTintColor: Color.fromARGB(255, 98, 89, 84),
+      // surfaceTintColor: Color.fromARGB(255, 98, 89, 84),
+      surfaceTintColor: Colors.transparent,
 
       titleTextStyle: _textTheme.headlineLarge?.copyWith(
         color: appPaletteLight.onPrimary,
@@ -56,6 +57,7 @@ class AppTheme {
     appBarTheme: AppBarTheme(
       backgroundColor: appPaletteDark.primary,
       centerTitle: false,
+      surfaceTintColor: Colors.transparent,
       titleTextStyle: _textTheme.headlineLarge?.copyWith(
         color: appPaletteDark.onMenuButton,
       ),

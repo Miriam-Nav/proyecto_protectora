@@ -63,6 +63,7 @@ class _LoginPageState extends ConsumerState<LoginPage> {
     return Scaffold(
       body: Center(
         child: Card(
+          color: palette.menuButton,
           elevation: 12,
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(20),

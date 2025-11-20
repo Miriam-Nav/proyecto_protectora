@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:proyecto_protectora/features/preferences/controllers/preferences_controller.dart';
 import 'package:proyecto_protectora/features/preferences/data/models/preferences.dart';
+import 'package:proyecto_protectora/features/protectora/presentation/widgets/appbar.dart';
 
 class PreferencesPage extends ConsumerStatefulWidget {
   const PreferencesPage({super.key});
@@ -27,9 +28,7 @@ class _PreferencesPageState extends ConsumerState<PreferencesPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('Preferencias', textAlign: TextAlign.center),
-      ),
+      appBar: customAppBar(context, "Preferencias"),
       body: ListView(
         padding: const EdgeInsets.all(16),
         children: [

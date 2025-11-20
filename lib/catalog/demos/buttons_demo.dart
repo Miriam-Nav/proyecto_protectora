@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:proyecto_protectora/app/theme/app_palette.dart';
 // import 'package:proyecto_protectora/catalog/widgets/showcase_scaffold.dart';
 import 'package:proyecto_protectora/core/widgets/app_button.dart';
 
@@ -11,7 +12,6 @@ class ButtonsDemo extends StatelessWidget {
       // title: 'Botones',
       appBar: AppBar(title: const Text('Botones'), centerTitle: true),
 
-      //
       body: ListView(
         padding: const EdgeInsets.all(16),
         children: [
@@ -25,18 +25,19 @@ class ButtonsDemo extends StatelessWidget {
 
           const Text('AppButton – Adopción'),
           const SizedBox(height: 8),
-          AppRoundedActionButton(
+          AppRoundedActionButtonBorde(
             leadingIcon: Icons.favorite_border,
             label: 'Registrar Nueva Adopción',
             onPressed: () {},
+            borderColor: appPaletteOf(context).primary,
           ),
 
-          const Text('AppButton – Veterinario'),
+          const Text('AppButton – Primary'),
           const SizedBox(height: 8),
-          AppRoundedActionButton(
-            leadingIcon: Icons.medical_services_outlined,
-            label: 'Registrar Visita Veterinario',
+          AppButtonBorde(
+            label: 'Adoptar',
             onPressed: () {},
+            borderColor: appPaletteOf(context).cardGreen,
           ),
 
           const Text('AppButton – Primary'),

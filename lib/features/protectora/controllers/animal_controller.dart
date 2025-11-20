@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:proyecto_protectora/app/theme/app_palette.dart';
+import 'package:proyecto_protectora/core/widgets/app_button.dart';
 import 'package:proyecto_protectora/features/protectora/data/models/animales.dart';
 import 'package:proyecto_protectora/features/protectora/presentation/providers/animal_provider.dart';
 
@@ -104,6 +106,7 @@ class AnimalController {
     final confirm = await showDialog<bool>(
       context: context,
       builder: (_) => AlertDialog(
+        backgroundColor: appPaletteOf(context).background,
         title: const Text('Confirmar eliminación'),
         content: Text(
           '¿Estás seguro de que quieres eliminar a ${seleccionado!.nombre}?',
@@ -113,10 +116,10 @@ class AnimalController {
             onPressed: () => Navigator.of(context).pop(false),
             child: const Text('Cancelar'),
           ),
-          ElevatedButton(
-            style: ElevatedButton.styleFrom(backgroundColor: Colors.red),
+          AppButton(
+            variant: AppButtonVariant.danger,
             onPressed: () => Navigator.of(context).pop(true),
-            child: const Text('Eliminar'),
+            label: 'Eliminar',
           ),
         ],
       ),

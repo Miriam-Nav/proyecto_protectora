@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:proyecto_protectora/core/widgets/app_animal_card.dart';
 import 'package:proyecto_protectora/core/widgets/app_button.dart';
+import 'package:proyecto_protectora/core/widgets/gradient_bg.dart';
 import 'package:proyecto_protectora/features/protectora/presentation/pages/formulario_adopcion.dart';
 import 'package:proyecto_protectora/features/protectora/presentation/providers/animal_provider.dart';
 import 'package:proyecto_protectora/features/protectora/presentation/widgets/appbar.dart';
@@ -27,6 +28,8 @@ class DetalleAnimal extends ConsumerWidget {
 
         return Scaffold(
           appBar: customAppBar(context, 'Conoce a ${animal.nombre}'),
+
+          
           body: ListView(
             children: [
               Padding(
