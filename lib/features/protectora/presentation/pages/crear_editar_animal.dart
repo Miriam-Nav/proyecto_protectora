@@ -58,6 +58,7 @@ class _CrearAnimalState extends ConsumerState<CrearAnimal> {
                 if (animales.isEmpty) {
                   return const Text('No hay animales registrados');
                 }
+
                 return DropdownButton<Animales>(
                   hint: const Text('Selecciona un animal para editar'),
                   value: controller.seleccionado,
@@ -68,7 +69,11 @@ class _CrearAnimalState extends ConsumerState<CrearAnimal> {
                     );
                   }).toList(),
                   onChanged: (animal) {
-                    if (animal != null) controller.cargarAnimal(animal);
+                    if (animal != null) {
+                      setState(() {
+                        controller.cargarAnimal(animal);
+                      });
+                    }
                   },
                 );
               },
@@ -164,7 +169,10 @@ class _CrearAnimalState extends ConsumerState<CrearAnimal> {
                       const SizedBox(width: 12),
                       AppButton(
                         label: "Eliminar Animal",
-                        onPressed: () => controller.eliminar(ref, context),
+                        onPressed: () async {
+                          await controller.eliminar(ref, context);
+                          setState(() {});
+                        },
                       ),
                     ],
                   ),
