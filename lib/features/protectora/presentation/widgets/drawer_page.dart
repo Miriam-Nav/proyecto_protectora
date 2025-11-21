@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:proyecto_protectora/app/theme/app_palette.dart';
 import 'package:proyecto_protectora/catalog/catalog_pages.dart';
+import 'package:proyecto_protectora/core/l10n/app_localizations.dart';
 import 'package:proyecto_protectora/features/auth/controllers/auth_controller.dart';
 import 'package:proyecto_protectora/features/auth/data/models/user_model.dart';
 import 'package:proyecto_protectora/features/auth/presentation/pages/login_page.dart';
@@ -15,6 +16,7 @@ class ProtectoraDrawer extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final l10n = AppLocalizations.of(context)!;
     return Drawer(
       child: Container(
         color: appPaletteOf(context).background,
@@ -53,7 +55,7 @@ class ProtectoraDrawer extends ConsumerWidget {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text(
-                            'Protectora',
+                            l10n.tituloProtectora,
                             style: Theme.of(context).textTheme.titleLarge
                                 ?.copyWith(
                                   color: appPaletteOf(context).onPrimary,
@@ -68,7 +70,7 @@ class ProtectoraDrawer extends ConsumerWidget {
 
               ListTile(
                 leading: const Icon(Icons.person),
-                title: const Text('Usuario'),
+                title: Text(l10n.usuario),
                 onTap: () async {
                   Navigator.pop(context);
                   final usuario = ref.read(authControllerProvider).value;
@@ -81,7 +83,7 @@ class ProtectoraDrawer extends ConsumerWidget {
                     );
                   } else {
                     ScaffoldMessenger.of(context).showSnackBar(
-                      const SnackBar(content: Text('No hay usuario logeado')),
+                      SnackBar(content: Text(l10n.noUsuarioLogeado)),
                     );
                   }
                 },
@@ -89,7 +91,7 @@ class ProtectoraDrawer extends ConsumerWidget {
 
               ListTile(
                 leading: const Icon(Icons.refresh),
-                title: const Text('Preferencias'),
+                title:  Text(l10n.preferencias),
                 onTap: () async {
                   Navigator.pop(context);
                   //await ref.read(todosProvider.notifier).refresh();
@@ -102,7 +104,7 @@ class ProtectoraDrawer extends ConsumerWidget {
 
               ListTile(
                 leading: const Icon(Icons.dashboard),
-                title: const Text('Catálogo'),
+                title: Text(l10n.drawerCatalogo),
                 onTap: () async {
                   Navigator.pop(context);
                   Navigator.push(
@@ -115,7 +117,7 @@ class ProtectoraDrawer extends ConsumerWidget {
               const Divider(height: 1),
               ListTile(
                 leading: const Icon(Icons.logout),
-                title: const Text('Cerrar sesión'),
+                title: Text(l10n.cerrarSesion),
                 onTap: () async {
                   Navigator.pop(context);
                   await ref.read(authControllerProvider.notifier).signOut();

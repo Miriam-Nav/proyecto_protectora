@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:proyecto_protectora/catalog/catalog_pages.dart';
+import 'package:proyecto_protectora/core/l10n/app_localizations.dart';
 import 'package:proyecto_protectora/features/auth/data/models/user_model.dart';
 import 'package:proyecto_protectora/features/auth/presentation/pages/login_page.dart';
 import 'package:proyecto_protectora/features/protectora/presentation/pages/formulario_adopcion.dart';
@@ -35,6 +36,7 @@ class _MenuButtonsState extends State<MenuButtons> {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
     final palette = appPaletteOf(context);
     return Scaffold(
       body: widgetOptions[_selectedIndex],
@@ -51,16 +53,16 @@ class _MenuButtonsState extends State<MenuButtons> {
           selectedItemColor: palette.primary,
           unselectedItemColor: palette.onMenuButton,
           backgroundColor: palette.menuButton,
-          items: const [
-            BottomNavigationBarItem(icon: Icon(Icons.home), label: 'Profile'),
+          items: [
+            BottomNavigationBarItem(icon: Icon(Icons.home), label: l10n.buttonProfolio),
             BottomNavigationBarItem(
-              icon: Icon(Icons.new_releases_sharp),
-              label: 'Novedades',
+              icon: const Icon(Icons.new_releases_sharp),
+              label: l10n.subtituloNovedades,
             ),
-            BottomNavigationBarItem(icon: Icon(Icons.pets), label: 'Animales'),
+            BottomNavigationBarItem(icon: Icon(Icons.pets), label: l10n.tituloAnimales),
             BottomNavigationBarItem(
-              icon: Icon(Icons.favorite_border),
-              label: 'Favorito',
+              icon: const Icon(Icons.favorite_border),
+              label: l10n.tituloFavoritos,
             ),
             // BottomNavigationBarItem(
             //   icon: Icon(Icons.dashboard),

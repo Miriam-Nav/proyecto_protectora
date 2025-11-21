@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:proyecto_protectora/core/l10n/app_localizations.dart';
 import 'package:proyecto_protectora/core/widgets/app_animal_card.dart';
 import 'package:proyecto_protectora/core/widgets/app_button.dart';
 import 'package:proyecto_protectora/core/widgets/gradient_bg.dart';
@@ -14,6 +15,7 @@ class DetalleAnimal extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final l10n = AppLocalizations.of(context)!;
     final animalesAsync = ref.watch(animalesProvider);
 
     return animalesAsync.when(
@@ -23,11 +25,11 @@ class DetalleAnimal extends ConsumerWidget {
       data: (animales) {
         final animal = animales.firstWhere(
           (animales) => animales.idAnimal == seleccionado,
-          orElse: () => throw Exception('Animal no encontrado'),
+          orElse: () => throw Exception(l10n.animalnoencontrado),
         );
 
         return Scaffold(
-          appBar: customAppBar(context, 'Conoce a ${animal.nombre}'),
+          appBar: customAppBar(context, '${l10n.conocer} ${animal.nombre}'),
 
           
           body: ListView(

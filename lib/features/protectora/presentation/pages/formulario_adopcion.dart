@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:proyecto_protectora/app/theme/app_palette.dart';
+import 'package:proyecto_protectora/core/l10n/app_localizations.dart';
 import 'package:proyecto_protectora/core/widgets/app_button.dart';
 import 'package:proyecto_protectora/core/widgets/app_input_text.dart';
 import 'package:proyecto_protectora/core/widgets/gradient_bg.dart';
@@ -48,6 +49,7 @@ class _FormularioAdopcionState extends ConsumerState<FormularioAdopcion> {
   }
 
   Future<void> _guardarAdopcion(animal) async {
+    final l10n = AppLocalizations.of(context)!;
     final nuevaAdopcion = Adopcion(
       idAnimal: int.parse(animal.idAnimal),
       nombreAnimal: animal.nombre,
@@ -62,7 +64,7 @@ class _FormularioAdopcionState extends ConsumerState<FormularioAdopcion> {
     await ref.read(adopcionesProvider.notifier).addAdopcion(nuevaAdopcion);
 
     ScaffoldMessenger.of(context).showSnackBar(
-      const SnackBar(content: Text('Solicitud guardada correctamente')),
+      SnackBar(content: Text(l10n.avisosolicitudguardada)),
     );
 
     Navigator.pop(context);
@@ -70,17 +72,18 @@ class _FormularioAdopcionState extends ConsumerState<FormularioAdopcion> {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
     final animalesAsync = ref.watch(animalesProvider);
 
     return Scaffold(
-      appBar: customAppBar(context, "Formulario Adopción"),
+      appBar: customAppBar(context, l10n.tituloFormulario),
       body: animalesAsync.when(
         loading: () => const Center(child: CircularProgressIndicator()),
         error: (e, _) => Center(child: Text('Error: $e')),
         data: (animales) {
           final animal = animales.firstWhere(
             (animal) => animal.idAnimal == widget.seleccionado,
-            orElse: () => throw Exception('Animal no encontrado'),
+            orElse: () => throw Exception(l10n.animalnoencontrado),
           );
 
           return Padding(
@@ -114,13 +117,13 @@ class _FormularioAdopcionState extends ConsumerState<FormularioAdopcion> {
                     child: Column(
                       children: [
                         AppInputText(
-                          label: 'Nombre del animal',
+                          label: l10n.nombreAnimal,
                           seleccion: animal.nombre,
                           readOnly: true,
                         ),
                         const SizedBox(height: 12),
                         AppInputText(
-                          label: 'Chip',
+                          label: l10n.chipAnimal,
                           seleccion: animal.chip,
                           readOnly: true,
                         ),
@@ -145,12 +148,12 @@ class _FormularioAdopcionState extends ConsumerState<FormularioAdopcion> {
                       child: Column(
                         children: [
                           AppInputText(
-                            label: 'Nombre del Adoptante',
+                            label: l10n.nombreAdoptante,
                             controller: _nombreCtrl,
                             color: appPaletteOf(context).cardGreen,
                             validator: (value) {
                               if (value == null || value.isEmpty) {
-                                return 'El Nombre es obligatorio';
+                                return l10n.comprobantenombreAdoptante;
                               }
                               return null;
                             },
@@ -160,12 +163,12 @@ class _FormularioAdopcionState extends ConsumerState<FormularioAdopcion> {
                             children: [
                               Expanded(
                                 child: AppInputText(
-                                  label: 'Primer apellido',
+                                  label: l10n.primerApellidoAdoptante,
                                   controller: _apellido1Ctrl,
                                   color: appPaletteOf(context).cardGreen,
                                   validator: (value) {
                                     if (value == null || value.isEmpty) {
-                                      return 'El Primer Apellido es obligatorio';
+                                      return l10n.comprobantePrimerApellidoAdoptante;
                                     }
                                     return null;
                                   },
@@ -174,12 +177,12 @@ class _FormularioAdopcionState extends ConsumerState<FormularioAdopcion> {
                               const SizedBox(width: 12),
                               Expanded(
                                 child: AppInputText(
-                                  label: 'Segundo apellido',
+                                  label: l10n.segundoApellidoAdoptante,
                                   controller: _apellido2Ctrl,
                                   color: appPaletteOf(context).cardGreen,
                                   validator: (value) {
                                     if (value == null || value.isEmpty) {
-                                      return 'El Segundo Apellido es obligatorio';
+                                      return l10n.comprobanteSegundoApellidoAdoptante;
                                     }
                                     return null;
                                   },
@@ -192,17 +195,17 @@ class _FormularioAdopcionState extends ConsumerState<FormularioAdopcion> {
                             children: [
                               Expanded(
                                 child: AppInputText(
-                                  label: 'DNI',
+                                  label: l10n.DNIAdoptante,
                                   controller: _dniCtrl,
                                   color: appPaletteOf(context).cardGreen,
                                   validator: (value) {
                                     if (value == null || value.isEmpty) {
-                                      return 'El DNI es obligatorio';
+                                      return l10n.comprobanteDNIAdoptante;
                                     }
 
                                     final dniRegex = RegExp(r'^[0-9]{8}[A-Z]$');
                                     if (!dniRegex.hasMatch(value)) {
-                                      return 'Formato de DNI inválido (12345678A)';
+                                      return l10n.comprobanteFormatoDNIAdoptante;
                                     }
 
                                     return null;
@@ -212,16 +215,16 @@ class _FormularioAdopcionState extends ConsumerState<FormularioAdopcion> {
                               const SizedBox(width: 12),
                               Expanded(
                                 child: AppInputText(
-                                  label: 'Teléfono',
+                                  label: l10n.telefonoAdoptante,
                                   controller: _telefonoCtrl,
                                   color: appPaletteOf(context).cardGreen,
                                   validator: (value) {
                                     if (value == null || value.isEmpty) {
-                                      return 'El Teléfono es obligatorio';
+                                      return l10n.comprobantetelefonoAdoptante;
                                     }
                                     final numero = int.tryParse(value);
                                     if (numero == null) {
-                                      return 'Se esperaba un valor numérico';
+                                      return l10n.comprobanteFormatotelefonoAdoptante;
                                     }
                                     return null;
                                   },
@@ -231,46 +234,46 @@ class _FormularioAdopcionState extends ConsumerState<FormularioAdopcion> {
                           ),
                           const SizedBox(height: 12),
                           AppInputText(
-                            label: 'Correo electrónico',
+                            label: l10n.correoAdoptante,
                             controller: _emailCtrl,
                             color: appPaletteOf(context).cardGreen,
                             validator: (value) {
                               if (value == null || value.isEmpty) {
-                                return 'El correo es obligatorio';
+                                return l10n.comporbanteCorreoAdoptante;
                               }
                               final emailRegex = RegExp(
                                 r'^[^@]+@[^@]+\.[^@]+$',
                               );
                               if (!emailRegex.hasMatch(value)) {
-                                return 'Formato de correo no válido';
+                                return l10n.comporbanteFormatoCorreoAdoptante;
                               }
                               return null;
                             },
                           ),
                           const SizedBox(height: 12),
                           AppInputText(
-                            label: 'Dirección',
+                            label: l10n.direccionAdoptante,
                             controller: _direccionCtrl,
                             color: appPaletteOf(context).cardGreen,
                             validator: (value) {
                               if (value == null || value.isEmpty) {
-                                return 'La Dirección es obligatoria';
+                                return l10n.comprobanteDireccionAdoptante;
                               }
                               return null;
                             },
                           ),
                           const SizedBox(height: 12),
                           AppInputText(
-                            label: 'Código postal',
+                            label: l10n.codigopostalAdoptante,
                             controller: _cpCtrl,
                             color: appPaletteOf(context).cardGreen,
                             validator: (value) {
                               if (value == null || value.isEmpty) {
-                                return 'El CP es obligatorio';
+                                return l10n.comprobanteCodigopostalAdoptante;
                               }
                               final numero = int.tryParse(value);
                               if (numero == null) {
-                                return 'Se esperaba un valor numérico';
+                                return l10n.comprobanteFormatoCodigopostalAdoptante;
                               }
                               return null;
                             },
@@ -280,12 +283,12 @@ class _FormularioAdopcionState extends ConsumerState<FormularioAdopcion> {
                             children: [
                               Expanded(
                                 child: AppInputText(
-                                  label: 'Localidad',
+                                  label: l10n.localidadAdoptante,
                                   controller: _localidadCtrl,
                                   color: appPaletteOf(context).cardGreen,
                                   validator: (value) {
                                     if (value == null || value.isEmpty) {
-                                      return 'La Localidad es obligatoria';
+                                      return l10n.comprobantelocalidadAdoptante;
                                     }
                                     return null;
                                   },
@@ -294,12 +297,12 @@ class _FormularioAdopcionState extends ConsumerState<FormularioAdopcion> {
                               const SizedBox(width: 12),
                               Expanded(
                                 child: AppInputText(
-                                  label: 'Provincia',
+                                  label: l10n.provinciaAdoptante,
                                   controller: _provinciaCtrl,
                                   color: appPaletteOf(context).cardGreen,
                                   validator: (value) {
                                     if (value == null || value.isEmpty) {
-                                      return 'La Provincia es obligatoria';
+                                      return l10n.comprobanteProvinciaAdoptante;
                                     }
                                     return null;
                                   },
@@ -310,7 +313,7 @@ class _FormularioAdopcionState extends ConsumerState<FormularioAdopcion> {
                           const SizedBox(height: 20),
                           Center(
                             child: AppButton(
-                              label: "Enviar Solicitud",
+                              label: l10n.enviarSolicitud,
                               onPressed: () {
                                 if (_formKey.currentState!.validate()) {
                                   _guardarAdopcion(animal);

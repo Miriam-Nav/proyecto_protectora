@@ -40,7 +40,7 @@ class _CrearAnimalState extends ConsumerState<CrearAnimal> {
     final animalesAsync = ref.watch(animalesProvider);
 
     return Scaffold(
-      appBar: customAppBar(context, "Gestional Animales"),
+      appBar: customAppBar(context, l10n.gestionarAnimales),
       body: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 24.0, vertical: 16.0),
         child: ListView(
@@ -56,11 +56,11 @@ class _CrearAnimalState extends ConsumerState<CrearAnimal> {
               error: (e, _) => Text('Error: $e'),
               data: (animales) {
                 if (animales.isEmpty) {
-                  return const Text('No hay animales registrados');
+                  return Text(l10n.noAnimalesRegistrados);
                 }
 
                 return DropdownButton<Animales>(
-                  hint: const Text('Selecciona un animal para editar'),
+                  hint: Text(l10n.seleccionarAnimalEdicion),
                   value: controller.seleccionado,
                   items: animales.map((animal) {
                     return DropdownMenuItem(
@@ -87,21 +87,21 @@ class _CrearAnimalState extends ConsumerState<CrearAnimal> {
                     children: [
                       Expanded(
                         child: AppInputText(
-                          label: 'Nombre',
+                          label: l10n.nombreAnimal,
                           controller: controller.nombreCtrl,
                         ),
                       ),
                       const SizedBox(width: 12),
                       Expanded(
                         child: AppInputText(
-                          label: 'Sexo',
+                          label: l10n.sexoAnimal,
                           controller: controller.sexoCtrl,
                         ),
                       ),
                       const SizedBox(width: 12),
                       Expanded(
                         child: AppInputText(
-                          label: 'Fecha nacimiento',
+                          label: l10n.fechaNacimientoAnimal,
                           controller: controller.fechaCtrl,
                         ),
                       ),
@@ -112,14 +112,14 @@ class _CrearAnimalState extends ConsumerState<CrearAnimal> {
                     children: [
                       Expanded(
                         child: AppInputText(
-                          label: 'Raza',
+                          label: l10n.razaAnimal,
                           controller: controller.razaCtrl,
                         ),
                       ),
                       const SizedBox(width: 12),
                       Expanded(
                         child: AppInputText(
-                          label: 'Tipo',
+                          label: l10n.tipoAnimal,
                           controller: controller.tipoCtrl,
                         ),
                       ),
@@ -130,24 +130,24 @@ class _CrearAnimalState extends ConsumerState<CrearAnimal> {
                     children: [
                       Expanded(
                         child: AppInputText(
-                          label: 'Esterilizado',
+                          label: l10n.esterelizadoAnimal,
                           controller: controller.esterilizadoCtrl,
                         ),
                       ),
                       const SizedBox(width: 12),
                       Expanded(
                         child: AppInputText(
-                          label: 'Chip',
+                          label: l10n.chipAnimal,
                           controller: controller.chipCtrl,
                         ),
                       ),
                     ],
                   ),
                   const SizedBox(height: 12),
-                  AppInputText(label: 'Foto', controller: controller.fotoCtrl),
+                  AppInputText(label: l10n.fotoAnimal, controller: controller.fotoCtrl),
                   const SizedBox(height: 12),
                   AppInputText(
-                    label: 'Descripción',
+                    label: l10n.descripcionAnimal,
                     controller: controller.descripcionCtrl,
                   ),
 
@@ -157,18 +157,18 @@ class _CrearAnimalState extends ConsumerState<CrearAnimal> {
                     children: [
                       const SizedBox(width: 12),
                       AppButton(
-                        label: "Crear Animal",
+                        label: l10n.crearAnimal,
                         onPressed: () => controller.crear(ref, context),
                       ),
                       const SizedBox(width: 12),
                       AppButton(
-                        label: "Guardar Cambios",
+                        label: l10n.guardarCambiosAnimal,
                         onPressed: () =>
                             controller.guardarCambios(ref, context),
                       ),
                       const SizedBox(width: 12),
                       AppButton(
-                        label: "Eliminar Animal",
+                        label: l10n.eliminarAnimal,
                         onPressed: () async {
                           await controller.eliminar(ref, context);
                           setState(() {});

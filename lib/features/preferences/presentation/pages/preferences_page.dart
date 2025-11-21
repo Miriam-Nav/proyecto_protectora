@@ -75,6 +75,7 @@ class _PreferencesPageState extends ConsumerState<PreferencesPage> {
                 dropdownMenuEntries: [
                   DropdownMenuEntry(value: 'es', label: 'ES'),
                   DropdownMenuEntry(value: 'en', label: 'EN'),
+                  DropdownMenuEntry(value: 'it', label: 'IT'),
                 ],
               ),
             ],

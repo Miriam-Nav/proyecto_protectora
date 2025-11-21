@@ -17,7 +17,7 @@ class AnimalListPage extends ConsumerWidget {
     final l10n = AppLocalizations.of(context)!;
     final animales = ref.watch(animalesProvider);
     return Scaffold(
-      appBar: customAppBar(context, "Animales", showDrawer: true),
+      appBar: customAppBar(context, l10n.tituloAnimales, showDrawer: true),
       drawer: const ProtectoraDrawer(),
 
       body: Padding(

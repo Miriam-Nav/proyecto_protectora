@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:proyecto_protectora/app/theme/app_palette.dart';
+import 'package:proyecto_protectora/core/l10n/app_localizations.dart';
 import 'package:proyecto_protectora/core/widgets/app_button.dart';
 import 'package:proyecto_protectora/features/protectora/data/models/animales.dart';
 import 'package:proyecto_protectora/features/protectora/presentation/providers/fav_animal_provider.dart';
@@ -36,6 +37,7 @@ enum AppMascotaCardVariant {
 }
 
 class MascotaFavCard extends ConsumerWidget {
+  
   final Animales animal;
   final AppMascotaCardVariant variant;
   final bool showAdoptButton;
@@ -53,6 +55,7 @@ class MascotaFavCard extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final l10n = AppLocalizations.of(context)!;
     final palette = appPaletteOf(context);
     final favAnimals = ref.watch(favAnimalProvider);
 
@@ -103,7 +106,7 @@ class MascotaFavCard extends ConsumerWidget {
                   Wrap(
                     children: [
                       Text(
-                        '🟠 Sexo: ',
+                        '🟠 ${l10n.sexoAnimal}: ',
                         style: Theme.of(context).textTheme.titleSmall?.copyWith(
                           fontWeight: FontWeight.bold,
                         ),
@@ -118,7 +121,7 @@ class MascotaFavCard extends ConsumerWidget {
                   Wrap(
                     children: [
                       Text(
-                        '🟠 Raza: ',
+                        '🟠  ${l10n.razaAnimal}: ',
                         style: Theme.of(context).textTheme.titleSmall?.copyWith(
                           fontWeight: FontWeight.bold,
                         ),
@@ -133,7 +136,7 @@ class MascotaFavCard extends ConsumerWidget {
                   Wrap(
                     children: [
                       Text(
-                        '🟠 Fecha de nacimiento: ',
+                        '🟠  ${l10n.fechaNacimientoAnimal}: ',
                         style: Theme.of(context).textTheme.titleSmall?.copyWith(
                           fontWeight: FontWeight.bold,
                         ),
@@ -148,7 +151,7 @@ class MascotaFavCard extends ConsumerWidget {
                   Wrap(
                     children: [
                       Text(
-                        '🟠 Esterilizado: ',
+                        '🟠  ${l10n.esterelizadoAnimal}: ',
                         style: Theme.of(context).textTheme.titleSmall?.copyWith(
                           fontWeight: FontWeight.bold,
                         ),
@@ -163,7 +166,7 @@ class MascotaFavCard extends ConsumerWidget {
                   Wrap(
                     children: [
                       Text(
-                        '🟠 Chip: ',
+                        '🟠  ${l10n.chipAnimal}: ',
                         style: Theme.of(context).textTheme.titleSmall?.copyWith(
                           fontWeight: FontWeight.bold,
                         ),
@@ -178,7 +181,7 @@ class MascotaFavCard extends ConsumerWidget {
                   Wrap(
                     children: [
                       Text(
-                        '🟠 Descripción: ',
+                        '🟠  ${l10n.descripcionAnimal}: ',
                         style: Theme.of(context).textTheme.titleSmall?.copyWith(
                           fontWeight: FontWeight.bold,
                         ),
@@ -200,7 +203,7 @@ class MascotaFavCard extends ConsumerWidget {
                     children: [
                       if (showAdoptButton)
                         AppButtonBorde(
-                          label: 'Adoptar',
+                          label: l10n.adoptar,
                           onPressed: onAdoptPressed,
                           borderColor: appPaletteOf(context).cardGreen,
                         ),

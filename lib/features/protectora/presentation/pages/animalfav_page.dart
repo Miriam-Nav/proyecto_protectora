@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:proyecto_protectora/core/l10n/app_localizations.dart';
 import 'package:proyecto_protectora/core/widgets/app_animal_card.dart';
 import 'package:proyecto_protectora/core/widgets/gradient_bg.dart';
 import 'package:proyecto_protectora/features/protectora/data/models/animales.dart';
@@ -13,10 +14,11 @@ class FavAnimalesPage extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final l10n = AppLocalizations.of(context)!;
     final Set<Animales> favAnimales = ref.watch(favAnimalProvider);
 
     return Scaffold(
-      appBar: customAppBar(context, "Favoritos", showDrawer: true),
+      appBar: customAppBar(context, l10n.tituloFavoritos, showDrawer: true),
       drawer: const ProtectoraDrawer(),
       body: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 24.0, vertical: 16.0),

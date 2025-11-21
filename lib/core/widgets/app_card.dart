@@ -121,7 +121,7 @@ class AppInfoCard extends StatelessWidget {
   final VoidCallback? onTap;
   final AppCardVariant variant;
 
-  const AppInfoCard({
+  const AppInfoCard( {
     super.key,
     required this.title,
     required this.subtitle,
