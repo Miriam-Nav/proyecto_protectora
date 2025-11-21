@@ -32,7 +32,7 @@ class ClientPage extends ConsumerWidget {
     final ultimosAnimales = ref.watch(ultimosAnimalesProvider);
 
     return Scaffold(
-      appBar: customAppBar(context, "Protectora", showDrawer: true),
+      appBar: customAppBar(context, l10n.tituloProtectora, showDrawer: true),
 
       drawer: ProtectoraDrawer(),
 
@@ -44,7 +44,7 @@ class ClientPage extends ConsumerWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  'Novedades',
+                  l10n.subtituloNovedades,
                   style: Theme.of(context).textTheme.headlineLarge,
                   textAlign: TextAlign.left,
                 ),
@@ -106,7 +106,7 @@ class ClientPage extends ConsumerWidget {
             ),
             SizedBox(height: 24),
             Text(
-              'Noticias y Eventos',
+              l10n.noticiasEventos,
               style: Theme.of(context).textTheme.headlineLarge,
               textAlign: TextAlign.left,
             ),

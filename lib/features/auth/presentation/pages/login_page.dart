@@ -57,6 +57,7 @@ class _LoginPageState extends ConsumerState<LoginPage> {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
     final palette = appPaletteOf(context);
 
     return Scaffold(
@@ -101,7 +102,7 @@ class _LoginPageState extends ConsumerState<LoginPage> {
                     const SizedBox(height: 24),
 
                     // Usuario
-                    AppInputText(label: 'Usuario', controller: _userCtrl),
+                    AppInputText(label: l10n.usuario, controller: _userCtrl),
                     const SizedBox(height: 20),
 
                     // Contraseña

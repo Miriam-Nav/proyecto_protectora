@@ -40,7 +40,7 @@ class _CrearAnimalState extends ConsumerState<CrearAnimal> {
     final animalesAsync = ref.watch(animalesProvider);
 
     return Scaffold(
-      appBar: customAppBar(context, "Gestional Animales"),
+      appBar: customAppBar(context, l10n.gestionarAnimales),
       body: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 24.0, vertical: 16.0),
         child: ListView(
@@ -56,11 +56,11 @@ class _CrearAnimalState extends ConsumerState<CrearAnimal> {
               error: (e, _) => Text('Error: $e'),
               data: (animales) {
                 if (animales.isEmpty) {
-                  return const Text('No hay animales registrados');
+                  return Text(l10n.noAnimalesRegistrados);
                 }
 
                 return DropdownButton<Animales>(
-                  hint: const Text('Selecciona un animal para editar'),
+                  hint: Text(l10n.seleccionarAnimalEdicion),
                   value: controller.seleccionado,
                   items: animales.map((animal) {
                     return DropdownMenuItem(
@@ -87,7 +87,7 @@ class _CrearAnimalState extends ConsumerState<CrearAnimal> {
                     children: [
                       Expanded(
                         child: AppInputText(
-                          label: 'Nombre',
+                          label: l10n.nombreAnimal,
                           controller: controller.nombreCtrl,
                           validator: (v) => v == null || v.isEmpty
                               ? 'Nombre obligatorio'
@@ -96,18 +96,16 @@ class _CrearAnimalState extends ConsumerState<CrearAnimal> {
                       ),
                       const SizedBox(width: 12),
                       Expanded(
-                        child: AppInputSelect<Sexo>(
-                          label: 'Sexo',
-                          value: controller.seleccionado?.sexo,
-                          items: Sexo.values,
-                          itemLabel: sexoLabel,
-                          onChanged: (value) {
-                            if (value != null) {
-                              controller.sexoCtrl.text = value.name;
-                            }
-                          },
-                          validator: (value) =>
-                              value == null ? 'Selecciona sexo' : null,
+                        child: AppInputText(
+                          label: l10n.sexoAnimal,
+                          controller: controller.sexoCtrl,
+                        ),
+                      ),
+                      const SizedBox(width: 12),
+                      Expanded(
+                        child: AppInputText(
+                          label: l10n.fechaNacimientoAnimal,
+                          controller: controller.fechaCtrl,
                         ),
                       ),
                     ],
@@ -117,7 +115,7 @@ class _CrearAnimalState extends ConsumerState<CrearAnimal> {
                     children: [
                       Expanded(
                         child: AppInputText(
-                          label: 'Raza',
+                          label: l10n.razaAnimal,
                           controller: controller.razaCtrl,
                           validator: (v) => v == null || v.isEmpty
                               ? 'Raza obligatoria'
@@ -126,18 +124,9 @@ class _CrearAnimalState extends ConsumerState<CrearAnimal> {
                       ),
                       const SizedBox(width: 12),
                       Expanded(
-                        child: AppInputSelect<TipoAnimal>(
-                          label: 'Tipo',
-                          value: controller.seleccionado?.tipo,
-                          items: TipoAnimal.values,
-                          itemLabel: tipoLabel,
-                          onChanged: (value) {
-                            if (value != null) {
-                              controller.tipoCtrl.text = value.name;
-                            }
-                          },
-                          validator: (value) =>
-                              value == null ? 'Selecciona tipo' : null,
+                        child: AppInputText(
+                          label: l10n.tipoAnimal,
+                          controller: controller.tipoCtrl,
                         ),
                       ),
                     ],
@@ -147,61 +136,18 @@ class _CrearAnimalState extends ConsumerState<CrearAnimal> {
                     children: [
                       // Fecha con date picker
                       Expanded(
-                        child: TextFormField(
-                          controller: controller.fechaCtrl,
-                          readOnly: true,
-                          decoration: InputDecoration(
-                            labelText: 'Fecha nacimiento',
-                            enabledBorder: UnderlineInputBorder(
-                              borderSide: BorderSide(
-                                color: appPaletteOf(context).primary,
-                                width: 1.5,
-                              ),
-                            ),
-                            focusedBorder: UnderlineInputBorder(
-                              borderSide: BorderSide(
-                                color: appPaletteOf(context).secondary,
-                                width: 2,
-                              ),
-                            ),
-                            floatingLabelStyle: TextStyle(
-                              color: appPaletteOf(context).secondary,
-                            ),
-                          ),
-                          onTap: () async {
-                            final picked = await showDatePicker(
-                              context: context,
-                              initialDate: DateTime.now(),
-                              firstDate: DateTime(2000),
-                              lastDate: DateTime.now(),
-                            );
-                            if (picked != null) {
-                              controller.fechaCtrl.text = picked
-                                  .toIso8601String()
-                                  .split('T')
-                                  .first;
-                            }
-                          },
-                          validator: (v) => v == null || v.isEmpty
-                              ? 'Fecha obligatoria'
-                              : null,
+                        child: AppInputText(
+                          label: l10n.esterelizadoAnimal,
+                          controller: controller.esterilizadoCtrl,
                         ),
                       ),
 
                       const SizedBox(width: 12),
                       // Esterilizado como checkbox
                       Expanded(
-                        child: CheckboxListTile(
-                          title: const Text('Esterilizado'),
-                          value:
-                              controller.esterilizadoCtrl.text.toLowerCase() ==
-                              "sí",
-                          onChanged: (checked) {
-                            controller.esterilizadoCtrl.text = checked == true
-                                ? "Sí"
-                                : "No";
-                            setState(() {});
-                          },
+                        child: AppInputText(
+                          label: l10n.chipAnimal,
+                          controller: controller.chipCtrl,
                         ),
                       ),
                     ],
@@ -210,18 +156,10 @@ class _CrearAnimalState extends ConsumerState<CrearAnimal> {
                   const SizedBox(height: 12),
                   AppInputText(label: 'Chip', controller: controller.chipCtrl),
                   const SizedBox(height: 12),
-                  AppInputText(
-                    label: 'Foto',
-                    controller: controller.fotoCtrl,
-                    validator: (value) {
-                      if (value == null || value.isEmpty) {
-                        return 'La foto es obligatoria';
-                      }
-                    },
-                  ),
+                  AppInputText(label: l10n.fotoAnimal, controller: controller.fotoCtrl),
                   const SizedBox(height: 12),
                   AppInputText(
-                    label: 'Descripción Breve',
+                    label: l10n.descripcionAnimal,
                     controller: controller.descripcionCtrl,
                     validator: (value) {
                       if (value == null || value.isEmpty) {
@@ -238,25 +176,18 @@ class _CrearAnimalState extends ConsumerState<CrearAnimal> {
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       AppButton(
-                        label: "Crear Animal",
-                        onPressed: () {
-                          if (_formKey.currentState!.validate()) {
-                            controller.crear(ref, context);
-                          }
-                        },
+                        label: l10n.crearAnimal,
+                        onPressed: () => controller.crear(ref, context),
                       ),
                       const SizedBox(width: 12),
                       AppButton(
-                        label: "Guardar Cambios",
-                        onPressed: () {
-                          if (_formKey.currentState!.validate()) {
-                            controller.guardarCambios(ref, context);
-                          }
-                        },
+                        label: l10n.guardarCambiosAnimal,
+                        onPressed: () =>
+                            controller.guardarCambios(ref, context),
                       ),
                       const SizedBox(width: 12),
                       AppButton(
-                        label: "Eliminar Animal",
+                        label: l10n.eliminarAnimal,
                         onPressed: () async {
                           await controller.eliminar(ref, context);
                           setState(() {});

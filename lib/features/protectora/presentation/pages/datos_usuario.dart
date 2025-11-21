@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:proyecto_protectora/core/l10n/app_localizations.dart';
 import 'package:proyecto_protectora/core/widgets/app_input_text.dart';
 import 'package:proyecto_protectora/features/auth/data/models/user_model.dart';
 import 'package:proyecto_protectora/features/protectora/presentation/widgets/appbar.dart';
@@ -10,8 +11,9 @@ class DatosUsuario extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+     final l10n = AppLocalizations.of(context)!;
     return Scaffold(
-      appBar: customAppBar(context, "Datos de Usuario"),
+      appBar: customAppBar(context, l10n.tituloDatos),
       body: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 24.0, vertical: 16.0),
         child: ListView(
@@ -30,13 +32,13 @@ class DatosUsuario extends StatelessWidget {
                   ),
                   const SizedBox(height: 25),
                   AppInputText(
-                    label: 'Usuario',
+                    label: l10n.usuario,
                     seleccion: usuario.username,
                     readOnly: true,
                   ),
                   const SizedBox(height: 15),
                   AppInputText(
-                    label: 'Nombre',
+                    label: l10n.nombreAdoptante,
                     seleccion: usuario.firstName,
                     readOnly: true,
                   ),
@@ -45,7 +47,7 @@ class DatosUsuario extends StatelessWidget {
                     children: [
                       Expanded(
                         child: AppInputText(
-                          label: 'Primer apellido',
+                          label: l10n.primerApellidoAdoptante,
                           seleccion: usuario.lastName,
                           readOnly: true,
                         ),
@@ -53,7 +55,7 @@ class DatosUsuario extends StatelessWidget {
                       const SizedBox(width: 12),
                       Expanded(
                         child: AppInputText(
-                          label: 'Segundo apellido',
+                          label: l10n.segundoApellidoAdoptante,
                           seleccion: usuario.maidenName,
                           readOnly: true,
                         ),
@@ -65,7 +67,7 @@ class DatosUsuario extends StatelessWidget {
                     children: [
                       Expanded(
                         child: AppInputText(
-                          label: 'DNI',
+                          label: l10n.DNIAdoptante,
                           seleccion: usuario.id.toString(),
                           readOnly: true,
                         ),
@@ -73,7 +75,7 @@ class DatosUsuario extends StatelessWidget {
                       const SizedBox(width: 12),
                       Expanded(
                         child: AppInputText(
-                          label: 'Número de teléfono',
+                          label: l10n.telefonoAdoptante,
                           seleccion: usuario.phone,
                           readOnly: true,
                         ),
@@ -82,13 +84,13 @@ class DatosUsuario extends StatelessWidget {
                   ),
                   const SizedBox(height: 15),
                   AppInputText(
-                    label: 'Correo electrónico',
+                    label: l10n.correoAdoptante,
                     seleccion: usuario.email,
                     readOnly: true,
                   ),
                   const SizedBox(height: 15),
                   AppInputText(
-                    label: 'Fecha de nacimiento',
+                    label: l10n.fechaNacimiento,
                     seleccion: usuario.birthDate,
                     readOnly: true,
                   ),

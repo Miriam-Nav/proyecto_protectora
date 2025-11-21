@@ -28,29 +28,25 @@ class HomePage extends StatelessWidget {
           children: [
             const SizedBox(height: 5),
             Text(
-              'Bienvenido/a, ${user.username}',
+              '${l10n.welcome}, ${user.username}',
               style: Theme.of(context).textTheme.headlineLarge?.copyWith(
                 fontWeight: FontWeight.bold,
                 color: appPaletteOf(context).secondary,
               ),
             ),
             const SizedBox(height: 24),
-            Consumer(
-              builder: (context, ref, _) {
-                final adopcionesAsync = ref.watch(adopcionesProvider);
-
-                return adopcionesAsync.when(
-                  loading: () => const CircularProgressIndicator(),
-                  error: (e, _) => Text('Error: $e'),
-                  data: (adopciones) {
-                    return AppNotiCard(
-                      title: "Total de Solicitudes de Adopción",
-                      text: "Adopciones por revisar: ${adopciones.length}",
-                      variant: AppCardVariant.cardBlue,
-                    );
-                  },
-                );
-              },
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Padding(
+                  padding: EdgeInsets.all(5),
+                  child: AppNotiCard(
+                    title: l10n.visitaveterinario,
+                    text: l10n.visitaveterinarioText,
+                    variant: AppCardVariant.cardBlue,
+                  ),
+                ),
+              ],
             ),
 
             SizedBox(height: 24),
@@ -58,13 +54,14 @@ class HomePage extends StatelessWidget {
             Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                // Text(
-                //   'Acciones',
-                //   style: Theme.of(context).textTheme.headlineLarge,
-                // ),
+                Text(
+                  l10n.acciones,
+                  style: Theme.of(context).textTheme.headlineLarge,
+                ),
+
                 AppRoundedActionButtonBorde(
                   leadingIcon: Icons.pets,
-                  label: 'Gestionar Animales',
+                  label: l10n.botonAciones,
                   onPressed: () => Navigator.of(
                     context,
                   ).push(MaterialPageRoute(builder: (_) => CrearAnimal())),
@@ -79,7 +76,7 @@ class HomePage extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  'Actividad reciente',
+                  l10n.actividadReciente,
                   style: Theme.of(context).textTheme.headlineLarge,
                 ),
 
@@ -93,12 +90,7 @@ class HomePage extends StatelessWidget {
                       error: (e, _) => Text('Error: $e'),
                       data: (adopciones) {
                         if (adopciones.isEmpty) {
-                          return const Padding(
-                            padding: EdgeInsets.symmetric(vertical: 12),
-                            child: Text(
-                              'No hay actividades recientes todavía.',
-                            ),
-                          );
+                          return Text(l10n.sinActividadReciente);
                         }
 
                         return Column(
@@ -110,11 +102,11 @@ class HomePage extends StatelessWidget {
                                 ),
                                 child: AppInfoCard(
                                   title:
-                                      '${adopcion.nombreAnimal} - Solicitud de Adopción',
+                                      '${adopcion.nombreAnimal}${l10n.actividadReciente}',
                                   subtitle:
                                       '${adopcion.fechaAdopcion.day}/${adopcion.fechaAdopcion.month}/${adopcion.fechaAdopcion.year} '
                                       '- ${adopcion.fechaAdopcion.hour}:${adopcion.fechaAdopcion.minute.toString().padLeft(2, '0')}',
-                                  badgeText: 'Adopción',
+                                  badgeText: l10n.adopcion,
                                   variant: AppCardVariant.cardGreen,
                                 ),
                               ),

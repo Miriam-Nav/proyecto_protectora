@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:proyecto_protectora/app/theme/app_palette.dart';
+import 'package:proyecto_protectora/core/l10n/app_localizations.dart';
 import 'package:proyecto_protectora/core/widgets/app_button.dart';
 import 'package:proyecto_protectora/features/protectora/data/models/animales.dart';
 import 'package:proyecto_protectora/features/protectora/presentation/providers/animal_provider.dart';
@@ -58,6 +59,7 @@ class AnimalController {
 
   /// Crear un nuevo animal
   Future<void> crear(WidgetRef ref, BuildContext context) async {
+    final l10n = AppLocalizations.of(context)!;
     await ref
         .read(animalesProvider.notifier)
         .addAnimal(
@@ -71,13 +73,14 @@ class AnimalController {
           descripcion: descripcionCtrl.text,
           foto: fotoCtrl.text,
         );
-    ScaffoldMessenger.of(context).showSnackBar(
-      const SnackBar(content: Text('Animal creado correctamente')),
-    );
+    ScaffoldMessenger.of(
+      context,
+    ).showSnackBar(SnackBar(content: Text(l10n.animalCreado)));
     limpiar();
   }
 
   Future<void> guardarCambios(WidgetRef ref, BuildContext context) async {
+    final l10n = AppLocalizations.of(context)!;
     if (seleccionado == null) return;
 
     final actualizado = seleccionado!.copyWith(
@@ -94,34 +97,34 @@ class AnimalController {
 
     await ref.read(animalesProvider.notifier).updateAnimal(actualizado);
 
-    ScaffoldMessenger.of(context).showSnackBar(
-      const SnackBar(content: Text('Animal actualizado correctamente')),
-    );
+    ScaffoldMessenger.of(
+      context,
+    ).showSnackBar(SnackBar(content: Text(l10n.animalActualizado)));
     limpiar();
   }
 
   /// Eliminar animal seleccionado
   Future<void> eliminar(WidgetRef ref, BuildContext context) async {
+    final l10n = AppLocalizations.of(context)!;
     if (seleccionado == null) return;
 
     final confirm = await showDialog<bool>(
       context: context,
       builder: (_) => AlertDialog(
         backgroundColor: appPaletteOf(context).background,
-        title: const Text('Confirmar eliminación'),
+        title: Text(l10n.confirmarEliminacion),
         content: Text(
-          '¿Estás seguro de que quieres eliminar a ${seleccionado!.nombre}?',
+          '${l10n.preguntarConfirmarEliminacion} ${seleccionado!.nombre}?',
         ),
         actions: [
           AppButton(
             onPressed: () => Navigator.of(context).pop(false),
-            label: 'Cancelar',
-            variant: AppButtonVariant.secondary,
+            label: l10n.cancelar,
           ),
           AppButton(
             variant: AppButtonVariant.danger,
             onPressed: () => Navigator.of(context).pop(true),
-            label: 'Eliminar',
+            label: l10n.eliminar,
           ),
         ],
       ),
@@ -132,7 +135,7 @@ class AnimalController {
           .read(animalesProvider.notifier)
           .removeAnimal(seleccionado!.idAnimal);
       ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text('Animal eliminado correctamente')),
+        SnackBar(content: Text(l10n.animalEliminadoCorrectamente)),
       );
       limpiar();
     }

@@ -57,6 +57,11 @@ class _PreferencesPageState extends ConsumerState<PreferencesPage> {
                     _selDarkMode = val;
                   });
                 },
+                // dropdownMenuEntries: [
+                //   DropdownMenuEntry(value: 'es', label: 'ES'),
+                //   DropdownMenuEntry(value: 'en', label: 'EN'),
+                //   DropdownMenuEntry(value: 'it', label: 'IT'),
+                // ],
               ),
             ],
           ),
