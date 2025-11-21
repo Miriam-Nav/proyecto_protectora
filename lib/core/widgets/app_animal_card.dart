@@ -109,7 +109,7 @@ class MascotaFavCard extends ConsumerWidget {
                         ),
                       ),
                       Text(
-                        animal.sexo,
+                        animal.sexo == Sexo.macho ? 'Macho' : 'Hembra',
                         style: Theme.of(context).textTheme.bodyLarge,
                       ),
                     ],
@@ -139,7 +139,8 @@ class MascotaFavCard extends ConsumerWidget {
                         ),
                       ),
                       Text(
-                        animal.fNacimiento,
+                        
+                        animal.fNacimiento.toString(),
                         style: Theme.of(context).textTheme.bodyLarge,
                       ),
                     ],
@@ -154,7 +155,7 @@ class MascotaFavCard extends ConsumerWidget {
                         ),
                       ),
                       Text(
-                        animal.estereilizado,
+                        animal.esterilizado ? 'Sí' : 'No',
                         style: Theme.of(context).textTheme.bodyLarge,
                       ),
                     ],
@@ -169,7 +170,7 @@ class MascotaFavCard extends ConsumerWidget {
                         ),
                       ),
                       Text(
-                        animal.chip,
+                        animal.chip.toString(),
                         style: Theme.of(context).textTheme.bodyLarge,
                       ),
                     ],

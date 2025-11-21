@@ -3,18 +3,16 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:proyecto_protectora/app/theme/app_palette.dart';
 import 'package:proyecto_protectora/catalog/catalog_pages.dart';
 import 'package:proyecto_protectora/features/auth/controllers/auth_controller.dart';
-import 'package:proyecto_protectora/features/auth/data/models/user_model.dart';
 import 'package:proyecto_protectora/features/auth/presentation/pages/login_page.dart';
-import 'package:proyecto_protectora/features/auth/presentation/providers/user_provider.dart';
 import 'package:proyecto_protectora/features/preferences/presentation/pages/preferences_page.dart';
 import 'package:proyecto_protectora/features/protectora/presentation/pages/datos_usuario.dart';
-import 'package:proyecto_protectora/features/protectora/presentation/pages/home_page.dart';
 
 class ProtectoraDrawer extends ConsumerWidget {
   const ProtectoraDrawer({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final usuario = ref.watch(authControllerProvider).value;
     return Drawer(
       child: Container(
         color: appPaletteOf(context).background,
@@ -39,13 +37,27 @@ class ProtectoraDrawer extends ConsumerWidget {
                 child: Row(
                   children: [
                     const SizedBox(width: 10),
-                    Image.asset(
-                      "assets/images/gato_conn_perro_login.png",
-                      width: 60,
-                      height: 60,
-                      fit: BoxFit.contain,
+                    Container(
+                      decoration: BoxDecoration(
+                        shape: BoxShape.circle,
+                        border: Border.all(
+                          color: appPaletteOf(
+                            context,
+                          ).background.withOpacity(0.3),
+                          width: 2,
+                        ),
+                      ),
+                      child: CircleAvatar(
+                        radius: 32,
+                        backgroundColor: appPaletteOf(context).background,
+                        child: Image.asset(
+                          "assets/images/gato_conn_perro_login.png",
+                          width: 50,
+                          height: 50,
+                          fit: BoxFit.contain,
+                        ),
+                      ),
                     ),
-
                     const SizedBox(width: 20),
                     Expanded(
                       child: Column(
@@ -53,11 +65,20 @@ class ProtectoraDrawer extends ConsumerWidget {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text(
-                            'Protectora',
+                            usuario?.firstName ?? "Invitado",
                             style: Theme.of(context).textTheme.titleLarge
                                 ?.copyWith(
                                   color: appPaletteOf(context).onPrimary,
                                 ),
+                          ),
+                          const SizedBox(height: 4),
+                          Text(
+                            usuario?.email ?? "Sin correo",
+                            style: Theme.of(context).textTheme.bodyMedium
+                                ?.copyWith(
+                                  color: appPaletteOf(context).onPrimary,
+                                ),
+                            overflow: TextOverflow.fade,
                           ),
                         ],
                       ),
@@ -88,7 +109,7 @@ class ProtectoraDrawer extends ConsumerWidget {
               ),
 
               ListTile(
-                leading: const Icon(Icons.refresh),
+                leading: const Icon(Icons.settings),
                 title: const Text('Preferencias'),
                 onTap: () async {
                   Navigator.pop(context);
@@ -112,10 +133,45 @@ class ProtectoraDrawer extends ConsumerWidget {
                 },
               ),
 
-              const Divider(height: 1),
+              // Separador con patita
+              Padding(
+                padding: const EdgeInsets.symmetric(
+                  horizontal: 24,
+                  vertical: 8,
+                ),
+                child: Row(
+                  children: [
+                    Expanded(
+                      child: Divider(color: appPaletteOf(context).onMenuButton),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 12),
+                      child: Icon(
+                        Icons.pets,
+                        size: 20,
+                        color: appPaletteOf(context).onMenuButton,
+                      ),
+                    ),
+                    Expanded(
+                      child: Divider(color: appPaletteOf(context).onMenuButton),
+                    ),
+                  ],
+                ),
+              ),
+
               ListTile(
-                leading: const Icon(Icons.logout),
-                title: const Text('Cerrar sesión'),
+                leading: Icon(
+                  Icons.logout,
+                  color: appPaletteOf(context).danger,
+                ),
+                title: Text(
+                  'Cerrar sesión',
+                  style: TextStyle(
+                    color: appPaletteOf(context).danger,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+
                 onTap: () async {
                   Navigator.pop(context);
                   await ref.read(authControllerProvider.notifier).signOut();

@@ -232,17 +232,17 @@ class AppInfoCard extends StatelessWidget {
 class AppNotiCard extends StatelessWidget {
   final String title;
   final String text;
-  final String badgeText;
   final VoidCallback? onTap;
   final AppCardVariant variant;
+  final AppButton? button;
 
   const AppNotiCard({
     super.key,
     required this.title,
     required this.text,
-    required this.badgeText,
     this.onTap,
     this.variant = AppCardVariant.primary,
+    this.button,
   });
 
   @override
@@ -290,27 +290,22 @@ class AppNotiCard extends StatelessWidget {
                 // Título en negrita
                 Text(
                   title,
-                  style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                    fontWeight: FontWeight.bold,
-                    color: darkerColor,
-                  ),
+                  style: Theme.of(
+                    context,
+                  ).textTheme.titleLarge?.copyWith(color: darkerColor),
                 ),
               ],
             ),
 
             const SizedBox(height: 8),
             // Texto inferior
-            Text(text, style: Theme.of(context).textTheme.bodyMedium),
+            Text(text, style: Theme.of(context).textTheme.titleSmall),
 
             const SizedBox(height: 8),
             // Etiqueta
             Container(
               padding: const EdgeInsets.symmetric(horizontal: 3, vertical: 4),
-              child: AppButton(
-                label: 'Revisar',
-                onPressed: () {},
-                variant: AppButtonVariant.secondary,
-              ),
+              child: button,
             ),
           ],
         ),

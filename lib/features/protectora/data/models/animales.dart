@@ -3,12 +3,12 @@ import 'package:equatable/equatable.dart';
 class Animales extends Equatable {
   final String idAnimal;
   final String nombre;
-  final String sexo;
+  final Sexo sexo;
   final String raza;
-  final String tipo;
-  final String fNacimiento;
-  final String estereilizado;
-  final String chip;
+  final TipoAnimal tipo;
+  final DateTime fNacimiento;
+  final bool esterilizado;
+  final String? chip;
   final String descripcion;
   final String foto;
 
@@ -19,8 +19,8 @@ class Animales extends Equatable {
     required this.raza,
     required this.tipo,
     required this.fNacimiento,
-    required this.estereilizado,
-    required this.chip,
+    required this.esterilizado,
+    this.chip,
     required this.descripcion,
     required this.foto,
   });
@@ -28,26 +28,28 @@ class Animales extends Equatable {
   Animales copyWith({
     String? idAnimal,
     String? nombre,
-    String? sexo,
+    Sexo? sexo,
     String? raza,
-    String? tipo,
-    String? fNacimiento,
-    String? estereilizado,
+    TipoAnimal? tipo,
+    DateTime? fNacimiento,
+    bool? esterilizado,
     String? chip,
     String? descripcion,
     String? foto,
-  }) => Animales(
-    idAnimal: idAnimal ?? this.idAnimal,
-    nombre: nombre ?? this.nombre,
-    sexo: sexo ?? this.sexo,
-    raza: raza ?? this.raza,
-    tipo: tipo ?? this.tipo,
-    fNacimiento: fNacimiento ?? this.fNacimiento,
-    estereilizado: estereilizado ?? this.estereilizado,
-    chip: chip ?? this.chip,
-    descripcion: descripcion ?? this.descripcion,
-    foto: foto ?? this.foto,
-  );
+  }) {
+    return Animales(
+      idAnimal: idAnimal ?? this.idAnimal,
+      nombre: nombre ?? this.nombre,
+      sexo: sexo ?? this.sexo,
+      raza: raza ?? this.raza,
+      tipo: tipo ?? this.tipo,
+      fNacimiento: fNacimiento ?? this.fNacimiento,
+      esterilizado: esterilizado ?? this.esterilizado,
+      chip: chip ?? this.chip,
+      descripcion: descripcion ?? this.descripcion,
+      foto: foto ?? this.foto,
+    );
+  }
 
   @override
   List<Object?> get props => [
@@ -57,9 +59,14 @@ class Animales extends Equatable {
     raza,
     tipo,
     fNacimiento,
-    estereilizado,
+    esterilizado,
     chip,
     descripcion,
     foto,
   ];
 }
+
+// --- Enums para dar más semántica ---
+enum Sexo { macho, hembra }
+
+enum TipoAnimal { perro, gato, otro }

@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:proyecto_protectora/core/widgets/app_input_text.dart';
-import 'package:proyecto_protectora/core/widgets/gradient_bg.dart';
 import 'package:proyecto_protectora/features/auth/data/models/user_model.dart';
 import 'package:proyecto_protectora/features/protectora/presentation/widgets/appbar.dart';
 

@@ -58,8 +58,6 @@ class MainApp extends ConsumerWidget {
         GlobalWidgetsLocalizations.delegate,
         GlobalCupertinoLocalizations.delegate,
       ],
-      // home: AuthGate(builder: (user) => HomePage(user: user)),
-      // home: LoginPage(),
       home: AuthGate(builder: (user) => MenuButtons(user: user)),
     );
   }

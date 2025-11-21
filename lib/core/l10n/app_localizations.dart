@@ -81,7 +81,7 @@ class _AppLocalizationsDelegate
 AppLocalizations lookupAppLocalizations(Locale locale) {
   switch (locale.languageCode) {
     case 'en':
-    // return AppLocalizationsEn();
+      return AppLocalizationsEn();
     case 'es':
       return AppLocalizationsEs();
     case 'it':

@@ -4,15 +4,11 @@ import 'package:proyecto_protectora/app/theme/app_palette.dart';
 import 'package:proyecto_protectora/core/l10n/app_localizations.dart';
 import 'package:proyecto_protectora/core/widgets/app_button.dart';
 import 'package:proyecto_protectora/core/widgets/app_card.dart';
-import 'package:proyecto_protectora/core/widgets/gradient_bg.dart';
 import 'package:proyecto_protectora/features/auth/data/models/user_model.dart';
-import 'package:proyecto_protectora/features/auth/presentation/pages/login_page.dart';
 import 'package:proyecto_protectora/features/protectora/presentation/providers/adopcion_provider.dart';
 import 'package:proyecto_protectora/features/protectora/presentation/widgets/appbar.dart';
 import 'package:proyecto_protectora/features/protectora/presentation/widgets/drawer_page.dart';
-import 'package:proyecto_protectora/features/protectora/data/fakes/adopciones_datafake.dart';
 import 'package:proyecto_protectora/features/protectora/presentation/pages/crear_editar_animal.dart';
-import 'package:proyecto_protectora/features/protectora/presentation/pages/formulario_adopcion.dart';
 
 class HomePage extends StatelessWidget {
   final User user;
@@ -39,19 +35,22 @@ class HomePage extends StatelessWidget {
               ),
             ),
             const SizedBox(height: 24),
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Padding(
-                  padding: EdgeInsets.all(5),
-                  child: AppNotiCard(
-                    title: "Visita Veterinario",
-                    text: "Tienes 2 visitas al veterniario esta semana.",
-                    badgeText: "Revisar",
-                    variant: AppCardVariant.cardBlue,
-                  ),
-                ),
-              ],
+            Consumer(
+              builder: (context, ref, _) {
+                final adopcionesAsync = ref.watch(adopcionesProvider);
+
+                return adopcionesAsync.when(
+                  loading: () => const CircularProgressIndicator(),
+                  error: (e, _) => Text('Error: $e'),
+                  data: (adopciones) {
+                    return AppNotiCard(
+                      title: "Total de Solicitudes de Adopción",
+                      text: "Adopciones por revisar: ${adopciones.length}",
+                      variant: AppCardVariant.cardBlue,
+                    );
+                  },
+                );
+              },
             ),
 
             SizedBox(height: 24),
@@ -59,11 +58,10 @@ class HomePage extends StatelessWidget {
             Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text(
-                  'Acciones',
-                  style: Theme.of(context).textTheme.headlineLarge,
-                ),
-
+                // Text(
+                //   'Acciones',
+                //   style: Theme.of(context).textTheme.headlineLarge,
+                // ),
                 AppRoundedActionButtonBorde(
                   leadingIcon: Icons.pets,
                   label: 'Gestionar Animales',
@@ -95,8 +93,11 @@ class HomePage extends StatelessWidget {
                       error: (e, _) => Text('Error: $e'),
                       data: (adopciones) {
                         if (adopciones.isEmpty) {
-                          return const Text(
-                            'No hay adopciones registradas todavía.',
+                          return const Padding(
+                            padding: EdgeInsets.symmetric(vertical: 12),
+                            child: Text(
+                              'No hay actividades recientes todavía.',
+                            ),
                           );
                         }
 

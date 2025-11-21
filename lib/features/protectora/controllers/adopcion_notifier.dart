@@ -22,7 +22,7 @@ class AdopcionesNotifier extends AsyncNotifier<List<Adopcion>> {
     state = AsyncData(await _repo.fetchAll());
   }
 
-  Future<void> removeAdopcion(int idAnimal) async {
+  Future<void> removeAdopcion(String idAnimal) async {
     await _repo.removeAdopcion(idAnimal);
     state = AsyncData(await _repo.fetchAll());
   }

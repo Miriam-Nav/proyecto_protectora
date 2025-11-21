@@ -1,13 +1,10 @@
 import 'package:proyecto_protectora/features/protectora/data/models/adopcion_model.dart';
-import 'package:uuid/uuid.dart';
 
 class AdopcionesRepository {
-  final _uuid = const Uuid();
-
   // Lista interna de adopciones (datos falsos por ahora)
   var _adopcionesList = <Adopcion>[
     Adopcion(
-      idAnimal: 1,
+      idAnimal: "1",
       nombreAnimal: "Luna",
       chip: "CHIP12345",
       usuarioNombre: "Miriam García",
@@ -16,7 +13,7 @@ class AdopcionesRepository {
       fechaAdopcion: DateTime(2025, 11, 10, 15, 30),
     ),
     Adopcion(
-      idAnimal: 2,
+      idAnimal: "2",
       nombreAnimal: "Max",
       chip: "CHIP67890",
       usuarioNombre: "Carlos Pérez",
@@ -25,7 +22,7 @@ class AdopcionesRepository {
       fechaAdopcion: DateTime(2025, 11, 11, 10, 15),
     ),
     Adopcion(
-      idAnimal: 3,
+      idAnimal: "3",
       nombreAnimal: "Nala",
       chip: "CHIP54321",
       usuarioNombre: "Laura Sánchez",
@@ -42,7 +39,7 @@ class AdopcionesRepository {
   }
 
   /// Obtener una adopción por idAnimal
-  Future<Adopcion?> fetchOne(int idAnimal) async {
+  Future<Adopcion?> fetchOne(String idAnimal) async {
     await Future<void>.delayed(const Duration(milliseconds: 250));
     return _adopcionesList.firstWhere(
       (adopcion) => adopcion.idAnimal == idAnimal,
@@ -52,7 +49,7 @@ class AdopcionesRepository {
 
   /// Añadir una nueva adopción
   Future<Adopcion> addAdopcion({
-    required int idAnimal,
+    required String idAnimal,
     required String nombreAnimal,
     required String chip,
     required String usuarioNombre,
@@ -74,7 +71,7 @@ class AdopcionesRepository {
 
   /// Actualizar datos de una adopción
   Future<void> updateAdopcion(
-    int idAnimal, {
+    String idAnimal, {
     String? usuarioNombre,
     String? usuarioEmail,
     String? usuarioTelefono,
@@ -96,7 +93,7 @@ class AdopcionesRepository {
   }
 
   /// Eliminar una adopción
-  Future<void> removeAdopcion(int idAnimal) async {
+  Future<void> removeAdopcion(String idAnimal) async {
     _adopcionesList.removeWhere((a) => a.idAnimal == idAnimal);
   }
 }

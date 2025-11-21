@@ -3,7 +3,7 @@ import 'package:proyecto_protectora/app/theme/app_palette.dart';
 
 class AppTheme {
   static final TextTheme _textTheme = const TextTheme(
-    headlineLarge: TextStyle(fontSize: 28, fontWeight: FontWeight.w700),
+    headlineLarge: TextStyle(fontSize: 28, fontWeight: FontWeight.w600),
     headlineMedium: TextStyle(fontSize: 24, fontWeight: FontWeight.w600),
 
     titleLarge: TextStyle(fontSize: 20, fontWeight: FontWeight.w600),
@@ -28,8 +28,7 @@ class AppTheme {
       foregroundColor: appPaletteLight.onPrimary,
       // Sin sombra
       elevation: 0,
-      // Título centrado = false
-      centerTitle: false,
+
       // Reaccion del AppBar al scroll
       // surfaceTintColor: Color.fromARGB(255, 98, 89, 84),
       surfaceTintColor: Colors.transparent,
@@ -48,6 +47,7 @@ class AppTheme {
       onError: appPaletteLight.onDanger,
     ),
     textTheme: _textTheme,
+    fontFamily: 'NunitoSans',
   );
 
   static ThemeData dark = ThemeData(
@@ -56,7 +56,6 @@ class AppTheme {
     scaffoldBackgroundColor: appPaletteDark.background,
     appBarTheme: AppBarTheme(
       backgroundColor: appPaletteDark.primary,
-      centerTitle: false,
       surfaceTintColor: Colors.transparent,
       titleTextStyle: _textTheme.headlineLarge?.copyWith(
         color: appPaletteDark.onMenuButton,

@@ -1,10 +1,10 @@
 import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:proyecto_protectora/app/theme/app_palette.dart';
 import 'package:proyecto_protectora/core/l10n/app_localizations.dart';
 import 'package:proyecto_protectora/core/widgets/app_input_text.dart';
 import 'package:proyecto_protectora/core/widgets/app_button.dart';
-import 'package:proyecto_protectora/core/widgets/gradient_bg.dart';
 import 'package:proyecto_protectora/features/protectora/controllers/animal_controller.dart';
 import 'package:proyecto_protectora/features/protectora/data/models/animales.dart';
 import 'package:proyecto_protectora/features/protectora/presentation/providers/animal_provider.dart';
@@ -78,7 +78,7 @@ class _CrearAnimalState extends ConsumerState<CrearAnimal> {
                 );
               },
             ),
-            const SizedBox(height: 12),
+            const SizedBox(height: 25),
             Form(
               key: _formKey,
               child: Column(
@@ -89,20 +89,25 @@ class _CrearAnimalState extends ConsumerState<CrearAnimal> {
                         child: AppInputText(
                           label: 'Nombre',
                           controller: controller.nombreCtrl,
+                          validator: (v) => v == null || v.isEmpty
+                              ? 'Nombre obligatorio'
+                              : null,
                         ),
                       ),
                       const SizedBox(width: 12),
                       Expanded(
-                        child: AppInputText(
+                        child: AppInputSelect<Sexo>(
                           label: 'Sexo',
-                          controller: controller.sexoCtrl,
-                        ),
-                      ),
-                      const SizedBox(width: 12),
-                      Expanded(
-                        child: AppInputText(
-                          label: 'Fecha nacimiento',
-                          controller: controller.fechaCtrl,
+                          value: controller.seleccionado?.sexo,
+                          items: Sexo.values,
+                          itemLabel: sexoLabel,
+                          onChanged: (value) {
+                            if (value != null) {
+                              controller.sexoCtrl.text = value.name;
+                            }
+                          },
+                          validator: (value) =>
+                              value == null ? 'Selecciona sexo' : null,
                         ),
                       ),
                     ],
@@ -114,13 +119,25 @@ class _CrearAnimalState extends ConsumerState<CrearAnimal> {
                         child: AppInputText(
                           label: 'Raza',
                           controller: controller.razaCtrl,
+                          validator: (v) => v == null || v.isEmpty
+                              ? 'Raza obligatoria'
+                              : null,
                         ),
                       ),
                       const SizedBox(width: 12),
                       Expanded(
-                        child: AppInputText(
+                        child: AppInputSelect<TipoAnimal>(
                           label: 'Tipo',
-                          controller: controller.tipoCtrl,
+                          value: controller.seleccionado?.tipo,
+                          items: TipoAnimal.values,
+                          itemLabel: tipoLabel,
+                          onChanged: (value) {
+                            if (value != null) {
+                              controller.tipoCtrl.text = value.name;
+                            }
+                          },
+                          validator: (value) =>
+                              value == null ? 'Selecciona tipo' : null,
                         ),
                       ),
                     ],
@@ -128,43 +145,114 @@ class _CrearAnimalState extends ConsumerState<CrearAnimal> {
                   const SizedBox(height: 12),
                   Row(
                     children: [
+                      // Fecha con date picker
                       Expanded(
-                        child: AppInputText(
-                          label: 'Esterilizado',
-                          controller: controller.esterilizadoCtrl,
+                        child: TextFormField(
+                          controller: controller.fechaCtrl,
+                          readOnly: true,
+                          decoration: InputDecoration(
+                            labelText: 'Fecha nacimiento',
+                            enabledBorder: UnderlineInputBorder(
+                              borderSide: BorderSide(
+                                color: appPaletteOf(context).primary,
+                                width: 1.5,
+                              ),
+                            ),
+                            focusedBorder: UnderlineInputBorder(
+                              borderSide: BorderSide(
+                                color: appPaletteOf(context).secondary,
+                                width: 2,
+                              ),
+                            ),
+                            floatingLabelStyle: TextStyle(
+                              color: appPaletteOf(context).secondary,
+                            ),
+                          ),
+                          onTap: () async {
+                            final picked = await showDatePicker(
+                              context: context,
+                              initialDate: DateTime.now(),
+                              firstDate: DateTime(2000),
+                              lastDate: DateTime.now(),
+                            );
+                            if (picked != null) {
+                              controller.fechaCtrl.text = picked
+                                  .toIso8601String()
+                                  .split('T')
+                                  .first;
+                            }
+                          },
+                          validator: (v) => v == null || v.isEmpty
+                              ? 'Fecha obligatoria'
+                              : null,
                         ),
                       ),
+
                       const SizedBox(width: 12),
+                      // Esterilizado como checkbox
                       Expanded(
-                        child: AppInputText(
-                          label: 'Chip',
-                          controller: controller.chipCtrl,
+                        child: CheckboxListTile(
+                          title: const Text('Esterilizado'),
+                          value:
+                              controller.esterilizadoCtrl.text.toLowerCase() ==
+                              "sí",
+                          onChanged: (checked) {
+                            controller.esterilizadoCtrl.text = checked == true
+                                ? "Sí"
+                                : "No";
+                            setState(() {});
+                          },
                         ),
                       ),
                     ],
-                  ),
-                  const SizedBox(height: 12),
-                  AppInputText(label: 'Foto', controller: controller.fotoCtrl),
-                  const SizedBox(height: 12),
-                  AppInputText(
-                    label: 'Descripción',
-                    controller: controller.descripcionCtrl,
                   ),
 
                   const SizedBox(height: 12),
+                  AppInputText(label: 'Chip', controller: controller.chipCtrl),
+                  const SizedBox(height: 12),
+                  AppInputText(
+                    label: 'Foto',
+                    controller: controller.fotoCtrl,
+                    validator: (value) {
+                      if (value == null || value.isEmpty) {
+                        return 'La foto es obligatoria';
+                      }
+                    },
+                  ),
+                  const SizedBox(height: 12),
+                  AppInputText(
+                    label: 'Descripción Breve',
+                    controller: controller.descripcionCtrl,
+                    validator: (value) {
+                      if (value == null || value.isEmpty) {
+                        return 'La descripción es obligatoria';
+                      }
+                      if (value.length > 50) {
+                        return 'La descripción no puede superar los 50 caracteres';
+                      }
+                      return null;
+                    },
+                  ),
+                  const SizedBox(height: 20),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      const SizedBox(width: 12),
                       AppButton(
                         label: "Crear Animal",
-                        onPressed: () => controller.crear(ref, context),
+                        onPressed: () {
+                          if (_formKey.currentState!.validate()) {
+                            controller.crear(ref, context);
+                          }
+                        },
                       ),
                       const SizedBox(width: 12),
                       AppButton(
                         label: "Guardar Cambios",
-                        onPressed: () =>
-                            controller.guardarCambios(ref, context),
+                        onPressed: () {
+                          if (_formKey.currentState!.validate()) {
+                            controller.guardarCambios(ref, context);
+                          }
+                        },
                       ),
                       const SizedBox(width: 12),
                       AppButton(
@@ -173,6 +261,7 @@ class _CrearAnimalState extends ConsumerState<CrearAnimal> {
                           await controller.eliminar(ref, context);
                           setState(() {});
                         },
+                        variant: AppButtonVariant.danger,
                       ),
                     ],
                   ),

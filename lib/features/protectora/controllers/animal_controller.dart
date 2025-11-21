@@ -7,11 +7,11 @@ import 'package:proyecto_protectora/features/protectora/presentation/providers/a
 
 class AnimalController {
   final nombreCtrl = TextEditingController();
-  final sexoCtrl = TextEditingController();
+  final sexoCtrl = TextEditingController(); // "Macho" / "Hembra"
   final razaCtrl = TextEditingController();
-  final tipoCtrl = TextEditingController();
-  final fechaCtrl = TextEditingController();
-  final esterilizadoCtrl = TextEditingController();
+  final tipoCtrl = TextEditingController(); // "Perro" / "Gato"
+  final fechaCtrl = TextEditingController(); // "2020-01-15"
+  final esterilizadoCtrl = TextEditingController(); // "Sí" / "No"
   final chipCtrl = TextEditingController();
   final descripcionCtrl = TextEditingController();
   final fotoCtrl = TextEditingController();
@@ -20,12 +20,12 @@ class AnimalController {
 
   void cargarAnimal(Animales animal) {
     nombreCtrl.text = animal.nombre;
-    sexoCtrl.text = animal.sexo;
+    sexoCtrl.text = animal.sexo.name; // enum → string
     razaCtrl.text = animal.raza;
-    tipoCtrl.text = animal.tipo;
-    fechaCtrl.text = animal.fNacimiento;
-    esterilizadoCtrl.text = animal.estereilizado;
-    chipCtrl.text = animal.chip;
+    tipoCtrl.text = animal.tipo.name; // enum → string
+    fechaCtrl.text = animal.fNacimiento.toIso8601String();
+    esterilizadoCtrl.text = animal.esterilizado ? "Sí" : "No";
+    chipCtrl.text = animal.chip ?? "";
     descripcionCtrl.text = animal.descripcion;
     fotoCtrl.text = animal.foto;
     seleccionado = animal;
@@ -56,19 +56,20 @@ class AnimalController {
     fotoCtrl.dispose();
   }
 
+  /// Crear un nuevo animal
   Future<void> crear(WidgetRef ref, BuildContext context) async {
     await ref
         .read(animalesProvider.notifier)
         .addAnimal(
-          nombreCtrl.text,
-          sexoCtrl.text,
-          razaCtrl.text,
-          tipoCtrl.text,
-          fechaCtrl.text,
-          esterilizadoCtrl.text,
-          chipCtrl.text,
-          descripcionCtrl.text,
-          fotoCtrl.text,
+          nombre: nombreCtrl.text,
+          sexo: _parseSexo(sexoCtrl.text),
+          raza: razaCtrl.text,
+          tipo: _parseTipo(tipoCtrl.text),
+          fNacimiento: DateTime.parse(fechaCtrl.text),
+          esterilizado: esterilizadoCtrl.text.toLowerCase() == "sí",
+          chip: chipCtrl.text.isEmpty ? null : chipCtrl.text,
+          descripcion: descripcionCtrl.text,
+          foto: fotoCtrl.text,
         );
     ScaffoldMessenger.of(context).showSnackBar(
       const SnackBar(content: Text('Animal creado correctamente')),
@@ -78,28 +79,28 @@ class AnimalController {
 
   Future<void> guardarCambios(WidgetRef ref, BuildContext context) async {
     if (seleccionado == null) return;
-    await ref
-        .read(animalesProvider.notifier)
-        .updateAnimal(
-          Animales(
-            idAnimal: seleccionado!.idAnimal,
-            nombre: nombreCtrl.text,
-            sexo: sexoCtrl.text,
-            raza: razaCtrl.text,
-            tipo: tipoCtrl.text,
-            fNacimiento: fechaCtrl.text,
-            estereilizado: esterilizadoCtrl.text,
-            chip: chipCtrl.text,
-            descripcion: descripcionCtrl.text,
-            foto: fotoCtrl.text,
-          ),
-        );
+
+    final actualizado = seleccionado!.copyWith(
+      nombre: nombreCtrl.text,
+      sexo: _parseSexo(sexoCtrl.text),
+      raza: razaCtrl.text,
+      tipo: _parseTipo(tipoCtrl.text),
+      fNacimiento: DateTime.parse(fechaCtrl.text),
+      esterilizado: esterilizadoCtrl.text.toLowerCase() == "sí",
+      chip: chipCtrl.text.isEmpty ? null : chipCtrl.text,
+      descripcion: descripcionCtrl.text,
+      foto: fotoCtrl.text,
+    );
+
+    await ref.read(animalesProvider.notifier).updateAnimal(actualizado);
+
     ScaffoldMessenger.of(context).showSnackBar(
       const SnackBar(content: Text('Animal actualizado correctamente')),
     );
     limpiar();
   }
 
+  /// Eliminar animal seleccionado
   Future<void> eliminar(WidgetRef ref, BuildContext context) async {
     if (seleccionado == null) return;
 
@@ -112,9 +113,10 @@ class AnimalController {
           '¿Estás seguro de que quieres eliminar a ${seleccionado!.nombre}?',
         ),
         actions: [
-          TextButton(
+          AppButton(
             onPressed: () => Navigator.of(context).pop(false),
-            child: const Text('Cancelar'),
+            label: 'Cancelar',
+            variant: AppButtonVariant.secondary,
           ),
           AppButton(
             variant: AppButtonVariant.danger,
@@ -133,6 +135,22 @@ class AnimalController {
         const SnackBar(content: Text('Animal eliminado correctamente')),
       );
       limpiar();
+    }
+  }
+
+  // --- Helpers para convertir texto a enums ---
+  Sexo _parseSexo(String value) {
+    return value.toLowerCase().startsWith("h") ? Sexo.hembra : Sexo.macho;
+  }
+
+  TipoAnimal _parseTipo(String value) {
+    switch (value.toLowerCase()) {
+      case "perro":
+        return TipoAnimal.perro;
+      case "gato":
+        return TipoAnimal.gato;
+      default:
+        return TipoAnimal.otro;
     }
   }
 }

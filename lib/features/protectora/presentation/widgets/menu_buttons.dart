@@ -1,8 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:proyecto_protectora/catalog/catalog_pages.dart';
 import 'package:proyecto_protectora/features/auth/data/models/user_model.dart';
-import 'package:proyecto_protectora/features/auth/presentation/pages/login_page.dart';
-import 'package:proyecto_protectora/features/protectora/presentation/pages/formulario_adopcion.dart';
 import 'package:proyecto_protectora/features/protectora/presentation/pages/animal_list_page.dart';
 import 'package:proyecto_protectora/features/protectora/presentation/pages/animalfav_page.dart';
 import 'package:proyecto_protectora/features/protectora/presentation/pages/client_page.dart';

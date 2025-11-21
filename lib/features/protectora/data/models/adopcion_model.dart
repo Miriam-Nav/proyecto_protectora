@@ -2,7 +2,7 @@ import 'package:equatable/equatable.dart';
 
 class Adopcion extends Equatable {
   // Datos del animal
-  final int idAnimal;
+  final String idAnimal;
   final String nombreAnimal;
   final String chip;
 
@@ -23,7 +23,7 @@ class Adopcion extends Equatable {
   });
 
   factory Adopcion.fromJson(Map<String, dynamic> json) => Adopcion(
-    idAnimal: json['idAnimal'] as int,
+    idAnimal: json['idAnimal'] as String,
     nombreAnimal: json['nombreAnimal'] as String,
     chip: json['chip'] as String,
     usuarioNombre: json['usuarioNombre'] as String,

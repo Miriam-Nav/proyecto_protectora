@@ -17,7 +17,6 @@ class GradientScaffold extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final palette = appPaletteOf(context);
 
     return Container(
       decoration: BoxDecoration(

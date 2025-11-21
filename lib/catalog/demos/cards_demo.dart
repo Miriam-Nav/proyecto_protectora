@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:proyecto_protectora/core/widgets/app_animal_card.dart';
-// import 'package:proyecto_protectora/catalog/widgets/showcase_scaffold.dart';
+import 'package:proyecto_protectora/core/widgets/app_button.dart';
+import 'package:proyecto_protectora/features/protectora/data/models/animales.dart';
 import 'package:proyecto_protectora/core/widgets/app_card.dart';
 import 'package:proyecto_protectora/features/protectora/data/fakes/noticias_datafake.dart';
-import 'package:proyecto_protectora/features/protectora/data/models/animales.dart';
 
 /// Pantalla que muestra ejemplos de las AppCards personalizadas
 class CardsDemo extends StatelessWidget {
@@ -75,7 +75,11 @@ class CardsDemo extends StatelessWidget {
           AppNotiCard(
             title: "Visita Veterinario",
             text: "Tienes 2 visitas al veterniario esta semana.",
-            badgeText: "Revisar",
+            button: AppButton(
+              label: "Revisar",
+              onPressed: () {},
+              variant: AppButtonVariant.secondary,
+            ),
             variant: AppCardVariant.cardBlue,
           ),
 
@@ -117,11 +121,11 @@ class CardsDemo extends StatelessWidget {
             animal: Animales(
               idAnimal: '1',
               nombre: 'Nala',
-              sexo: 'Hembra',
+              sexo: Sexo.macho,
               raza: 'Golden Retriever',
-              tipo: 'Perro',
-              fNacimiento: '2019-08-22',
-              estereilizado: 'Sí',
+              tipo: TipoAnimal.perro,
+              fNacimiento: DateTime.now(),
+              esterilizado: true,
               chip: 'CHIP001',
               descripcion: 'Dulce y sociable',
               foto: 'https://cataas.com/cat?random=1',
@@ -133,7 +137,6 @@ class CardsDemo extends StatelessWidget {
               print("Adoptar a Nala pulsado");
             },
           ),
-
           const SizedBox(height: 16),
           const Text('Noticia Card'),
           const SizedBox(height: 8),

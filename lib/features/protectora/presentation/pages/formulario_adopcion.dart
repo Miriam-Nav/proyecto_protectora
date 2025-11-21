@@ -3,7 +3,6 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:proyecto_protectora/app/theme/app_palette.dart';
 import 'package:proyecto_protectora/core/widgets/app_button.dart';
 import 'package:proyecto_protectora/core/widgets/app_input_text.dart';
-import 'package:proyecto_protectora/core/widgets/gradient_bg.dart';
 import 'package:proyecto_protectora/features/protectora/data/models/adopcion_model.dart';
 import 'package:proyecto_protectora/features/protectora/presentation/providers/adopcion_provider.dart';
 import 'package:proyecto_protectora/features/protectora/presentation/providers/animal_provider.dart';
@@ -49,7 +48,7 @@ class _FormularioAdopcionState extends ConsumerState<FormularioAdopcion> {
 
   Future<void> _guardarAdopcion(animal) async {
     final nuevaAdopcion = Adopcion(
-      idAnimal: int.parse(animal.idAnimal),
+      idAnimal: animal.idAnimal,
       nombreAnimal: animal.nombre,
       chip: animal.chip,
       usuarioNombre:
@@ -119,11 +118,11 @@ class _FormularioAdopcionState extends ConsumerState<FormularioAdopcion> {
                           readOnly: true,
                         ),
                         const SizedBox(height: 12),
-                        AppInputText(
-                          label: 'Chip',
-                          seleccion: animal.chip,
-                          readOnly: true,
-                        ),
+                        // AppInputText(
+                        //   label: 'Chip',
+                        //   seleccion: animal.chip ?? "Sin Chip",
+                        //   readOnly: true,
+                        // ),
                       ],
                     ),
                   ),

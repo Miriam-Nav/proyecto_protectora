@@ -81,7 +81,7 @@ const appPaletteDark = AppPalette(
   onWarning: Colors.white,
   menuButton: Color.fromARGB(255, 47, 33, 52),
   onMenuButton: Colors.white,
-  cardBlue: Color.fromARGB(255, 27, 121, 197),
+  cardBlue: Color.fromARGB(255, 42, 148, 236),
   onCardBlue: Colors.white,
   cardGreen: Color.fromARGB(255, 36, 211, 41),
   onCardGreen: Colors.white,

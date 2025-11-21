@@ -4,7 +4,6 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:proyecto_protectora/core/l10n/app_localizations.dart';
 import 'package:proyecto_protectora/core/widgets/app_animal_card.dart';
 import 'package:proyecto_protectora/core/widgets/app_card.dart';
-import 'package:proyecto_protectora/core/widgets/gradient_bg.dart';
 import 'package:proyecto_protectora/features/protectora/data/models/noticia_model.dart';
 import 'package:proyecto_protectora/features/protectora/presentation/providers/animal_provider.dart';
 import 'package:proyecto_protectora/features/protectora/presentation/widgets/appbar.dart';
@@ -54,45 +53,54 @@ class ClientPage extends ConsumerWidget {
                   loading: () =>
                       const Center(child: CircularProgressIndicator()),
                   error: (e, _) => Center(child: Text('Error: $e')),
-                  data: (animales) => ScrollConfiguration(
+                  data: (animales) {
+                    if (animales.isEmpty) {
+                      return const Padding(
+                        padding: EdgeInsets.symmetric(vertical: 12),
+                        child: Text('No hay animales recientes todavía.'),
+                      );
+                    }
+
                     // Añade un comportamiento de desplazamiento
                     // personalizado que permite que todos los
                     // dispositivos puedan arrastrar la lista.
-                    behavior: const MaterialScrollBehavior().copyWith(
-                      dragDevices: {...PointerDeviceKind.values},
-                    ),
-                    child: SizedBox(
-                      height: 175,
-                      child: ListView.builder(
-                        scrollDirection: Axis.horizontal,
-                        itemCount: animales.length,
-                        itemBuilder: (context, index) {
-                          final animal = animales[index];
-                          return SizedBox(
-                            height: 175,
-                            width: 150,
-                            child: Container(
-                              margin: const EdgeInsets.only(right: 12),
-                              child: MascotaMiniCard(
-                                image: animal.foto,
-                                title: animal.nombre,
-                                text: animal.descripcion,
-                                onPressed: () {
-                                  Navigator.of(context).push(
-                                    MaterialPageRoute(
-                                      builder: (_) => DetalleAnimal(
-                                        seleccionado: animal.idAnimal,
-                                      ),
-                                    ),
-                                  );
-                                },
-                              ),
-                            ),
-                          );
-                        },
+                    return ScrollConfiguration(
+                      behavior: const MaterialScrollBehavior().copyWith(
+                        dragDevices: {...PointerDeviceKind.values},
                       ),
-                    ),
-                  ),
+                      child: SizedBox(
+                        height: 175,
+                        child: ListView.builder(
+                          scrollDirection: Axis.horizontal,
+                          itemCount: animales.length,
+                          itemBuilder: (context, index) {
+                            final animal = animales[index];
+                            return SizedBox(
+                              height: 175,
+                              width: 150,
+                              child: Container(
+                                margin: const EdgeInsets.only(right: 12),
+                                child: MascotaMiniCard(
+                                  image: animal.foto,
+                                  title: animal.nombre,
+                                  text: animal.descripcion,
+                                  onPressed: () {
+                                    Navigator.of(context).push(
+                                      MaterialPageRoute(
+                                        builder: (_) => DetalleAnimal(
+                                          seleccionado: animal.idAnimal,
+                                        ),
+                                      ),
+                                    );
+                                  },
+                                ),
+                              ),
+                            );
+                          },
+                        ),
+                      ),
+                    );
+                  },
                 ),
               ],
             ),
@@ -105,12 +113,22 @@ class ClientPage extends ConsumerWidget {
             const SizedBox(height: 15),
             // LISTA
             Column(
-              children: ultimasNoticias.map((noticia) {
-                return Padding(
-                  padding: const EdgeInsets.only(bottom: 16.0),
-                  child: NoticiaCard(noticia: noticia),
-                );
-              }).toList(),
+              children: ultimasNoticias.isEmpty
+                  ? [
+                      const Padding(
+                        padding: EdgeInsets.symmetric(vertical: 12),
+                        child: Text(
+                          'No hay noticias todavía.',
+                          textAlign: TextAlign.left,
+                        ),
+                      ),
+                    ]
+                  : ultimasNoticias.map((noticia) {
+                      return Padding(
+                        padding: const EdgeInsets.only(bottom: 16.0),
+                        child: NoticiaCard(noticia: noticia),
+                      );
+                    }).toList(),
             ),
           ],
         ),

@@ -57,6 +57,9 @@ class AppButton extends StatelessWidget {
         backgroundColor: backgroundColorOverride ?? baseColor,
         foregroundColor: foregroundColorOverride ?? textColor,
         padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 12),
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(6), // menos redondeado
+        ),
       ),
       onPressed: onPressed,
       child: icon != null
@@ -268,12 +271,25 @@ class MenuButton extends StatelessWidget {
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
       ),
       onPressed: onPressed,
-      child: Column(
-        children: [
-          Icon(leadingIcon, size: 28),
-          const SizedBox(height: 5),
-          Text(label, textAlign: TextAlign.center),
-        ],
+      // Icono con gradiente
+      child: Container(
+        width: 50,
+        height: 50,
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(14),
+          boxShadow: [
+            BoxShadow(
+              color: appPaletteOf(context).primary,
+              blurRadius: 8,
+              offset: const Offset(0, 4),
+            ),
+          ],
+        ),
+        child: Icon(
+          leadingIcon,
+          color: appPaletteOf(context).onPrimary,
+          size: 24,
+        ),
       ),
     );
   }

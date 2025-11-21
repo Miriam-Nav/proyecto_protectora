@@ -16,29 +16,30 @@ class AnimalesNotifier extends AsyncNotifier<List<Animales>> {
     state = await AsyncValue.guard(_repo.fetchAll);
   }
 
-  Future<void> addAnimal(
-    String nombre,
-    String sexo,
-    String raza,
-    String tipo,
-    String fNacimiento,
-    String estereilizado,
-    String chip,
-    String descripcion,
-    String foto,
-  ) async {
+  /// Añadir un nuevo animal con tipos correctos
+  Future<void> addAnimal({
+    required String nombre,
+    required Sexo sexo,
+    required String raza,
+    required TipoAnimal tipo,
+    required DateTime fNacimiento,
+    required bool esterilizado,
+    String? chip,
+    required String descripcion,
+    required String foto,
+  }) async {
     final previous = state.value ?? const <Animales>[];
     try {
       final created = await _repo.addAnimal(
-        nombre,
-        sexo,
-        raza,
-        tipo,
-        fNacimiento,
-        estereilizado,
-        chip,
-        descripcion,
-        foto,
+        nombre: nombre,
+        sexo: sexo,
+        raza: raza,
+        tipo: tipo,
+        fNacimiento: fNacimiento,
+        esterilizado: esterilizado,
+        chip: chip,
+        descripcion: descripcion,
+        foto: foto,
       );
       state = AsyncValue.data([...previous, created]);
       state = await AsyncValue.guard(_repo.fetchAll);
@@ -47,19 +48,20 @@ class AnimalesNotifier extends AsyncNotifier<List<Animales>> {
     }
   }
 
+  /// Actualizar un animal existente
   Future<void> updateAnimal(Animales animal) async {
     try {
       await _repo.updateAnimal(
-        animal.idAnimal,
-        animal.nombre,
-        animal.sexo,
-        animal.raza,
-        animal.tipo,
-        animal.fNacimiento,
-        animal.estereilizado,
-        animal.chip,
-        animal.descripcion,
-        animal.foto,
+        idAnimal: animal.idAnimal,
+        nombre: animal.nombre,
+        sexo: animal.sexo,
+        raza: animal.raza,
+        tipo: animal.tipo,
+        fNacimiento: animal.fNacimiento,
+        esterilizado: animal.esterilizado,
+        chip: animal.chip,
+        descripcion: animal.descripcion,
+        foto: animal.foto,
       );
       state = await AsyncValue.guard(_repo.fetchAll);
     } catch (e, st) {
@@ -67,6 +69,7 @@ class AnimalesNotifier extends AsyncNotifier<List<Animales>> {
     }
   }
 
+  /// Eliminar un animal por id
   Future<void> removeAnimal(String id) async {
     try {
       await _repo.removeAnimal(id);

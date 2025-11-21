@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:proyecto_protectora/core/l10n/app_localizations.dart';
 import 'package:proyecto_protectora/core/widgets/app_animal_card.dart';
-import 'package:proyecto_protectora/core/widgets/gradient_bg.dart';
 import 'package:proyecto_protectora/features/protectora/presentation/providers/animal_provider.dart';
 import 'package:proyecto_protectora/features/protectora/presentation/widgets/appbar.dart';
 import 'package:proyecto_protectora/features/protectora/presentation/widgets/drawer_page.dart';
@@ -25,31 +24,43 @@ class AnimalListPage extends ConsumerWidget {
         child: animales.when(
           loading: () => const Center(child: CircularProgressIndicator()),
           error: (err, _) => Center(child: Text('Error: $err')),
-          data: (items) => ListView.builder(
-            itemCount: items.length,
-            itemBuilder: (context, index) {
-              final animal = items[index];
-              return Padding(
-                padding: const EdgeInsets.only(bottom: 16.0),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    MascotaFavCard(
-                      animal: animal,
-                      onAdoptPressed: () => Navigator.of(context).push(
-                        MaterialPageRoute(
-                          builder: (_) =>
-                              FormularioAdopcion(seleccionado: animal.idAnimal),
-                        ),
-                      ),
-                      showAdoptButton: true,
-                      showFavoriteIcon: true,
-                    ),
-                  ],
+          data: (items) {
+            if (items.isEmpty) {
+              return const Center(
+                child: Padding(
+                  padding: EdgeInsets.symmetric(vertical: 20),
+                  child: Text('No hay animales disponibles en este momento.'),
                 ),
               );
-            },
-          ),
+            }
+
+            return ListView.builder(
+              itemCount: items.length,
+              itemBuilder: (context, index) {
+                final animal = items[index];
+                return Padding(
+                  padding: const EdgeInsets.only(bottom: 16.0),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      MascotaFavCard(
+                        animal: animal,
+                        onAdoptPressed: () => Navigator.of(context).push(
+                          MaterialPageRoute(
+                            builder: (_) => FormularioAdopcion(
+                              seleccionado: animal.idAnimal,
+                            ),
+                          ),
+                        ),
+                        showAdoptButton: true,
+                        showFavoriteIcon: true,
+                      ),
+                    ],
+                  ),
+                );
+              },
+            );
+          },
         ),
       ),
     );

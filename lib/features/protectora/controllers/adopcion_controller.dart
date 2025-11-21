@@ -59,9 +59,9 @@ class AdopcionController {
     }
 
     final adopcion = Adopcion(
-      idAnimal: int.parse(animalSeleccionado!.idAnimal),
+      idAnimal: animalSeleccionado!.idAnimal,
       nombreAnimal: animalSeleccionado!.nombre,
-      chip: animalSeleccionado!.chip,
+      chip: animalSeleccionado!.chip.toString(),
       usuarioNombre:
           "${nombreCtrl.text} ${apellido1Ctrl.text} ${apellido2Ctrl.text}",
       usuarioEmail: emailCtrl.text,
@@ -83,7 +83,7 @@ class AdopcionController {
   Future<void> eliminarAdopcion(
     WidgetRef ref,
     BuildContext context,
-    int idAnimal,
+    String idAnimal,
   ) async {
     final confirm = await showDialog<bool>(
       context: context,
