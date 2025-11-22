@@ -51,7 +51,7 @@ class AdopcionesRepository {
   Future<Adopcion> addAdopcion({
     required String idAnimal,
     required String nombreAnimal,
-    required String chip,
+    required String? chip,
     required String usuarioNombre,
     required String usuarioEmail,
     required String usuarioTelefono,

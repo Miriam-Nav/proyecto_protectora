@@ -24,23 +24,4 @@ final ultimosAnimalesProvider = FutureProvider<List<Animales>>((ref) {
   return animales.sublist(startIndex, total);
 });
 
-// Funciones Form Crear Animal
-String sexoLabel(Sexo sexo) {
-  switch (sexo) {
-    case Sexo.macho:
-      return "Macho";
-    case Sexo.hembra:
-      return "Hembra";
-  }
-}
 
-String tipoLabel(TipoAnimal tipo) {
-  switch (tipo) {
-    case TipoAnimal.perro:
-      return "Perro";
-    case TipoAnimal.gato:
-      return "Gato";
-    case TipoAnimal.otro:
-      return "Otro";
-  }
-}

@@ -5,6 +5,7 @@ import 'package:proyecto_protectora/core/l10n/app_localizations.dart';
 import 'package:proyecto_protectora/core/widgets/app_button.dart';
 import 'package:proyecto_protectora/core/widgets/app_input_text.dart';
 import 'package:proyecto_protectora/features/protectora/data/models/adopcion_model.dart';
+import 'package:proyecto_protectora/features/protectora/data/models/animales.dart';
 import 'package:proyecto_protectora/features/protectora/presentation/providers/adopcion_provider.dart';
 import 'package:proyecto_protectora/features/protectora/presentation/providers/animal_provider.dart';
 import 'package:proyecto_protectora/features/protectora/presentation/widgets/appbar.dart';
@@ -47,7 +48,7 @@ class _FormularioAdopcionState extends ConsumerState<FormularioAdopcion> {
     super.dispose();
   }
 
-  Future<void> _guardarAdopcion(animal) async {
+  Future<void> _guardarAdopcion(Animales animal) async {
     final l10n = AppLocalizations.of(context)!;
     final nuevaAdopcion = Adopcion(
       idAnimal: animal.idAnimal,
@@ -62,17 +63,20 @@ class _FormularioAdopcionState extends ConsumerState<FormularioAdopcion> {
 
     await ref.read(adopcionesProvider.notifier).addAdopcion(nuevaAdopcion);
 
-    ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(content: Text(l10n.avisosolicitudguardada)),
-    );
+    if (!mounted) return;
+    ScaffoldMessenger.of(
+      context,
+    ).showSnackBar(SnackBar(content: Text(l10n.avisoSolicitudGuardada)));
 
     Navigator.pop(context);
   }
 
   @override
   Widget build(BuildContext context) {
-    final l10n = AppLocalizations.of(context)!;
     final animalesAsync = ref.watch(animalesProvider);
+    final l10n = AppLocalizations.of(context)!;
+
+    
 
     return Scaffold(
       appBar: customAppBar(context, l10n.tituloFormulario),
@@ -82,7 +86,7 @@ class _FormularioAdopcionState extends ConsumerState<FormularioAdopcion> {
         data: (animales) {
           final animal = animales.firstWhere(
             (animal) => animal.idAnimal == widget.seleccionado,
-            orElse: () => throw Exception(l10n.animalnoencontrado),
+            orElse: () => throw Exception(l10n.animalNoEncontrado),
           );
 
           return Padding(
@@ -116,14 +120,14 @@ class _FormularioAdopcionState extends ConsumerState<FormularioAdopcion> {
                     child: Column(
                       children: [
                         AppInputText(
-                          label: l10n.nombreAnimal,
+                          label: l10n.nombre,
                           seleccion: animal.nombre,
                           readOnly: true,
                         ),
                         const SizedBox(height: 12),
                         AppInputText(
                           label: l10n.chipAnimal,
-                          seleccion: animal.chip,
+                          seleccion: animal.chip ?? "-",
                           readOnly: true,
                         ),
                       ],
@@ -152,7 +156,7 @@ class _FormularioAdopcionState extends ConsumerState<FormularioAdopcion> {
                             color: appPaletteOf(context).cardGreen,
                             validator: (value) {
                               if (value == null || value.isEmpty) {
-                                return l10n.comprobantenombreAdoptante;
+                                return l10n.nombreObligatorio;
                               }
                               return null;
                             },
@@ -162,12 +166,12 @@ class _FormularioAdopcionState extends ConsumerState<FormularioAdopcion> {
                             children: [
                               Expanded(
                                 child: AppInputText(
-                                  label: l10n.primerApellidoAdoptante,
+                                  label: l10n.apellido1,
                                   controller: _apellido1Ctrl,
                                   color: appPaletteOf(context).cardGreen,
                                   validator: (value) {
                                     if (value == null || value.isEmpty) {
-                                      return l10n.comprobantePrimerApellidoAdoptante;
+                                      return l10n.obligatorioApellido1;
                                     }
                                     return null;
                                   },
@@ -176,12 +180,12 @@ class _FormularioAdopcionState extends ConsumerState<FormularioAdopcion> {
                               const SizedBox(width: 12),
                               Expanded(
                                 child: AppInputText(
-                                  label: l10n.segundoApellidoAdoptante,
+                                  label: l10n.apellido2,
                                   controller: _apellido2Ctrl,
                                   color: appPaletteOf(context).cardGreen,
                                   validator: (value) {
                                     if (value == null || value.isEmpty) {
-                                      return l10n.comprobanteSegundoApellidoAdoptante;
+                                      return l10n.obligatorioApellido2;
                                     }
                                     return null;
                                   },
@@ -194,17 +198,17 @@ class _FormularioAdopcionState extends ConsumerState<FormularioAdopcion> {
                             children: [
                               Expanded(
                                 child: AppInputText(
-                                  label: l10n.DNIAdoptante,
+                                  label: l10n.dni,
                                   controller: _dniCtrl,
                                   color: appPaletteOf(context).cardGreen,
                                   validator: (value) {
                                     if (value == null || value.isEmpty) {
-                                      return l10n.comprobanteDNIAdoptante;
+                                      return l10n.obligatorioDni;
                                     }
 
                                     final dniRegex = RegExp(r'^[0-9]{8}[A-Z]$');
                                     if (!dniRegex.hasMatch(value)) {
-                                      return l10n.comprobanteFormatoDNIAdoptante;
+                                      return l10n.formatoDni;
                                     }
 
                                     return null;
@@ -214,16 +218,16 @@ class _FormularioAdopcionState extends ConsumerState<FormularioAdopcion> {
                               const SizedBox(width: 12),
                               Expanded(
                                 child: AppInputText(
-                                  label: l10n.telefonoAdoptante,
+                                  label: l10n.telefono,
                                   controller: _telefonoCtrl,
                                   color: appPaletteOf(context).cardGreen,
                                   validator: (value) {
                                     if (value == null || value.isEmpty) {
-                                      return l10n.comprobantetelefonoAdoptante;
+                                      return l10n.obligatorioTelefono;
                                     }
                                     final numero = int.tryParse(value);
                                     if (numero == null) {
-                                      return l10n.comprobanteFormatotelefonoAdoptante;
+                                      return l10n.formatoNum;
                                     }
                                     return null;
                                   },
@@ -233,46 +237,46 @@ class _FormularioAdopcionState extends ConsumerState<FormularioAdopcion> {
                           ),
                           const SizedBox(height: 12),
                           AppInputText(
-                            label: l10n.correoAdoptante,
+                            label: l10n.correo,
                             controller: _emailCtrl,
                             color: appPaletteOf(context).cardGreen,
                             validator: (value) {
                               if (value == null || value.isEmpty) {
-                                return l10n.comporbanteCorreoAdoptante;
+                                return l10n.obligatorioCorreo;
                               }
                               final emailRegex = RegExp(
                                 r'^[^@]+@[^@]+\.[^@]+$',
                               );
                               if (!emailRegex.hasMatch(value)) {
-                                return l10n.comporbanteFormatoCorreoAdoptante;
+                                return l10n.formatoCorreo;
                               }
                               return null;
                             },
                           ),
                           const SizedBox(height: 12),
                           AppInputText(
-                            label: l10n.direccionAdoptante,
+                            label: l10n.direccion,
                             controller: _direccionCtrl,
                             color: appPaletteOf(context).cardGreen,
                             validator: (value) {
                               if (value == null || value.isEmpty) {
-                                return l10n.comprobanteDireccionAdoptante;
+                                return l10n.obligatorioDireccion;
                               }
                               return null;
                             },
                           ),
                           const SizedBox(height: 12),
                           AppInputText(
-                            label: l10n.codigopostalAdoptante,
+                            label: l10n.cp,
                             controller: _cpCtrl,
                             color: appPaletteOf(context).cardGreen,
                             validator: (value) {
                               if (value == null || value.isEmpty) {
-                                return l10n.comprobanteCodigopostalAdoptante;
+                                return l10n.obligatorioCp;
                               }
                               final numero = int.tryParse(value);
                               if (numero == null) {
-                                return l10n.comprobanteFormatoCodigopostalAdoptante;
+                                return l10n.formatoNum;
                               }
                               return null;
                             },
@@ -282,12 +286,12 @@ class _FormularioAdopcionState extends ConsumerState<FormularioAdopcion> {
                             children: [
                               Expanded(
                                 child: AppInputText(
-                                  label: l10n.localidadAdoptante,
+                                  label: l10n.localidad,
                                   controller: _localidadCtrl,
                                   color: appPaletteOf(context).cardGreen,
                                   validator: (value) {
                                     if (value == null || value.isEmpty) {
-                                      return l10n.comprobantelocalidadAdoptante;
+                                      return l10n.obligLocalidad;
                                     }
                                     return null;
                                   },
@@ -296,12 +300,12 @@ class _FormularioAdopcionState extends ConsumerState<FormularioAdopcion> {
                               const SizedBox(width: 12),
                               Expanded(
                                 child: AppInputText(
-                                  label: l10n.provinciaAdoptante,
+                                  label: l10n.provincia,
                                   controller: _provinciaCtrl,
                                   color: appPaletteOf(context).cardGreen,
                                   validator: (value) {
                                     if (value == null || value.isEmpty) {
-                                      return l10n.comprobanteProvinciaAdoptante;
+                                      return l10n.obligProvincia;
                                     }
                                     return null;
                                   },
@@ -313,6 +317,9 @@ class _FormularioAdopcionState extends ConsumerState<FormularioAdopcion> {
                           Center(
                             child: AppButton(
                               label: l10n.enviarSolicitud,
+                              foregroundColorOverride: appPaletteOf(
+                                context,
+                              ).onSecondary,
                               onPressed: () {
                                 if (_formKey.currentState!.validate()) {
                                   _guardarAdopcion(animal);

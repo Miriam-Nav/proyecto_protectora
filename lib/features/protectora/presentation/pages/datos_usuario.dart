@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:proyecto_protectora/app/theme/app_palette.dart';
 import 'package:proyecto_protectora/core/l10n/app_localizations.dart';
 import 'package:proyecto_protectora/core/widgets/app_input_text.dart';
 import 'package:proyecto_protectora/features/auth/data/models/user_model.dart';
@@ -11,104 +12,105 @@ class DatosUsuario extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-     final l10n = AppLocalizations.of(context)!;
+    final l10n = AppLocalizations.of(context)!;
     return Scaffold(
-      appBar: customAppBar(context, l10n.tituloDatos),
+      appBar: customAppBar(context, l10n.datosUsuario),
       body: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 24.0, vertical: 16.0),
+
         child: ListView(
           children: [
             const SizedBox(height: 18),
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 5),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Center(
-                    child: CircleAvatar(
-                      radius: 50,
-                      backgroundImage: NetworkImage(usuario.image),
-                    ),
-                  ),
-                  const SizedBox(height: 25),
-                  AppInputText(
-                    label: l10n.usuario,
-                    seleccion: usuario.username,
-                    readOnly: true,
-                  ),
-                  const SizedBox(height: 15),
-                  AppInputText(
-                    label: l10n.nombreAdoptante,
-                    seleccion: usuario.firstName,
-                    readOnly: true,
-                  ),
-                  const SizedBox(height: 15),
-                  Row(
+              child: Card(
+                color: appPaletteOf(context).menuButton,
+                elevation: 3,
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(12),
+                ),
+                child: Padding(
+                  padding: const EdgeInsets.all(16.0),
+                  child: Column(
                     children: [
-                      Expanded(
-                        child: AppInputText(
-                          label: l10n.primerApellidoAdoptante,
-                          seleccion: usuario.lastName,
-                          readOnly: true,
+                      Center(
+                        child: CircleAvatar(
+                          radius: 50,
+                          backgroundImage: NetworkImage(usuario.image),
                         ),
                       ),
-                      const SizedBox(width: 12),
-                      Expanded(
-                        child: AppInputText(
-                          label: l10n.segundoApellidoAdoptante,
-                          seleccion: usuario.maidenName,
-                          readOnly: true,
-                        ),
+                      const SizedBox(height: 25),
+                      AppInputText(
+                        label: l10n.usuario,
+                        seleccion: usuario.username,
+                        readOnly: true,
                       ),
+                      const SizedBox(height: 15),
+                      AppInputText(
+                        label: l10n.nombre,
+                        seleccion: usuario.firstName,
+                        readOnly: true,
+                      ),
+                      const SizedBox(height: 15),
+                      Row(
+                        children: [
+                          Expanded(
+                            child: AppInputText(
+                              label: l10n.apellido1,
+                              seleccion: usuario.lastName,
+                              readOnly: true,
+                            ),
+                          ),
+                          const SizedBox(width: 12),
+                          Expanded(
+                            child: AppInputText(
+                              label: l10n.apellido2,
+                              seleccion: usuario.maidenName,
+                              readOnly: true,
+                            ),
+                          ),
+                        ],
+                      ),
+                      const SizedBox(height: 15),
+                      Row(
+                        children: [
+                          Expanded(
+                            child: AppInputText(
+                              label: l10n.dni,
+                              seleccion: usuario.id.toString(),
+                              readOnly: true,
+                            ),
+                          ),
+                          const SizedBox(width: 12),
+                          Expanded(
+                            child: AppInputText(
+                              label: l10n.telefono,
+                              seleccion: usuario.phone,
+                              readOnly: true,
+                            ),
+                          ),
+                        ],
+                      ),
+                      const SizedBox(height: 15),
+                      AppInputText(
+                        label: l10n.correo,
+                        seleccion: usuario.email,
+                        readOnly: true,
+                      ),
+                      const SizedBox(height: 15),
+                      AppInputText(
+                        label: l10n.fechaNacimiento,
+                        seleccion: usuario.birthDate,
+                        readOnly: true,
+                      ),
+                      const SizedBox(height: 5),
                     ],
                   ),
-                  const SizedBox(height: 15),
-                  Row(
-                    children: [
-                      Expanded(
-                        child: AppInputText(
-                          label: l10n.DNIAdoptante,
-                          seleccion: usuario.id.toString(),
-                          readOnly: true,
-                        ),
-                      ),
-                      const SizedBox(width: 12),
-                      Expanded(
-                        child: AppInputText(
-                          label: l10n.telefonoAdoptante,
-                          seleccion: usuario.phone,
-                          readOnly: true,
-                        ),
-                      ),
-                    ],
-                  ),
-                  const SizedBox(height: 15),
-                  AppInputText(
-                    label: l10n.correoAdoptante,
-                    seleccion: usuario.email,
-                    readOnly: true,
-                  ),
-                  const SizedBox(height: 15),
-                  AppInputText(
-                    label: l10n.fechaNacimiento,
-                    seleccion: usuario.birthDate,
-                    readOnly: true,
-                  ),
-                  const SizedBox(height: 5),
-                ],
+                ),
               ),
             ),
           ],
         ),
-        // floatingActionButton: FloatingActionButton.extended(
-        //   onPressed: () {
-        //     ScaffoldMessenger.of(context).showSnackBar(
-        //       const SnackBar(content: Text('Datos de usuario mostrados')),
-        //     );
-        //   },
-        //   icon: const Icon(Icons.save),
-        //   label: const Text('Guardar'),
-        // ),
       ),
     );
   }

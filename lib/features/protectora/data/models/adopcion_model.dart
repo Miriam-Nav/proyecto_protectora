@@ -4,7 +4,7 @@ class Adopcion extends Equatable {
   // Datos del animal
   final String idAnimal;
   final String nombreAnimal;
-  final String chip;
+  final String? chip;
 
   // Datos del usuario/adoptante
   final String usuarioNombre;
@@ -15,7 +15,7 @@ class Adopcion extends Equatable {
   const Adopcion({
     required this.idAnimal,
     required this.nombreAnimal,
-    required this.chip,
+    this.chip,
     required this.usuarioNombre,
     required this.usuarioEmail,
     required this.usuarioTelefono,

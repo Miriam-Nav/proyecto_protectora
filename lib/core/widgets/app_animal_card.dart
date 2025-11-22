@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:intl/intl.dart';
 import 'package:proyecto_protectora/app/theme/app_palette.dart';
 import 'package:proyecto_protectora/core/l10n/app_localizations.dart';
 import 'package:proyecto_protectora/core/widgets/app_button.dart';
@@ -37,7 +38,6 @@ enum AppMascotaCardVariant {
 }
 
 class MascotaFavCard extends ConsumerWidget {
-  
   final Animales animal;
   final AppMascotaCardVariant variant;
   final bool showAdoptButton;
@@ -55,9 +55,9 @@ class MascotaFavCard extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final l10n = AppLocalizations.of(context)!;
     final palette = appPaletteOf(context);
     final favAnimals = ref.watch(favAnimalProvider);
+    final l10n = AppLocalizations.of(context)!;
 
     return Card(
       shape: RoundedRectangleBorder(
@@ -107,12 +107,12 @@ class MascotaFavCard extends ConsumerWidget {
                     children: [
                       Text(
                         '🟠 ${l10n.sexoAnimal}: ',
-                        style: Theme.of(context).textTheme.titleSmall?.copyWith(
-                          fontWeight: FontWeight.bold,
-                        ),
+                        style: Theme.of(
+                          context,
+                        ).textTheme.titleSmall?.copyWith(),
                       ),
                       Text(
-                        animal.sexo == Sexo.macho ? 'Macho' : 'Hembra',
+                        animal.sexo == Sexo.macho ? l10n.macho : l10n.hembra,
                         style: Theme.of(context).textTheme.bodyLarge,
                       ),
                     ],
@@ -121,10 +121,10 @@ class MascotaFavCard extends ConsumerWidget {
                   Wrap(
                     children: [
                       Text(
-                        '🟠  ${l10n.razaAnimal}: ',
-                        style: Theme.of(context).textTheme.titleSmall?.copyWith(
-                          fontWeight: FontWeight.bold,
-                        ),
+                        '🟠 ${l10n.razaAnimal}: ',
+                        style: Theme.of(
+                          context,
+                        ).textTheme.titleSmall?.copyWith(),
                       ),
                       Text(
                         animal.raza,
@@ -136,14 +136,13 @@ class MascotaFavCard extends ConsumerWidget {
                   Wrap(
                     children: [
                       Text(
-                        '🟠  ${l10n.fechaNacimientoAnimal}: ',
-                        style: Theme.of(context).textTheme.titleSmall?.copyWith(
-                          fontWeight: FontWeight.bold,
-                        ),
+                        '🟠 ${l10n.fechaNacimiento}: ',
+                        style: Theme.of(
+                          context,
+                        ).textTheme.titleSmall?.copyWith(),
                       ),
                       Text(
-                        
-                        animal.fNacimiento.toString(),
+                        DateFormat('dd/MM/yyyy').format(animal.fNacimiento),
                         style: Theme.of(context).textTheme.bodyLarge,
                       ),
                     ],
@@ -152,13 +151,13 @@ class MascotaFavCard extends ConsumerWidget {
                   Wrap(
                     children: [
                       Text(
-                        '🟠  ${l10n.esterelizadoAnimal}: ',
-                        style: Theme.of(context).textTheme.titleSmall?.copyWith(
-                          fontWeight: FontWeight.bold,
-                        ),
+                        '🟠 ${l10n.esterelizadoAnimal}: ',
+                        style: Theme.of(
+                          context,
+                        ).textTheme.titleSmall?.copyWith(),
                       ),
                       Text(
-                        animal.esterilizado ? 'Sí' : 'No',
+                        animal.esterilizado ? l10n.si : l10n.no,
                         style: Theme.of(context).textTheme.bodyLarge,
                       ),
                     ],
@@ -167,10 +166,10 @@ class MascotaFavCard extends ConsumerWidget {
                   Wrap(
                     children: [
                       Text(
-                        '🟠  ${l10n.chipAnimal}: ',
-                        style: Theme.of(context).textTheme.titleSmall?.copyWith(
-                          fontWeight: FontWeight.bold,
-                        ),
+                        '🟠 ${l10n.chipAnimal}: ',
+                        style: Theme.of(
+                          context,
+                        ).textTheme.titleSmall?.copyWith(),
                       ),
                       Text(
                         animal.chip.toString(),
@@ -182,16 +181,14 @@ class MascotaFavCard extends ConsumerWidget {
                   Wrap(
                     children: [
                       Text(
-                        '🟠  ${l10n.descripcionAnimal}: ',
-                        style: Theme.of(context).textTheme.titleSmall?.copyWith(
-                          fontWeight: FontWeight.bold,
-                        ),
+                        '🟠 ${l10n.descripcionAnimal}: ',
+                        style: Theme.of(
+                          context,
+                        ).textTheme.titleSmall?.copyWith(),
                       ),
-                      Expanded(
-                        child: Text(
-                          animal.descripcion,
-                          style: Theme.of(context).textTheme.bodyLarge,
-                        ),
+                      Text(
+                        animal.descripcion,
+                        style: Theme.of(context).textTheme.bodyLarge,
                       ),
                     ],
                   ),
@@ -287,7 +284,6 @@ class MascotaMiniCard extends StatelessWidget {
                 width: 110,
                 height: 90,
                 child: Image.network(image, fit: BoxFit.cover),
-                //Image.asset(image, fit: BoxFit.cover),
               ),
             ),
           ),

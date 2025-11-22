@@ -8,177 +8,121 @@ import 'app_localizations.dart';
 class AppLocalizationsIt extends AppLocalizations {
   AppLocalizationsIt([String locale = 'it']) : super(locale);
 
-  // --- Textos generales ---
+  // --- Testi generali ---
+  @override
+  String get appTitle => 'Zampette Felici';
 
   @override
-  String get appTitle => 'Protezione';
+  String hello(String name) {
+    return 'Ciao, $name!';
+  }
+
+  @override
+  String get conocer => 'Conosci';
 
   @override
   String get inicio => 'Inizio';
 
   @override
-  String get openLanguagePicker => 'Cambia lingua';
+  String get invitado => 'Ospite';
 
   @override
-  String get namePagesGestion => 'Gestione delle pagine';
+  String get sinCorreo => 'Nessuna email';
 
-  // --- Textos de HomePage ---
-  @override
-  String get welcome => 'Benvenuto';
+  String get noLoggin => 'Nessun utente connesso';
 
   @override
-  String get visitaveterinario => 'Visita Veterinaria';
+  String get guardado => 'Salvato';
 
   @override
-  String get visitaveterinarioText =>
-      'Hai 2 visite veterinarie questa settimana.';
+  String get idioma => 'Lingua';
 
   @override
-  String get visitaveterinarioTextButton => 'Rivedi';
+  String get selecIdioma => 'Cambia Lingua';
 
   @override
-  String get acciones => 'Azioni';
+  String get apariencia => "Aspetto";
 
   @override
-  String get botonAciones => 'Gestisci Animali';
+  String get modoOsc => "Modalità Scura";
 
   @override
-  String get actividadReciente => 'Attività recente';
+  String get namePagesGestion => 'Gestione Pagine';
 
   @override
-  String get sinActividadReciente => 'Non ci sono ancora adozioni registrate.';
+  String get pagCatalogo => 'Pagina Catalogo';
 
   @override
-  String get solicitudAdopcion => ' - Richiesta di Adozione';
+  String get si => 'Sì';
 
   @override
-  String get adopcion => 'Adozione';
+  String get no => 'No';
 
-  // --- Textos de FormularioPage ---
+  // --- Testi DrawerPage ---
   @override
-  String get avisosolicitudguardada => 'Richiesta salvata correttamente';
-
-  @override
-  String get tituloFormulario => 'Modulo di Adozione';
+  String get preferencias => 'Preferenze';
 
   @override
-  String get animalnoencontrado => 'Animale non trovato';
+  String get catalogo => 'Catalogo';
 
   @override
-  String get nombreAnimal => 'Nome dell\'animale';
+  String get cerrarSesion => 'Disconnetti';
 
+  // --- Dati Utente ---
   @override
-  String get chipAnimal => 'Chip dell\'animale';
-
-  @override
-  String get nombreAdoptante => 'Nome dell\'Adottante';
-
-  @override
-  String get comprobantenombreAdoptante => 'Il Nome è obbligatorio';
-
-  @override
-  String get primerApellidoAdoptante => 'Primo cognome';
-
-  @override
-  String get comprobantePrimerApellidoAdoptante =>
-      'Il Primo Cognome è obbligatorio';
-
-  @override
-  String get segundoApellidoAdoptante => 'Secondo cognome';
-
-  @override
-  String get comprobanteSegundoApellidoAdoptante =>
-      'Il Secondo Cognome è obbligatorio';
-
-  @override
-  String get DNIAdoptante => 'Documento d\'identità';
-
-  @override
-  String get comprobanteDNIAdoptante => 'Il Documento è obbligatorio';
-
-  @override
-  String get comprobanteFormatoDNIAdoptante =>
-      'Formato del documento non valido (12345678A)';
-
-  @override
-  String get telefonoAdoptante => 'Telefono';
-
-  @override
-  String get comprobantetelefonoAdoptante => 'Il Telefono è obbligatorio';
-
-  @override
-  String get comprobanteFormatotelefonoAdoptante =>
-      'Era previsto un valore numerico';
-
-  @override
-  String get correoAdoptante => 'Email';
-
-  @override
-  String get comporbanteCorreoAdoptante => 'L\'Email è obbligatoria';
-
-  @override
-  String get comporbanteFormatoCorreoAdoptante => 'Formato email non valido';
-
-  @override
-  String get direccionAdoptante => 'Indirizzo';
-
-  @override
-  String get comprobanteDireccionAdoptante => 'L\'Indirizzo è obbligatorio';
-
-  @override
-  String get codigopostalAdoptante => 'Codice postale';
-
-  @override
-  String get comprobanteCodigopostalAdoptante => 'Il CAP è obbligatorio';
-
-  @override
-  String get comprobanteFormatoCodigopostalAdoptante =>
-      'Era previsto un valore numerico';
-
-  @override
-  String get localidadAdoptante => 'Località';
-
-  @override
-  String get comprobantelocalidadAdoptante => 'La Località è obbligatoria';
-
-  @override
-  String get provinciaAdoptante => 'Provincia';
-
-  @override
-  String get comprobanteProvinciaAdoptante => 'La Provincia è obbligatoria';
-
-  @override
-  String get enviarSolicitud => 'Invia Richiesta';
-
-  // --- Textos de DetallePage ---
-  @override
-  String get conocer => 'Conosci';
-
-  // --- Textos de Datos usuario Page ---
-  @override
-  String get tituloDatos => 'Dati Utente';
+  String get datosUsuario => 'Dati Utente';
 
   @override
   String get usuario => 'Utente';
 
   @override
-  String get fechaNacimiento => 'Data di nascita';
-
-  // --- Textos de CrearEditarAnimalPage ---
-  @override
-  String get gestionarAnimales => 'Gestisci Animali';
+  String get fechaNacimiento => 'Data di Nascita';
 
   @override
-  String get noAnimalesRegistrados => 'Nessun animale registrato';
+  String get nombreAdoptante => 'Nome dell’Adottante';
 
   @override
-  String get seleccionarAnimalEdicion => 'Seleziona un animale da modificare';
+  String get apellido1 => 'Primo Cognome';
 
   @override
-  String get sexoAnimal => ' Sesso';
+  String get apellido2 => 'Secondo Cognome';
 
   @override
-  String get fechaNacimientoAnimal => 'Data di nascita';
+  String get dni => 'Documento';
+
+  @override
+  String get telefono => 'Telefono';
+
+  @override
+  String get correo => 'Email';
+
+  @override
+  String get direccion => 'Indirizzo';
+
+  @override
+  String get cp => 'CAP';
+
+  @override
+  String get localidad => 'Località';
+
+  @override
+  String get provincia => 'Provincia';
+
+  // --- Dati Animali ---
+  @override
+  String get nombre => 'Nome';
+
+  @override
+  String get chipAnimal => 'Chip';
+
+  @override
+  String get sexoAnimal => 'Sesso';
+
+  @override
+  String get macho => 'Maschio';
+
+  @override
+  String get hembra => 'Femmina';
 
   @override
   String get razaAnimal => 'Razza';
@@ -187,70 +131,194 @@ class AppLocalizationsIt extends AppLocalizations {
   String get tipoAnimal => 'Tipo';
 
   @override
+  String get perro => 'Cane';
+
+  @override
+  String get gato => 'Gatto';
+
+  @override
+  String get otro => 'Altro';
+
+  @override
   String get esterelizadoAnimal => 'Sterilizzato';
 
   @override
   String get fotoAnimal => 'Foto';
 
   @override
-  String get descripcionAnimal => 'Descrizione';
+  String get descripcionAnimal => 'Descrizione Breve';
+
+  // --- Bottoni ---
+  @override
+  String get botonAciones => 'Gestisci Animali';
 
   @override
-  String get crearAnimal => 'Crea Animale';
+  String get enviarSolicitud => 'Invia Richiesta';
 
   @override
-  String get guardarCambiosAnimal => 'Salva Modifiche';
+  String get adoptar => 'Adotta';
 
   @override
-  String get eliminarAnimal => 'Elimina Animale';
+  String get buttonProfile => 'Profilo';
+
+  // --- HomePage ---
+  @override
+  String get totalAdop => 'Totale Richieste di Adozione';
 
   @override
-  String get loginButton => 'Accedi';
+  String get revisarAdop => 'Adozioni da Revisionare:';
 
   @override
-  String get catalogButton => 'Pagina del Catalogo';
+  String get visitaVeterinario => 'Visita Veterinaria';
 
-  // --- Textos de ClientePage ---
+  @override
+  String get acciones => 'Azioni';
+
+  @override
+  String get actividadReciente => 'Attività Recente';
+
+  @override
+  String get sinActividadReciente => 'Nessuna adozione registrata finora.';
+
+  @override
+  String get solicitudAdopcion => '- Richiesta di Adozione';
+
+  @override
+  String get adopcion => 'Adozione';
+
+  // --- Formulario Adozione ---
+  @override
+  String get avisoSolicitudGuardada => 'Richiesta salvata correttamente';
+
+  @override
+  String get solicitudCreada => 'Richiesta di adozione creata correttamente';
+
+  @override
+  String get preguntEliAdop => 'Sei sicuro di voler eliminare questa adozione?';
+
+  @override
+  String get solicitudEliminada => 'Adozione eliminata correttamente';
+
+  @override
+  String get noAnimalSelect => 'Nessun animale selezionato';
+
+  @override
+  String get tituloFormulario => 'Modulo di Adozione';
+
+  @override
+  String get chipDuplicado => 'Esiste già un animale con questo chip';
+
+  @override
+  String get animalNoEncontrado => 'Animale non trovato';
+
+  @override
+  String get nombreObligatorio => 'Il Nome è obbligatorio';
+
+  @override
+  String get obligatorioApellido1 => 'Il Primo Cognome è obbligatorio';
+
+  @override
+  String get obligatorioApellido2 => 'Il Secondo Cognome è obbligatorio';
+
+  @override
+  String get obligatorioDni => 'Il Documento è obbligatorio';
+
+  @override
+  String get formatoDni => 'Formato Documento non valido (12345678A)';
+
+  @override
+  String get obligatorioTelefono => 'Il Telefono è obbligatorio';
+
+  @override
+  String get formatoNum => 'Si aspettava un valore numerico';
+
+  @override
+  String get obligatorioCorreo => 'L’Email è obbligatoria';
+
+  @override
+  String get formatoCorreo => 'Formato email non valido';
+
+  @override
+  String get obligatorioDireccion => 'L’Indirizzo è obbligatorio';
+
+  @override
+  String get obligatorioCp => 'Il CAP è obbligatorio';
+
+  @override
+  String get obligLocalidad => 'La Località è obbligatoria';
+
+  @override
+  String get obligProvincia => 'La Provincia è obbligatoria';
+
+  // --- CRUDAnimalPage ---
+  @override
+  String get gestionarAnimales => 'Gestisci Animali';
+
+  @override
+  String get noAnimalesRegistrados => 'Nessun animale registrato';
+
+  @override
+  String get selecEdicion => 'Seleziona un animale da modificare';
+
+  @override
+  String get selecSexo => 'Seleziona sesso';
+
+  @override
+  String get razaOblig => 'Razza obbligatoria';
+
+  @override
+  String get tipoOblig => 'Seleziona tipo';
+
+  @override
+  String get fechaOblig => 'Data obbligatoria';
+
+  @override
+  String get fotoOblig => 'Foto obbligatoria';
+
+  @override
+  String get descOblig => 'Descrizione obbligatoria';
+
+  @override
+  String get descLong => 'La descrizione non può superare i 50 caratteri';
+
+  @override
+  String get crearAnimal => 'Crea';
+
+  @override
+  String get guardarCambios => 'Salva';
+
+  // --- ClientPage ---
   @override
   String get noticiasEventos => 'Notizie ed Eventi';
 
   @override
-  String get tituloProtectora => 'Protezione';
+  String get noNoticias => 'Nessuna notizia al momento.';
 
   @override
-  String get subtituloNovedades => 'Novità';
-
-  // --- Textos de FavoritosPage ---
-  @override
-  String get tituloFavoritos => 'Preferiti';
-
-  // --- Textos de AnimalesPage ---
-  @override
-  String get tituloAnimales => 'Animali';
-
-  // --- Textos de drawerPage ---
-  @override
-  String get noUsuarioLogeado => 'Nessun utente connesso';
+  String get novedades => 'Novità';
 
   @override
-  String get preferencias => 'Preferenze';
+  String get favoritos => 'Preferiti';
 
   @override
-  String get drawerCatalogo => 'Catalogo';
+  String get noNoFavoritos => 'Non hai ancora animali preferiti.';
 
   @override
-  String get cerrarSesion => 'Disconnetti';
-
-  // --- Textos de LoginPage ---
-  @override
-  String get mensajeError => 'Accesso fallito:';
+  String get animales => 'Animali';
 
   @override
-  String get bienvenidoProtectora => 'Benvenuto a Protezione';
+  String get noAnimales => 'Nessun animale disponibile al momento.';
+
+  // --- LoginPage ---
+  @override
+  String get errorSesion => 'Accesso fallito:';
+
+  @override
+  String get bienvenida => 'Benvenuto a';
 
   @override
   String get usuarioContrasenya =>
-      'Inserisci il tuo nome utente e la password per continuare.';
+      'Inserisci il tuo utente e la password per continuare.';
 
   @override
   String get contrasenya => 'Password';
@@ -258,13 +326,7 @@ class AppLocalizationsIt extends AppLocalizations {
   @override
   String get iniciarSesion => 'Accedi';
 
-  // --- Textos de card de favoritos ---
-
-  @override
-  String get adoptar => 'Adotta';
-
-  // --- Textos AnimalController ---
-
+  // --- AnimalController ---
   @override
   String get animalCreado => 'Animale creato correttamente';
 
@@ -275,7 +337,9 @@ class AppLocalizationsIt extends AppLocalizations {
   String get confirmarEliminacion => 'Conferma eliminazione';
 
   @override
-  String get preguntarConfirmarEliminacion => 'Sei sicuro di voler eliminare';
+  String preguntaEliminacion(String name) {
+    return 'Sei sicuro di voler eliminare $name?';
+  }
 
   @override
   String get cancelar => 'Annulla';
@@ -284,32 +348,5 @@ class AppLocalizationsIt extends AppLocalizations {
   String get eliminar => 'Elimina';
 
   @override
-  String get animalEliminadoCorrectamente => 'Animale eliminato correttamente';
-
-  // --- Texto MenuButons ---
-
-  @override
-  String get buttonProfolio => 'Profilo';
-
-  // @override
-  // String hello(String name) {
-  //   return '¡Hola, $name!';
-  // }
-
-  // @override
-  // String dueDate(DateTime date) {
-  //   final intl.DateFormat dateDateFormat = intl.DateFormat.yMMMd(localeName);
-  //   final String dateString = dateDateFormat.format(date);
-  //   return 'Vence el $dateString';
-  // }
-
-  // @override
-  // String price(num amount) {
-  //   final intl.NumberFormat amountNumberFormat = intl.NumberFormat.currency(
-  //     locale: localeName,
-  //     name: 'EUR',
-  //   );
-  //   final String amountString = amountNumberFormat.format(amount);
-  //   return 'Total: $amountString';
-  // }
+  String get animalEliminado => 'Animale eliminato correttamente';
 }

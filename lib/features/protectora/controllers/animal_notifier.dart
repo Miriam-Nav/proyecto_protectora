@@ -78,4 +78,6 @@ class AnimalesNotifier extends AsyncNotifier<List<Animales>> {
       state = AsyncError(e, st);
     }
   }
+
+
 }

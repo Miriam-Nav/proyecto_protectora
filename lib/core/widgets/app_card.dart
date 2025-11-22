@@ -121,7 +121,7 @@ class AppInfoCard extends StatelessWidget {
   final VoidCallback? onTap;
   final AppCardVariant variant;
 
-  const AppInfoCard( {
+  const AppInfoCard({
     super.key,
     required this.title,
     required this.subtitle,
@@ -187,10 +187,9 @@ class AppInfoCard extends StatelessWidget {
                   // Título
                   Text(
                     title,
-                    style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                      fontWeight: FontWeight.bold,
-                      color: textColor,
-                    ),
+                    style: Theme.of(
+                      context,
+                    ).textTheme.titleMedium?.copyWith(color: textColor),
                   ),
 
                   // Boton de dentro

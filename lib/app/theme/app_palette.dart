@@ -5,6 +5,7 @@ class AppPalette {
   final Color primary;
   final Color onPrimary;
   final Color degradado;
+  final Color onDegradado;
   final Color secondary;
   final Color onSecondary;
   final Color danger;
@@ -27,6 +28,7 @@ class AppPalette {
     required this.secondary,
     required this.onSecondary,
     required this.degradado,
+    required this.onDegradado,
     required this.danger,
     required this.onDanger,
     required this.success,
@@ -48,6 +50,7 @@ const appPaletteLight = AppPalette(
   primary: Color(0xFFFF6F00),
   onPrimary: Colors.white,
   degradado: Color.fromARGB(255, 253, 176, 10),
+  onDegradado: Color.fromARGB(255, 255, 135, 23),
   secondary: Color.fromARGB(255, 30, 29, 29),
   onSecondary: Colors.white,
   danger: Color(0xFFD92D20),
@@ -68,12 +71,13 @@ const appPaletteLight = AppPalette(
 const appPaletteDark = AppPalette(
   //background: Color.fromARGB(255, 20, 20, 21),
   background: Color.fromARGB(255, 28, 21, 38),
-  primary: Color.fromARGB(255, 255, 140, 68),
+  primary: Color.fromARGB(255, 255, 201, 53),
   onPrimary: Colors.white,
   degradado: Color.fromARGB(255, 195, 10, 0),
+  onDegradado: Color.fromARGB(255, 252, 129, 53),
   secondary: Colors.white,
   onSecondary: Color.fromARGB(255, 30, 29, 29),
-  danger: Color.fromARGB(255, 208, 56, 42),
+  danger: Color.fromARGB(255, 244, 73, 58),
   onDanger: Colors.white,
   success: Color.fromARGB(236, 123, 253, 103),
   onSuccess: Colors.white,

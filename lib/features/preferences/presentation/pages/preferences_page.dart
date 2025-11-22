@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:proyecto_protectora/core/l10n/app_localizations.dart';
 import 'package:proyecto_protectora/core/widgets/app_button.dart';
 import 'package:proyecto_protectora/features/preferences/controllers/preferences_controller.dart';
 import 'package:proyecto_protectora/features/preferences/data/models/preferences.dart';
@@ -28,12 +29,13 @@ class _PreferencesPageState extends ConsumerState<PreferencesPage> {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
     return Scaffold(
-      appBar: customAppBar(context, "Preferencias"),
+      appBar: customAppBar(context, l10n.preferencias),
       body: ListView(
         padding: const EdgeInsets.symmetric(horizontal: 24.0, vertical: 16.0),
         children: [
-          Text("Apariencia"),
+          Text(l10n.apariencia),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
@@ -45,7 +47,7 @@ class _PreferencesPageState extends ConsumerState<PreferencesPage> {
                   ),
                   const SizedBox(width: 12),
                   Text(
-                    'Modo oscuro',
+                    l10n.modoOsc,
                     style: Theme.of(context).textTheme.titleMedium,
                   ),
                 ],
@@ -57,18 +59,13 @@ class _PreferencesPageState extends ConsumerState<PreferencesPage> {
                     _selDarkMode = val;
                   });
                 },
-                // dropdownMenuEntries: [
-                //   DropdownMenuEntry(value: 'es', label: 'ES'),
-                //   DropdownMenuEntry(value: 'en', label: 'EN'),
-                //   DropdownMenuEntry(value: 'it', label: 'IT'),
-                // ],
               ),
             ],
           ),
 
           const Divider(height: 32),
 
-          Text("Selección de Idioma"),
+          Text(l10n.selecIdioma),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
@@ -77,14 +74,14 @@ class _PreferencesPageState extends ConsumerState<PreferencesPage> {
                   Icon(Icons.language, color: appPaletteOf(context).cardBlue),
                   SizedBox(width: 12),
                   Text(
-                    'Idioma',
+                    l10n.idioma,
                     style: Theme.of(context).textTheme.titleMedium,
                   ),
                 ],
               ),
               DropdownButton<String>(
                 value: _selLanguage,
-                underline: const SizedBox(), // quita la línea inferior
+                underline: const SizedBox(),
                 onChanged: (String? value) {
                   setState(() {
                     _selLanguage = value!;
@@ -93,6 +90,7 @@ class _PreferencesPageState extends ConsumerState<PreferencesPage> {
                 items: const [
                   DropdownMenuItem(value: 'es', child: Text('Español')),
                   DropdownMenuItem(value: 'en', child: Text('English')),
+                  DropdownMenuItem(value: 'it', child: Text('Italiano')),
                 ],
               ),
             ],
@@ -106,7 +104,9 @@ class _PreferencesPageState extends ConsumerState<PreferencesPage> {
           width: double.infinity,
           child: AppButton(
             icon: Icons.save,
-            label: 'Guardar cambios',
+            label: l10n.guardarCambios,
+            foregroundColorOverride: appPaletteOf(context).onSecondary,
+            rounded: 5,
             onPressed: () async {
               final messenger = ScaffoldMessenger.of(context);
               await ref
@@ -120,7 +120,7 @@ class _PreferencesPageState extends ConsumerState<PreferencesPage> {
               messenger.showSnackBar(
                 SnackBar(
                   content: Text(
-                    'Guardado: darkmode = $_selDarkMode, idioma = $_selLanguage',
+                    '${l10n.guardado}: DarkMode = $_selDarkMode, ${l10n.idioma} = $_selLanguage',
                   ),
                 ),
               );

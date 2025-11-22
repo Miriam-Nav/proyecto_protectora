@@ -14,6 +14,7 @@ class ProtectoraDrawer extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final l10n = AppLocalizations.of(context)!;
+    final usuario = ref.watch(authControllerProvider).value;
     return Drawer(
       child: Container(
         color: appPaletteOf(context).background,
@@ -28,7 +29,7 @@ class ProtectoraDrawer extends ConsumerWidget {
                   color: appPaletteOf(context).primary,
                   gradient: LinearGradient(
                     colors: [
-                      appPaletteOf(context).primary,
+                      appPaletteOf(context).onDegradado,
                       appPaletteOf(context).degradado,
                     ],
                     begin: Alignment.topLeft,
@@ -44,15 +45,16 @@ class ProtectoraDrawer extends ConsumerWidget {
                         border: Border.all(
                           color: appPaletteOf(
                             context,
-                          ).background.withOpacity(0.3),
+                          ).background.withAlpha((0.3 * 255).round()),
+
                           width: 2,
                         ),
                       ),
                       child: CircleAvatar(
                         radius: 32,
                         backgroundColor: appPaletteOf(context).background,
-                        child: Image.asset(
-                          "assets/images/gato_conn_perro_login.png",
+                        child: Image.network(
+                          usuario?.image ?? l10n.usuario,
                           width: 50,
                           height: 50,
                           fit: BoxFit.contain,
@@ -66,7 +68,7 @@ class ProtectoraDrawer extends ConsumerWidget {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text(
-                            l10n.tituloProtectora,
+                            usuario?.firstName ?? l10n.invitado,
                             style: Theme.of(context).textTheme.titleLarge
                                 ?.copyWith(
                                   color: appPaletteOf(context).onPrimary,
@@ -74,7 +76,7 @@ class ProtectoraDrawer extends ConsumerWidget {
                           ),
                           const SizedBox(height: 4),
                           Text(
-                            usuario?.email ?? "Sin correo",
+                            usuario?.email ?? l10n.sinCorreo,
                             style: Theme.of(context).textTheme.bodyMedium
                                 ?.copyWith(
                                   color: appPaletteOf(context).onPrimary,
@@ -102,19 +104,18 @@ class ProtectoraDrawer extends ConsumerWidget {
                       ),
                     );
                   } else {
-                    ScaffoldMessenger.of(context).showSnackBar(
-                      SnackBar(content: Text(l10n.noUsuarioLogeado)),
-                    );
+                    ScaffoldMessenger.of(
+                      context,
+                    ).showSnackBar(SnackBar(content: Text(l10n.noLoggin)));
                   }
                 },
               ),
 
               ListTile(
-                leading: const Icon(Icons.refresh),
-                title:  Text(l10n.preferencias),
+                leading: const Icon(Icons.settings),
+                title: Text(l10n.preferencias),
                 onTap: () async {
                   Navigator.pop(context);
-                  //await ref.read(todosProvider.notifier).refresh();
                   Navigator.push(
                     context,
                     MaterialPageRoute(builder: (ref) => PreferencesPage()),
@@ -124,7 +125,7 @@ class ProtectoraDrawer extends ConsumerWidget {
 
               ListTile(
                 leading: const Icon(Icons.dashboard),
-                title: Text(l10n.drawerCatalogo),
+                title: Text(l10n.catalogo),
                 onTap: () async {
                   Navigator.pop(context);
                   Navigator.push(
@@ -161,11 +162,26 @@ class ProtectoraDrawer extends ConsumerWidget {
               ),
 
               ListTile(
-                leading: const Icon(Icons.logout),
-                title: Text(l10n.cerrarSesion),
+                leading: Icon(
+                  Icons.logout,
+                  color: appPaletteOf(context).danger,
+                ),
+                title: Text(
+                  l10n.cerrarSesion,
+                  style: Theme.of(context).textTheme.bodyLarge?.copyWith(
+                    color: appPaletteOf(context).danger,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+
                 onTap: () async {
                   Navigator.pop(context);
                   await ref.read(authControllerProvider.notifier).signOut();
+
+                  // Evita usar context si el widget ya no existe
+                  if (!context.mounted) {
+                    return;
+                  }
 
                   // Después de cerrar sesión va al login
                   Navigator.pushReplacement(

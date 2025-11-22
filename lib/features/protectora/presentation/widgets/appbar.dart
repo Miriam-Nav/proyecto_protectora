@@ -8,18 +8,15 @@ AppBar customAppBar(
   List<Widget>? actions,
 }) {
   final palette = appPaletteOf(context);
-
   return AppBar(
     centerTitle: true,
     backgroundColor: Colors.transparent,
     elevation: 0,
     toolbarHeight: 70,
     leadingWidth: 120,
-    actionsPadding: const EdgeInsets.symmetric(horizontal: 24),
     title: Text(
       title,
       style: Theme.of(context).textTheme.headlineLarge?.copyWith(
-        fontWeight: FontWeight.bold,
         color: appPaletteOf(context).onPrimary,
       ),
     ),
@@ -44,7 +41,7 @@ AppBar customAppBar(
       child: Container(
         decoration: BoxDecoration(
           gradient: LinearGradient(
-            colors: [palette.primary, palette.degradado],
+            colors: [palette.onDegradado, palette.degradado],
             begin: Alignment.topLeft,
             end: Alignment.bottomRight,
           ),

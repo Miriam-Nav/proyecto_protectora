@@ -13,8 +13,8 @@ class DetalleAnimal extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final l10n = AppLocalizations.of(context)!;
     final animalesAsync = ref.watch(animalesProvider);
+    final l10n = AppLocalizations.of(context)!;
 
     return animalesAsync.when(
       loading: () =>
@@ -23,7 +23,7 @@ class DetalleAnimal extends ConsumerWidget {
       data: (animales) {
         final animal = animales.firstWhere(
           (animales) => animales.idAnimal == seleccionado,
-          orElse: () => throw Exception(l10n.animalnoencontrado),
+          orElse: () => throw Exception(l10n.animalNoEncontrado),
         );
 
         return Scaffold(

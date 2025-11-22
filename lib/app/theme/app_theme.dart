@@ -47,7 +47,6 @@ class AppTheme {
       onError: appPaletteLight.onDanger,
     ),
     textTheme: _textTheme,
-    fontFamily: 'NunitoSans',
   );
 
   static ThemeData dark = ThemeData(

@@ -32,7 +32,7 @@ class ClientPage extends ConsumerWidget {
     final ultimosAnimales = ref.watch(ultimosAnimalesProvider);
 
     return Scaffold(
-      appBar: customAppBar(context, l10n.tituloProtectora, showDrawer: true),
+      appBar: customAppBar(context, l10n.appTitle, showDrawer: true),
 
       drawer: ProtectoraDrawer(),
 
@@ -44,7 +44,7 @@ class ClientPage extends ConsumerWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  l10n.subtituloNovedades,
+                  l10n.novedades,
                   style: Theme.of(context).textTheme.headlineLarge,
                   textAlign: TextAlign.left,
                 ),
@@ -55,9 +55,9 @@ class ClientPage extends ConsumerWidget {
                   error: (e, _) => Center(child: Text('Error: $e')),
                   data: (animales) {
                     if (animales.isEmpty) {
-                      return const Padding(
+                      return Padding(
                         padding: EdgeInsets.symmetric(vertical: 12),
-                        child: Text('No hay animales recientes todavía.'),
+                        child: Text(l10n.noAnimalesRegistrados),
                       );
                     }
 
@@ -115,12 +115,9 @@ class ClientPage extends ConsumerWidget {
             Column(
               children: ultimasNoticias.isEmpty
                   ? [
-                      const Padding(
+                      Padding(
                         padding: EdgeInsets.symmetric(vertical: 12),
-                        child: Text(
-                          'No hay noticias todavía.',
-                          textAlign: TextAlign.left,
-                        ),
+                        child: Text(l10n.noNoticias, textAlign: TextAlign.left),
                       ),
                     ]
                   : ultimasNoticias.map((noticia) {

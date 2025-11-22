@@ -8,11 +8,12 @@ import 'package:proyecto_protectora/features/protectora/presentation/providers/a
 
 class AnimalController {
   final nombreCtrl = TextEditingController();
-  final sexoCtrl = TextEditingController(); // "Macho" / "Hembra"
+  Sexo? sexo;
   final razaCtrl = TextEditingController();
-  final tipoCtrl = TextEditingController(); // "Perro" / "Gato"
-  final fechaCtrl = TextEditingController(); // "2020-01-15"
-  final esterilizadoCtrl = TextEditingController(); // "Sí" / "No"
+  TipoAnimal? tipo;
+  final fechaCtrl = TextEditingController(); // Solo para mostrar
+  DateTime? fechaNacimiento;
+  bool esterilizado = false;
   final chipCtrl = TextEditingController();
   final descripcionCtrl = TextEditingController();
   final fotoCtrl = TextEditingController();
@@ -21,11 +22,12 @@ class AnimalController {
 
   void cargarAnimal(Animales animal) {
     nombreCtrl.text = animal.nombre;
-    sexoCtrl.text = animal.sexo.name; // enum → string
+    sexo = animal.sexo;
     razaCtrl.text = animal.raza;
-    tipoCtrl.text = animal.tipo.name; // enum → string
-    fechaCtrl.text = animal.fNacimiento.toIso8601String();
-    esterilizadoCtrl.text = animal.esterilizado ? "Sí" : "No";
+    tipo = animal.tipo;
+    fechaNacimiento = animal.fNacimiento;
+    fechaCtrl.text = animal.fNacimiento.toIso8601String().split('T').first;
+    esterilizado = animal.esterilizado;
     chipCtrl.text = animal.chip ?? "";
     descripcionCtrl.text = animal.descripcion;
     fotoCtrl.text = animal.foto;
@@ -35,11 +37,12 @@ class AnimalController {
   void limpiar() {
     seleccionado = null;
     nombreCtrl.clear();
-    sexoCtrl.clear();
+    sexo = null;
     razaCtrl.clear();
-    tipoCtrl.clear();
+    tipo = null;
     fechaCtrl.clear();
-    esterilizadoCtrl.clear();
+    fechaNacimiento = null;
+    esterilizado = false;
     chipCtrl.clear();
     descripcionCtrl.clear();
     fotoCtrl.clear();
@@ -47,11 +50,8 @@ class AnimalController {
 
   void dispose() {
     nombreCtrl.dispose();
-    sexoCtrl.dispose();
     razaCtrl.dispose();
-    tipoCtrl.dispose();
     fechaCtrl.dispose();
-    esterilizadoCtrl.dispose();
     chipCtrl.dispose();
     descripcionCtrl.dispose();
     fotoCtrl.dispose();
@@ -64,15 +64,16 @@ class AnimalController {
         .read(animalesProvider.notifier)
         .addAnimal(
           nombre: nombreCtrl.text,
-          sexo: _parseSexo(sexoCtrl.text),
+          sexo: sexo!,
           raza: razaCtrl.text,
-          tipo: _parseTipo(tipoCtrl.text),
-          fNacimiento: DateTime.parse(fechaCtrl.text),
-          esterilizado: esterilizadoCtrl.text.toLowerCase() == "sí",
+          tipo: tipo!,
+          fNacimiento: fechaNacimiento!,
+          esterilizado: esterilizado,
           chip: chipCtrl.text.isEmpty ? null : chipCtrl.text,
           descripcion: descripcionCtrl.text,
           foto: fotoCtrl.text,
         );
+    if (!context.mounted) return;
     ScaffoldMessenger.of(
       context,
     ).showSnackBar(SnackBar(content: Text(l10n.animalCreado)));
@@ -85,18 +86,18 @@ class AnimalController {
 
     final actualizado = seleccionado!.copyWith(
       nombre: nombreCtrl.text,
-      sexo: _parseSexo(sexoCtrl.text),
+      sexo: sexo,
       raza: razaCtrl.text,
-      tipo: _parseTipo(tipoCtrl.text),
-      fNacimiento: DateTime.parse(fechaCtrl.text),
-      esterilizado: esterilizadoCtrl.text.toLowerCase() == "sí",
+      tipo: tipo,
+      fNacimiento: fechaNacimiento!,
+      esterilizado: esterilizado,
       chip: chipCtrl.text.isEmpty ? null : chipCtrl.text,
       descripcion: descripcionCtrl.text,
       foto: fotoCtrl.text,
     );
 
     await ref.read(animalesProvider.notifier).updateAnimal(actualizado);
-
+    if (!context.mounted) return;
     ScaffoldMessenger.of(
       context,
     ).showSnackBar(SnackBar(content: Text(l10n.animalActualizado)));
@@ -113,13 +114,12 @@ class AnimalController {
       builder: (_) => AlertDialog(
         backgroundColor: appPaletteOf(context).background,
         title: Text(l10n.confirmarEliminacion),
-        content: Text(
-          '${l10n.preguntarConfirmarEliminacion} ${seleccionado!.nombre}?',
-        ),
+        content: Text(l10n.preguntaEliminacion(seleccionado!.nombre)),
         actions: [
           AppButton(
             onPressed: () => Navigator.of(context).pop(false),
             label: l10n.cancelar,
+            variant: AppButtonVariant.secondary,
           ),
           AppButton(
             variant: AppButtonVariant.danger,
@@ -134,26 +134,21 @@ class AnimalController {
       await ref
           .read(animalesProvider.notifier)
           .removeAnimal(seleccionado!.idAnimal);
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text(l10n.animalEliminadoCorrectamente)),
-      );
+      if (!context.mounted) return;
+      ScaffoldMessenger.of(
+        context,
+      ).showSnackBar(SnackBar(content: Text(l10n.animalEliminado)));
       limpiar();
     }
   }
 
-  // --- Helpers para convertir texto a enums ---
-  Sexo _parseSexo(String value) {
-    return value.toLowerCase().startsWith("h") ? Sexo.hembra : Sexo.macho;
-  }
-
-  TipoAnimal _parseTipo(String value) {
-    switch (value.toLowerCase()) {
-      case "perro":
-        return TipoAnimal.perro;
-      case "gato":
-        return TipoAnimal.gato;
-      default:
-        return TipoAnimal.otro;
-    }
+  String? validarChip(
+    String? chip,
+    List<Animales> animales,
+    AppLocalizations l10n,
+  ) {
+    final existeChip = animales.any((a) => a.chip == chip);
+    if (existeChip) return l10n.chipDuplicado;
+    return null;
   }
 }

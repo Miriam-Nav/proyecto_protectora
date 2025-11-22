@@ -1,7 +1,5 @@
 import 'package:proyecto_protectora/features/preferences/data/models/preferences.dart';
-
 import 'dart:ui';
-
 import 'package:shared_preferences/shared_preferences.dart';
 
 class PreferencesRepository {

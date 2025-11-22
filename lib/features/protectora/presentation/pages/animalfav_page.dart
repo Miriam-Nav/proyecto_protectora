@@ -13,16 +13,16 @@ class FavAnimalesPage extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final l10n = AppLocalizations.of(context)!;
     final Set<Animales> favAnimales = ref.watch(favAnimalProvider);
+    final l10n = AppLocalizations.of(context)!;
 
     return Scaffold(
-      appBar: customAppBar(context, l10n.tituloFavoritos, showDrawer: true),
+      appBar: customAppBar(context, l10n.favoritos, showDrawer: true),
       drawer: const ProtectoraDrawer(),
       body: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 24.0, vertical: 16.0),
         child: favAnimales.isEmpty
-            ? const Center(child: Text('No tienes animales favoritos todavía.'))
+            ? Center(child: Text(l10n.noNoFavoritos))
             : ListView.builder(
                 itemCount: favAnimales.length,
                 itemBuilder: (BuildContext context, int index) {

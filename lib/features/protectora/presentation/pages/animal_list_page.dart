@@ -1,4 +1,3 @@
-import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:proyecto_protectora/core/l10n/app_localizations.dart';
@@ -16,7 +15,7 @@ class AnimalListPage extends ConsumerWidget {
     final l10n = AppLocalizations.of(context)!;
     final animales = ref.watch(animalesProvider);
     return Scaffold(
-      appBar: customAppBar(context, l10n.tituloAnimales, showDrawer: true),
+      appBar: customAppBar(context, l10n.animales, showDrawer: true),
       drawer: const ProtectoraDrawer(),
 
       body: Padding(
@@ -26,10 +25,10 @@ class AnimalListPage extends ConsumerWidget {
           error: (err, _) => Center(child: Text('Error: $err')),
           data: (items) {
             if (items.isEmpty) {
-              return const Center(
+              return Center(
                 child: Padding(
                   padding: EdgeInsets.symmetric(vertical: 20),
-                  child: Text('No hay animales disponibles en este momento.'),
+                  child: Text(l10n.noAnimales),
                 ),
               );
             }

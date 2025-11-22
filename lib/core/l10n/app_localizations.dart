@@ -4,7 +4,6 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:intl/intl.dart' as intl;
-import 'package:proyecto_protectora/features/protectora/presentation/pages/crear_editar_animal.dart';
 
 import 'app_localizations_en.dart';
 import 'app_localizations_es.dart';
@@ -36,122 +35,219 @@ abstract class AppLocalizations {
     Locale('es'),
     Locale('it'),
   ];
-
   // --- Textos generales ---
+  // Título principal de la aplicación, aparece en la barra superior y en metadatos.
   String get appTitle;
-  // String hello(String name);
-
-  // --- Textos generales ---
+  // Saludo dinámico que incluye el nombre del usuario.
+  String hello(String name);
+  // Texto introductorio para mostrar información de un animal ("Conoce a ...").
+  String get conocer;
+  // Etiqueta para la página de inicio.
   String get inicio;
-
-  // /// Placeholder de fecha formateada según la configuración regional
-  // String dueDate(DateTime date);
-
-  // /// Placeholder de número con formato de moneda
-  // String price(num amount);
-
-  /// Texto del botón para abrir el selector de idioma
-  String get openLanguagePicker;
-
-  /// Título de gestión de páginas
+  // Texto que se muestra cuando el usuario accede como invitado.
+  String get invitado;
+  // Texto que se muestra cuando no hay correo disponible.
+  String get sinCorreo;
+  // Mensaje que indica que no hay sesión iniciada.
+  String get noLoggin;
+  // Texto genérico de confirmación tras guardar cambios.
+  String get guardado;
+  // Etiqueta para seleccionar idioma en las preferencias.
+  String get idioma;
+  // Texto del botón o menú para cambiar idioma.
+  String get selecIdioma;
+  // Título de la sección de apariencia en preferencias.
+  String get apariencia;
+  // Texto para activar/desactivar el modo oscuro.
+  String get modoOsc;
+  // Título de la sección de gestión de páginas.
   String get namePagesGestion;
+  // Texto para la página de catálogo.
+  String get pagCatalogo;
+  // Valores genéricos de confirmación: Sí / No.
+  String get si;
+  String get no;
 
-  // --- Textos específicos de HomePage ---
-  String get welcome; // Bienvenido
-  String get loginButton; // Login
-  String get catalogButton; // Página de Catálogo
-  // --- Home ---
-  String get visitaveterinario; // cart home notificacion
-  String get visitaveterinarioText; // cart home notificacion texto
-  String get visitaveterinarioTextButton; // cart home notificaciones text del boton
-  String get acciones; // titulo de acciones
-  String get botonAciones; // titulo de accion del boton
-  String get actividadReciente; //titulo de actividad reciente
-  String get sinActividadReciente; // titulo cuando no hay actividad reciente
-  String get solicitudAdopcion; // solicitud de adopcion
-  String get adopcion; //texto del boton de adopcion
-  // ---Formulario---
-  String get avisosolicitudguardada; // aviso de solicitud guardada correctamente
-  String get tituloFormulario; // Titulo principal del formulario
-  String get animalnoencontrado; // mensaje cuando no encuentre el animal
-  String get nombreAnimal; // input que indica el nombre del animal
-  String get chipAnimal; // input que indica el chip del animal
-  String get nombreAdoptante; // input que indica el nombre del adoptante
-  String get comprobantenombreAdoptante; // comprobante que ha puesto el nombre
-  String get primerApellidoAdoptante; // input que indica el primer apellido del adoptante
-  String get comprobantePrimerApellidoAdoptante; // comprobar que ha puesto el primer apellido
-  String get segundoApellidoAdoptante; // input que indica el segundo apellido del adoptante
-  String get comprobanteSegundoApellidoAdoptante; // comprobar que ha puesto el segundo apellido
-  String get DNIAdoptante; // input que indica el DNI del adoptante
-  String get comprobanteDNIAdoptante; // comprobante de que se ha puesto el DNI
-  String get comprobanteFormatoDNIAdoptante; // comprobante de que el formato sea el correcto
-  String get telefonoAdoptante; // input que indica el telefono del adoptante
-  String get comprobantetelefonoAdoptante; // comporbante de que se ha puesto un numero de telefono
-  String get comprobanteFormatotelefonoAdoptante; // comporbante de que el formato del numero sea el correcto
-  String get correoAdoptante;// input que indica el correo electronico del adoptante
-  String get comporbanteCorreoAdoptante; // comprobante de que se haya puesto un correo electronico
-  String get comporbanteFormatoCorreoAdoptante; // comoprobante del formato del correo electronico del adoptante
-  String get direccionAdoptante;//  input que indica la direccion del correo electronico del adoptante
-  String get comprobanteDireccionAdoptante; // comprobante de que ha puesto la direccion
-  String get codigopostalAdoptante; // input que indica el codigo postal del adoptante
-  String get comprobanteCodigopostalAdoptante; // comprobante de que se ha introducido el codigo postal
-  String get comprobanteFormatoCodigopostalAdoptante; // comporbante del formato del codigo postal sea el correcto
-  String get localidadAdoptante; // input que indica la localidad del adoptante
-  String get comprobantelocalidadAdoptante; // comprobante de que se ha puesto la localidad
-  String get provinciaAdoptante; // input que indica la provincia del adoptante
-  String get comprobanteProvinciaAdoptante; // comprobante de que se ha introducido la provincia
-  String get enviarSolicitud; // texto del boton de enviar solicitud
-  // --- Detalle ---
-  String get conocer; // texto del titulo de conocer a
-  // --- Datos del usuario ---
-  String get tituloDatos; // titulo de la pagina datos del usuario
-  String get usuario; // input que indica el usuario
-  String get fechaNacimiento; // input que indica la fecha de nacimiento del usuario
-  // --- CrearEditarAnimal ---
-  String get gestionarAnimales; // titulo de la pagina de crear editar animal
-  String get noAnimalesRegistrados; // mensaje cuando no hay animales registrados
-  String get seleccionarAnimalEdicion; // selecciona un animal para editarlo
-  String get sexoAnimal; // input que indica el sexo del animal
-  String get fechaNacimientoAnimal; //input que indica la fecha de nacimiento del animal
-  String get razaAnimal; //input que indica la raza del animal
-  String get tipoAnimal; //input que indica el tipo de animal
-  String get esterelizadoAnimal; //input que indica si el animal esta esterelizado
-  String get fotoAnimal; //input que indica la foto del animal
-  String get descripcionAnimal; //input que indica la descripcion del animal
-  String get crearAnimal; //boton de crear animal
-  String get guardarCambiosAnimal; // boton de guardar cambios del animal
-  String get eliminarAnimal; // boton de eliminar animal
-  // --- ClientePage ---
-  String get noticiasEventos; // titulo de noticias y eventos
-  String get tituloProtectora; // titulo de la pagina cliente
-  String get subtituloNovedades; // subtitulo de la pagina cliente
-  // --- FavoritosPage ---
-  String get tituloFavoritos; // titulo de la pagina favoritos
-  // --- AnimalesPage --- 
-  String get tituloAnimales; // titulo de la pagina animales
-  // --- drawerPage ---
-  String get noUsuarioLogeado; // no hay un usuario logeado
-  String get preferencias; // preferencias 
-  String get drawerCatalogo; // catalogo
-  String get cerrarSesion; // texto del boton de cerrar sesion
-  // --- loginPage ---
-  String get mensajeError; // mensaje de error 
-  String get bienvenidoProtectora; // titulo de bienvenido a la aplicacion
-  String get usuarioContrasenya; // indica al usuario que debe de introducir el usuario y contraseña
-  String get contrasenya; // input para introducir la contraseña
-  String get iniciarSesion; // texto del boton para iniciar sesion
-  // --- cartFavoritos ---
-  String get adoptar; // boton de adoptar
-  // --- AnimalController ---
-  String get animalCreado; // texto cuando crear un animal correctamente
-  String get animalActualizado; // texto de animal actualizado
-  String get confirmarEliminacion; // texto de confirmar eliminacion
-  String get preguntarConfirmarEliminacion; // pregunta si estas seguro que quieres eliminar al animal
-  String get cancelar; // texto del boton cancelar
-  String get eliminar; // texto del boton eliminar
-  String get animalEliminadoCorrectamente; // notificacion de que el animal a sido eliminado correctamente
-  // --- MenuButons ---
-  String get buttonProfolio; // texto del boton porfolio
+  // --- Textos de drawerPage ---
+  // Opción de menú para abrir preferencias.
+  String get preferencias;
+  // Opción de menú para abrir catálogo.
+  String get catalogo;
+  // Opción de menú para cerrar sesión.
+  String get cerrarSesion;
+
+  // --- Textos de Datos Usuario ---
+  // Título de la página de datos de usuario.
+  String get datosUsuario;
+  // Campo de formulario para el nombre de usuario.
+  String get usuario;
+  // Campo de formulario para la fecha de nacimiento.
+  String get fechaNacimiento;
+  // Campo de formulario para el nombre del adoptante.
+  String get nombreAdoptante;
+  // Campo de formulario para el primer apellido.
+  String get apellido1;
+  // Campo de formulario para el segundo apellido.
+  String get apellido2;
+  // Campo de formulario para el DNI.
+  String get dni;
+  // Campo de formulario para el teléfono.
+  String get telefono;
+  // Campo de formulario para el correo electrónico.
+  String get correo;
+  // Campo de formulario para la dirección.
+  String get direccion;
+  // Campo de formulario para el código postal.
+  String get cp;
+  // Campo de formulario para la localidad.
+  String get localidad;
+  // Campo de formulario para la provincia.
+  String get provincia;
+
+  // --- Textos de Datos Animales ---
+  // Campo de formulario para el nombre del animal.
+  String get nombre;
+  // Campo de formulario para el chip identificador.
+  String get chipAnimal;
+  // Campo de formulario para el sexo del animal.
+  String get sexoAnimal;
+  // Opciones de sexo: macho / hembra.
+  String get macho;
+  String get hembra;
+  // Campo de formulario para la raza del animal.
+  String get razaAnimal;
+  // Campo de formulario para el tipo de animal.
+  String get tipoAnimal;
+  // Opciones de tipo: perro / gato / otro.
+  String get perro;
+  String get gato;
+  String get otro;
+  // Campo de formulario para indicar si está esterilizado.
+  String get esterelizadoAnimal;
+  // Campo de formulario para la foto del animal.
+  String get fotoAnimal;
+  // Campo de formulario para la descripción breve del animal.
+  String get descripcionAnimal;
+
+  // --- Textos Botones ---
+  // Botón para gestionar animales.
+  String get botonAciones;
+  // Botón para enviar solicitud de adopción.
+  String get enviarSolicitud;
+  // Botón para adoptar un animal.
+  String get adoptar;
+  // Botón para abrir perfil de usuario.
+  String get buttonProfile;
+
+  // --- Textos de HomePage ---
+  // Texto de Total de Adopciones.
+  String get totalAdop;
+  // Texto de Adopciones a Revisar.
+  String get revisarAdop;
+  // Tarjeta de notificación de visita veterinaria.
+  String get visitaVeterinario;
+  // Título de la sección de acciones.
+  String get acciones;
+  // Título de la sección de actividad reciente.
+  String get actividadReciente;
+  // Mensaje cuando no hay actividad registrada.
+  String get sinActividadReciente;
+  // Texto que acompaña a una solicitud de adopción.
+  String get solicitudAdopcion;
+  // Texto genérico para adopción.
+  String get adopcion;
+
+  // --- Textos de Formulario Adopción ---
+  // Aviso de que la solicitud se guardó correctamente.
+  String get avisoSolicitudGuardada;
+  String get solicitudCreada;
+  String get preguntEliAdop;
+  String get solicitudEliminada;
+  String get noAnimalSelect;
+
+  // Título principal del formulario de adopción.
+  String get tituloFormulario;
+  // Mensaje de chip duplicado.
+  String get chipDuplicado;
+  // Mensaje cuando no se encuentra el animal.
+  String get animalNoEncontrado;
+  // Validaciones de campos obligatorios y formatos.
+  String get nombreObligatorio;
+  String get obligatorioApellido1;
+  String get obligatorioApellido2;
+  String get obligatorioDni;
+  String get formatoDni;
+  String get obligatorioTelefono;
+  String get formatoNum;
+  String get obligatorioCorreo;
+  String get formatoCorreo;
+  String get obligatorioDireccion;
+  String get obligatorioCp;
+  String get obligLocalidad;
+  String get obligProvincia;
+
+  // --- Textos de CRUDAnimalPage ---
+  // Título de la página de gestión de animales.
+  String get gestionarAnimales;
+  // Mensaje cuando no hay animales registrados.
+  String get noAnimalesRegistrados;
+  // Texto para seleccionar un animal a editar.
+  String get selecEdicion;
+  // Validaciones de campos obligatorios.
+  String get selecSexo;
+  String get razaOblig;
+  String get tipoOblig;
+  String get fechaOblig;
+  String get fotoOblig;
+  String get descOblig;
+  String get descLong;
+  // Botones de acción en CRUD.
+  String get crearAnimal;
+  String get guardarCambios;
+
+  // --- Textos de ClientePage ---
+  // Título de sección noticias y eventos.
+  String get noticiasEventos;
+  // Mensaje cuando no hay noticias.
+  String get noNoticias;
+  // Subtítulo de novedades.
+  String get novedades;
+  // Título de favoritos.
+  String get favoritos;
+  // Mensaje cuando no hay favoritos.
+  String get noNoFavoritos;
+  // Título de animales.
+  String get animales;
+  // Mensaje cuando no hay animales disponibles.
+  String get noAnimales;
+
+  // --- Textos de LoginPage ---
+  // Mensaje de error en inicio de sesión.
+  String get errorSesion;
+  // Texto de bienvenida a la aplicación.
+  String get bienvenida;
+  // Instrucción para introducir usuario y contraseña.
+  String get usuarioContrasenya;
+  // Campo de formulario para contraseña.
+  String get contrasenya;
+  // Botón para iniciar sesión.
+  String get iniciarSesion;
+
+  // --- Textos AnimalController ---
+  // Mensaje cuando se crea un animal correctamente.
+  String get animalCreado;
+  // Mensaje cuando se actualiza un animal.
+  String get animalActualizado;
+  // Título del diálogo de confirmación de eliminación.
+  String get confirmarEliminacion;
+  // Pregunta de confirmación al eliminar un animal.
+  String preguntaEliminacion(String name);
+  // Botón cancelar en diálogo.
+  String get cancelar;
+  // Botón eliminar en diálogo.
+  String get eliminar;
+  // Mensaje cuando un animal se elimina correctamente.
+  String get animalEliminado;
 }
 
 class _AppLocalizationsDelegate
@@ -174,11 +270,11 @@ class _AppLocalizationsDelegate
 AppLocalizations lookupAppLocalizations(Locale locale) {
   switch (locale.languageCode) {
     case 'en':
-    return AppLocalizationsEn();
+      return AppLocalizationsEn();
     case 'es':
       return AppLocalizationsEs();
     case 'it':
-    return AppLocalizationsIt();
+      return AppLocalizationsIt();
   }
 
   throw FlutterError(

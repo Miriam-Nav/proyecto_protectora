@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:proyecto_protectora/app/theme/app_palette.dart';
+import 'package:proyecto_protectora/core/l10n/app_localizations.dart';
 import 'package:proyecto_protectora/core/widgets/app_button.dart';
 import 'package:proyecto_protectora/core/widgets/app_input_text.dart';
 import 'package:proyecto_protectora/features/auth/controllers/auth_controller.dart';
@@ -30,6 +31,7 @@ class _LoginPageState extends ConsumerState<LoginPage> {
   }
 
   Future<void> _submit() async {
+    final l10n = AppLocalizations.of(context)!;
     if (!_formKey.currentState!.validate()) return;
     setState(() => _loading = true);
     try {
@@ -47,7 +49,7 @@ class _LoginPageState extends ConsumerState<LoginPage> {
     } catch (e) {
       if (mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text('Inicio de sesión fallido: ${e.toString()}')),
+          SnackBar(content: Text('${l10n.errorSesion} ${e.toString()}')),
         );
       }
     } finally {
@@ -88,14 +90,14 @@ class _LoginPageState extends ConsumerState<LoginPage> {
 
                     // Título
                     Text(
-                      "Bienvenido a Protectora",
-                      style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                        fontWeight: FontWeight.bold,
-                      ),
+                      ' ${l10n.bienvenida} ${l10n.appTitle}',
+                      style: Theme.of(
+                        context,
+                      ).textTheme.titleMedium?.copyWith(),
                     ),
                     const SizedBox(height: 8),
                     Text(
-                      "Introduce tu usuario y contraseña para continuar.",
+                      l10n.usuarioContrasenya,
                       style: Theme.of(context).textTheme.bodySmall,
                       textAlign: TextAlign.center,
                     ),
@@ -107,7 +109,7 @@ class _LoginPageState extends ConsumerState<LoginPage> {
 
                     // Contraseña
                     AppInputText(
-                      label: 'Contraseña',
+                      label: l10n.contrasenya,
                       controller: _passCtrl,
                       obscureText: true,
                     ),
@@ -115,8 +117,9 @@ class _LoginPageState extends ConsumerState<LoginPage> {
 
                     // Botón
                     AppButton(
-                      label: "Iniciar sesión",
+                      label: l10n.iniciarSesion,
                       onPressed: _loading ? null : _submit,
+                      foregroundColorOverride: palette.background,
                     ),
                   ],
                 ),

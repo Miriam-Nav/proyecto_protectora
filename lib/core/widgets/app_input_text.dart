@@ -80,7 +80,7 @@ class AppInputSelect<T> extends StatelessWidget {
     final colorSelect = color ?? appPaletteOf(context).primary;
 
     return DropdownButtonFormField<T>(
-      value: value,
+      initialValue: value,
       items: items.map((item) {
         return DropdownMenuItem<T>(value: item, child: Text(itemLabel(item)));
       }).toList(),

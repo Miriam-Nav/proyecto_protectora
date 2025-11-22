@@ -31,6 +31,7 @@ class AppButton extends StatelessWidget {
   final VoidCallback? onPressed;
   final AppButtonVariant variant;
   final IconData? icon;
+  final double rounded;
 
   /// Overrides opcionales por si queremos forzar colores puntuales.
   final Color? backgroundColorOverride;
@@ -42,6 +43,7 @@ class AppButton extends StatelessWidget {
     required this.onPressed,
     this.variant = AppButtonVariant.primary,
     this.icon,
+    this.rounded = 15,
     this.backgroundColorOverride,
     this.foregroundColorOverride,
   });
@@ -58,7 +60,7 @@ class AppButton extends StatelessWidget {
         foregroundColor: foregroundColorOverride ?? textColor,
         padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 12),
         shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(6), // menos redondeado
+          borderRadius: BorderRadius.circular(rounded),
         ),
       ),
       onPressed: onPressed,
@@ -80,12 +82,14 @@ class AppButtonBorde extends StatelessWidget {
   final String label;
   final VoidCallback? onPressed;
   final Color borderColor;
+  final double rounded;
 
   const AppButtonBorde({
     super.key,
     required this.label,
     this.onPressed,
     required this.borderColor,
+    this.rounded = 15,
   });
 
   @override
@@ -96,7 +100,7 @@ class AppButtonBorde extends StatelessWidget {
         foregroundColor: borderColor,
         padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 12),
         shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(20),
+          borderRadius: BorderRadius.circular(rounded),
           side: BorderSide(color: borderColor, width: 2),
         ),
       ),
@@ -112,6 +116,8 @@ class AppRoundedActionButton extends StatelessWidget {
   final String label;
   final VoidCallback? onPressed;
   final AppButtonVariant variant;
+  final Color? bgColor;
+  final Color? txColor;
 
   const AppRoundedActionButton({
     super.key,
@@ -119,6 +125,8 @@ class AppRoundedActionButton extends StatelessWidget {
     required this.label,
     required this.onPressed,
     this.variant = AppButtonVariant.primary,
+    this.bgColor,
+    this.txColor,
   });
 
   @override
@@ -132,8 +140,8 @@ class AppRoundedActionButton extends StatelessWidget {
       child: ElevatedButton(
         onPressed: onPressed,
         style: ElevatedButton.styleFrom(
-          backgroundColor: baseColor,
-          foregroundColor: textColor,
+          backgroundColor: bgColor ?? baseColor,
+          foregroundColor: txColor ?? textColor,
           elevation: 3,
           padding: const EdgeInsets.symmetric(vertical: 16, horizontal: 16),
           shape: const RoundedRectangleBorder(

@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:proyecto_protectora/catalog/catalog_pages.dart';
 import 'package:proyecto_protectora/core/l10n/app_localizations.dart';
 import 'package:proyecto_protectora/features/auth/data/models/user_model.dart';
 import 'package:proyecto_protectora/features/protectora/presentation/pages/animal_list_page.dart';
@@ -12,18 +11,16 @@ class MenuButtons extends StatefulWidget {
   final User user;
   const MenuButtons({super.key, required this.user});
   @override
-  _MenuButtonsState createState() => _MenuButtonsState();
+  MenuButtonsState createState() => MenuButtonsState();
 }
 
-class _MenuButtonsState extends State<MenuButtons> {
+class MenuButtonsState extends State<MenuButtons> {
   int _selectedIndex = 0;
   List<Widget> get widgetOptions => [
-    // InicioPage(),
     HomePage(user: widget.user),
     ClientPage(),
     AnimalListPage(),
     FavAnimalesPage(),
-    // FormularioAdopcion(),
   ];
 
   void _onItemTapped(int index) {
@@ -52,20 +49,22 @@ class _MenuButtonsState extends State<MenuButtons> {
           unselectedItemColor: palette.onMenuButton,
           backgroundColor: palette.menuButton,
           items: [
-            BottomNavigationBarItem(icon: Icon(Icons.home), label: l10n.buttonProfolio),
             BottomNavigationBarItem(
-              icon: const Icon(Icons.new_releases_sharp),
-              label: l10n.subtituloNovedades,
+              icon: Icon(Icons.home),
+              label: l10n.buttonProfile,
             ),
-            BottomNavigationBarItem(icon: Icon(Icons.pets), label: l10n.tituloAnimales),
             BottomNavigationBarItem(
-              icon: const Icon(Icons.favorite_border),
-              label: l10n.tituloFavoritos,
+              icon: Icon(Icons.new_releases_sharp),
+              label: l10n.novedades,
             ),
-            // BottomNavigationBarItem(
-            //   icon: Icon(Icons.dashboard),
-            //   label: 'Adopta',
-            // ),
+            BottomNavigationBarItem(
+              icon: Icon(Icons.pets),
+              label: l10n.animales,
+            ),
+            BottomNavigationBarItem(
+              icon: Icon(Icons.favorite_border),
+              label: l10n.favoritos,
+            ),
           ],
           currentIndex: _selectedIndex,
           onTap: _onItemTapped,

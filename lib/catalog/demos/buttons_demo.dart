@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:proyecto_protectora/app/theme/app_palette.dart';
-// import 'package:proyecto_protectora/catalog/widgets/showcase_scaffold.dart';
 import 'package:proyecto_protectora/core/widgets/app_button.dart';
 
 class ButtonsDemo extends StatelessWidget {
@@ -8,8 +7,7 @@ class ButtonsDemo extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold /*ShowcaseScaffold*/ (
-      // title: 'Botones',
+    return Scaffold(
       appBar: AppBar(title: const Text('Botones'), centerTitle: true),
 
       body: ListView(
@@ -57,10 +55,10 @@ class ButtonsDemo extends StatelessWidget {
             variant: AppButtonVariant.secondary,
           ),
           const SizedBox(height: 16),
-          const Text('AppButton – Peligro'),
+          const Text('AppButton – Eliminar'),
           const SizedBox(height: 8),
           AppButton(
-            label: 'Peligro',
+            label: 'Eliminar',
             onPressed: () {},
             variant: AppButtonVariant.danger,
           ),

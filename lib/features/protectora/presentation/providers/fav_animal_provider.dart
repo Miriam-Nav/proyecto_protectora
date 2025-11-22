@@ -30,7 +30,7 @@ final totalPerrosProvider = Provider<int>((ref) {
   final totalFav = ref
       .watch(favAnimalProvider)
       .toList()
-      .where((animal) => animal.tipo == "Perro")
+      .where((animal) => animal.tipo == TipoAnimal.perro)
       .length;
   return totalFav;
 });

@@ -37,7 +37,7 @@ class MainApp extends ConsumerWidget {
         modoOscuro = false;
       },
 
-      error: (_, __) {
+      error: (_, _) {
         // Valores por defecto en caso de error
         selectedLocale = const Locale('es');
         modoOscuro = false;
@@ -45,7 +45,6 @@ class MainApp extends ConsumerWidget {
     );
 
     return MaterialApp(
-      title: 'Protectora App',
       debugShowCheckedModeBanner: false,
       theme: AppTheme.light,
       darkTheme: AppTheme.dark,

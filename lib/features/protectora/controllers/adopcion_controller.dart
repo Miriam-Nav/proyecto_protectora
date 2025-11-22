@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:proyecto_protectora/app/theme/app_palette.dart';
+import 'package:proyecto_protectora/core/l10n/app_localizations.dart';
 import 'package:proyecto_protectora/features/protectora/data/models/adopcion_model.dart';
 import 'package:proyecto_protectora/features/protectora/data/models/animales.dart';
 import 'package:proyecto_protectora/features/protectora/presentation/providers/adopcion_provider.dart';
@@ -51,10 +53,12 @@ class AdopcionController {
   }
 
   Future<void> crearAdopcion(WidgetRef ref, BuildContext context) async {
+    final l10n = AppLocalizations.of(context)!;
+
     if (animalSeleccionado == null) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text('No hay animal seleccionado')),
-      );
+      ScaffoldMessenger.of(
+        context,
+      ).showSnackBar(SnackBar(content: Text(l10n.noAnimalSelect)));
       return;
     }
 
@@ -70,12 +74,10 @@ class AdopcionController {
     );
 
     await ref.read(adopcionesProvider.notifier).addAdopcion(adopcion);
-
-    ScaffoldMessenger.of(context).showSnackBar(
-      const SnackBar(
-        content: Text('Solicitud de adopción creada correctamente'),
-      ),
-    );
+    if (!context.mounted) return;
+    ScaffoldMessenger.of(
+      context,
+    ).showSnackBar(SnackBar(content: Text(l10n.solicitudCreada)));
 
     limpiar();
   }
@@ -85,22 +87,23 @@ class AdopcionController {
     BuildContext context,
     String idAnimal,
   ) async {
+    final l10n = AppLocalizations.of(context)!;
     final confirm = await showDialog<bool>(
       context: context,
       builder: (_) => AlertDialog(
-        title: const Text('Confirmar eliminación'),
-        content: const Text(
-          '¿Estás seguro de que quieres eliminar esta adopción?',
-        ),
+        title: Text(l10n.confirmarEliminacion),
+        content: Text(l10n.preguntEliAdop),
         actions: [
           TextButton(
             onPressed: () => Navigator.of(context).pop(false),
-            child: const Text('Cancelar'),
+            child: Text(l10n.cancelar),
           ),
           ElevatedButton(
-            style: ElevatedButton.styleFrom(backgroundColor: Colors.red),
+            style: ElevatedButton.styleFrom(
+              backgroundColor: appPaletteOf(context).danger,
+            ),
             onPressed: () => Navigator.of(context).pop(true),
-            child: const Text('Eliminar'),
+            child: Text(l10n.eliminar),
           ),
         ],
       ),
@@ -108,9 +111,10 @@ class AdopcionController {
 
     if (confirm == true) {
       await ref.read(adopcionesProvider.notifier).removeAdopcion(idAnimal);
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text('Adopción eliminada correctamente')),
-      );
+      if (!context.mounted) return;
+      ScaffoldMessenger.of(
+        context,
+      ).showSnackBar(SnackBar(content: Text(l10n.solicitudEliminada)));
     }
   }
 }

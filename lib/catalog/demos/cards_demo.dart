@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:proyecto_protectora/core/widgets/app_animal_card.dart';
-import 'package:proyecto_protectora/core/widgets/app_button.dart';
 import 'package:proyecto_protectora/features/protectora/data/models/animales.dart';
 import 'package:proyecto_protectora/core/widgets/app_card.dart';
 import 'package:proyecto_protectora/features/protectora/data/fakes/noticias_datafake.dart';
@@ -12,62 +11,10 @@ class CardsDemo extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold /*ShowcaseScaffold*/ (
-      // title: 'Cards',
       appBar: AppBar(title: const Text('Cards'), centerTitle: true),
-      //
       body: ListView(
         padding: const EdgeInsets.all(16),
         children: [
-          // ---- CARD PRIMARY ----
-          const Text('AppCard – Primary'),
-          const SizedBox(height: 8),
-          AppCard(
-            title: 'Card primaria',
-            subtitle: 'Ejemplo de estilo principal',
-            icon: Icons.pets,
-            variant: AppCardVariant.primary,
-            onTap: () => print('Card primaria pulsada'),
-          ),
-
-          const SizedBox(height: 16),
-
-          // ---- CARD SECONDARY ----
-          const Text('AppCard – Secondary'),
-          const SizedBox(height: 8),
-          AppCard(
-            title: 'Card secundaria',
-            subtitle: 'Ejemplo con estilo alternativo',
-            icon: Icons.favorite,
-            variant: AppCardVariant.secondary,
-            onTap: () => print('Card secundaria pulsada'),
-          ),
-
-          const SizedBox(height: 16),
-
-          // ---- CARD DANGER ----
-          const Text('AppCard – Danger'),
-          const SizedBox(height: 8),
-          AppCard(
-            title: 'Card de peligro',
-            subtitle: 'Acción irreversible',
-            icon: Icons.delete,
-            variant: AppCardVariant.danger,
-            onTap: () => print('Card danger pulsada'),
-          ),
-
-          const SizedBox(height: 16),
-
-          // ---- CARD CON IMAGEN ----
-          const Text('AppCard – Con imagen'),
-          const SizedBox(height: 8),
-          AppCard(
-            title: 'Card con imagen',
-            subtitle: 'Muestra una foto en lugar del icono',
-            image: Image.asset('assets/images/gatito.jpg', fit: BoxFit.cover),
-            variant: AppCardVariant.primary,
-            onTap: () => print('Card con imagen pulsada'),
-          ),
-
           // ---- CARD NOTIFICACION ----
           const Text('AppInfoCard – Notificacion Base'),
           const SizedBox(height: 8),
@@ -75,11 +22,6 @@ class CardsDemo extends StatelessWidget {
           AppNotiCard(
             title: "Visita Veterinario",
             text: "Tienes 2 visitas al veterniario esta semana.",
-            button: AppButton(
-              label: "Revisar",
-              onPressed: () {},
-              variant: AppButtonVariant.secondary,
-            ),
             variant: AppCardVariant.cardBlue,
           ),
 
