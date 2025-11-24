@@ -3,6 +3,7 @@ import 'package:proyecto_protectora/core/widgets/app_animal_card.dart';
 import 'package:proyecto_protectora/features/protectora/data/models/animales.dart';
 import 'package:proyecto_protectora/core/widgets/app_card.dart';
 import 'package:proyecto_protectora/features/protectora/data/fakes/noticias_datafake.dart';
+import 'package:proyecto_protectora/features/protectora/presentation/widgets/appbar.dart';
 
 /// Pantalla que muestra ejemplos de las AppCards personalizadas
 class CardsDemo extends StatelessWidget {
@@ -10,14 +11,13 @@ class CardsDemo extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold /*ShowcaseScaffold*/ (
-      appBar: AppBar(title: const Text('Cards'), centerTitle: true),
+    return Scaffold (
+      appBar: customAppBar(context, 'Cards'),
       body: ListView(
         padding: const EdgeInsets.all(16),
         children: [
           // ---- CARD NOTIFICACION ----
           const Text('AppInfoCard – Notificacion Base'),
-          const SizedBox(height: 8),
 
           AppNotiCard(
             title: "Visita Veterinario",
@@ -25,9 +25,10 @@ class CardsDemo extends StatelessWidget {
             variant: AppCardVariant.cardBlue,
           ),
 
+          const SizedBox(height: 16),
+
           // ---- CARD INFORMATIVA ----
           const Text('AppInfoCard – Informativa personalizada'),
-          const SizedBox(height: 8),
 
           AppInfoCard(
             title: 'Max - Adoptado',
@@ -46,7 +47,7 @@ class CardsDemo extends StatelessWidget {
           ),
 
           const SizedBox(height: 16),
-          const Text('Mascota Mini Card'),
+          const Text('Mascota Mini Card - Datos básicos del animal.'),
           const SizedBox(height: 8),
           MascotaMiniCard(
             image: 'assets/images/gatito.jpg',
@@ -55,10 +56,11 @@ class CardsDemo extends StatelessWidget {
             onPressed: () {},
           ),
 
-          const SizedBox(height: 16),
-          const Text('Mascota Card'),
+          const SizedBox(height: 20),
+          const Text(
+            'Mascota Fav Card - Datos completos del animal con botones opcionales.',
+          ),
           const SizedBox(height: 8),
-
           MascotaFavCard(
             animal: Animales(
               idAnimal: '1',
@@ -80,7 +82,7 @@ class CardsDemo extends StatelessWidget {
             },
           ),
           const SizedBox(height: 16),
-          const Text('Noticia Card'),
+          const Text('Noticia Card - Información y noticias'),
           const SizedBox(height: 8),
           NoticiaCard(noticia: noticiasFake[0]),
         ],

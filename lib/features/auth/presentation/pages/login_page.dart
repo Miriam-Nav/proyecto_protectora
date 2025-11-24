@@ -80,12 +80,14 @@ class _LoginPageState extends ConsumerState<LoginPage> {
                 child: Column(
                   mainAxisSize: MainAxisSize.min,
                   children: [
-                    // Logo arriba
                     Image.asset(
-                      "assets/images/gato_conn_perro_login.png",
+                      Theme.of(context).brightness == Brightness.dark
+                          ? "assets/images/logoDark.png"
+                          : "assets/images/logoLight.png",
                       width: 100,
                       height: 100,
                     ),
+
                     const SizedBox(height: 16),
 
                     // Título
