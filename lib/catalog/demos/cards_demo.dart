@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:proyecto_protectora/app/theme/app_variants.dart';
 import 'package:proyecto_protectora/core/widgets/app_animal_card.dart';
-import 'package:proyecto_protectora/features/protectora/data/models/animales.dart';
+import 'package:proyecto_protectora/features/protectora/data/models/animales_model.dart';
 import 'package:proyecto_protectora/core/widgets/app_card.dart';
 import 'package:proyecto_protectora/features/protectora/data/fakes/noticias_datafake.dart';
 import 'package:proyecto_protectora/features/protectora/presentation/widgets/appbar.dart';
@@ -11,7 +12,7 @@ class CardsDemo extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold (
+    return Scaffold(
       appBar: customAppBar(context, 'Cards'),
       body: ListView(
         padding: const EdgeInsets.all(16),
@@ -22,7 +23,7 @@ class CardsDemo extends StatelessWidget {
           AppNotiCard(
             title: "Visita Veterinario",
             text: "Tienes 2 visitas al veterniario esta semana.",
-            variant: AppCardVariant.cardBlue,
+            variant: AppVariant.cardBlue,
           ),
 
           const SizedBox(height: 16),
@@ -34,7 +35,7 @@ class CardsDemo extends StatelessWidget {
             title: 'Max - Adoptado',
             subtitle: '11/10/2025 - 16:32',
             badgeText: 'Adopción',
-            variant: AppCardVariant.cardGreen,
+            variant: AppVariant.cardGreen,
             onTap: () => print('Card de adopción pulsada'),
           ),
 
@@ -42,7 +43,7 @@ class CardsDemo extends StatelessWidget {
             title: 'Luna - Vacunado',
             subtitle: '7/10/2025 - 11:15',
             badgeText: 'Veterinario',
-            variant: AppCardVariant.cardBlue,
+            variant: AppVariant.cardBlue,
             onTap: () => print('Card de veterinario pulsada'),
           ),
 
@@ -74,10 +75,10 @@ class CardsDemo extends StatelessWidget {
               descripcion: 'Dulce y sociable',
               foto: 'https://cataas.com/cat?random=1',
             ),
-            variant: AppMascotaCardVariant.primary,
+            variant: AppVariant.primary,
             showAdoptButton: true,
             showFavoriteIcon: true,
-            onAdoptPressed: () {
+            onPressed: () {
               print("Adoptar a Nala pulsado");
             },
           ),

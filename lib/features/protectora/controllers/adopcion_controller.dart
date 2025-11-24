@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:proyecto_protectora/app/theme/app_palette.dart';
+import 'package:proyecto_protectora/app/theme/app_variants.dart';
 import 'package:proyecto_protectora/core/l10n/app_localizations.dart';
+import 'package:proyecto_protectora/core/widgets/app_button.dart';
 import 'package:proyecto_protectora/features/protectora/data/models/adopcion_model.dart';
-import 'package:proyecto_protectora/features/protectora/data/models/animales.dart';
+import 'package:proyecto_protectora/features/protectora/data/models/animales_model.dart';
 import 'package:proyecto_protectora/features/protectora/presentation/providers/adopcion_provider.dart';
 
 class AdopcionController {
-  // Controladores para los datos del adoptante
   final nombreCtrl = TextEditingController();
   final apellido1Ctrl = TextEditingController();
   final apellido2Ctrl = TextEditingController();
@@ -21,10 +21,12 @@ class AdopcionController {
 
   Animales? animalSeleccionado;
 
+  // Método para cargar el animal elegido
   void cargarAnimal(Animales animal) {
     animalSeleccionado = animal;
   }
 
+  // Método para limpiar todos los campos y la selección
   void limpiar() {
     animalSeleccionado = null;
     nombreCtrl.clear();
@@ -39,6 +41,7 @@ class AdopcionController {
     provinciaCtrl.clear();
   }
 
+  // Método para liberar los recursos de los controladores
   void dispose() {
     nombreCtrl.dispose();
     apellido1Ctrl.dispose();
@@ -52,9 +55,11 @@ class AdopcionController {
     provinciaCtrl.dispose();
   }
 
+  // Método para crear una nueva solicitud de adopción
   Future<void> crearAdopcion(WidgetRef ref, BuildContext context) async {
     final l10n = AppLocalizations.of(context)!;
 
+    // Si no hay animal seleccionado se muestra un mensaje de error
     if (animalSeleccionado == null) {
       ScaffoldMessenger.of(
         context,
@@ -62,6 +67,7 @@ class AdopcionController {
       return;
     }
 
+    // Se construye el objeto Adopcion con los datos del formulario
     final adopcion = Adopcion(
       idAnimal: animalSeleccionado!.idAnimal,
       nombreAnimal: animalSeleccionado!.nombre,
@@ -73,44 +79,55 @@ class AdopcionController {
       fechaAdopcion: DateTime.now(),
     );
 
+    // Se añade la adopción al provider
     await ref.read(adopcionesProvider.notifier).addAdopcion(adopcion);
+
+    // Se muestra un mensaje de confirmación
     if (!context.mounted) return;
     ScaffoldMessenger.of(
       context,
     ).showSnackBar(SnackBar(content: Text(l10n.solicitudCreada)));
 
+    // Se limpian los campos tras crear la solicitud
     limpiar();
   }
 
+  // Método para eliminar una solicitud de adopción
   Future<void> eliminarAdopcion(
     WidgetRef ref,
     BuildContext context,
     String idAnimal,
   ) async {
     final l10n = AppLocalizations.of(context)!;
+
+    // Se muestra un diálogo de confirmación
     final confirm = await showDialog<bool>(
       context: context,
       builder: (_) => AlertDialog(
         title: Text(l10n.confirmarEliminacion),
         content: Text(l10n.preguntEliAdop),
         actions: [
-          TextButton(
+          // Botón de cancelar
+          AppButton(
             onPressed: () => Navigator.of(context).pop(false),
-            child: Text(l10n.cancelar),
+            label: l10n.cancelar,
+            variant: AppVariant.secondary,
           ),
-          ElevatedButton(
-            style: ElevatedButton.styleFrom(
-              backgroundColor: appPaletteOf(context).danger,
-            ),
+          // Botón de eliminar
+          AppButton(
+            variant: AppVariant.danger,
             onPressed: () => Navigator.of(context).pop(true),
-            child: Text(l10n.eliminar),
+            label: l10n.eliminar,
           ),
         ],
       ),
     );
 
+    // Si el usuario confirma, se elimina la adopción
     if (confirm == true) {
       await ref.read(adopcionesProvider.notifier).removeAdopcion(idAnimal);
+
+      // Se muestra un mensaje de confirmación
       if (!context.mounted) return;
       ScaffoldMessenger.of(
         context,

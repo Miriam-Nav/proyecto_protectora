@@ -105,6 +105,10 @@ abstract class AppLocalizations {
   String get provincia;
 
   // --- Textos de Datos Animales ---
+
+  String get limpiarFiltro;
+
+  String get filtrarPor;
   // Campo de formulario para el nombre del animal.
   String get nombre;
   // Campo de formulario para el chip identificador.

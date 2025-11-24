@@ -2,63 +2,41 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:intl/intl.dart';
 import 'package:proyecto_protectora/app/theme/app_palette.dart';
+import 'package:proyecto_protectora/app/theme/app_variants.dart';
 import 'package:proyecto_protectora/core/l10n/app_localizations.dart';
 import 'package:proyecto_protectora/core/widgets/app_button.dart';
-import 'package:proyecto_protectora/features/protectora/data/models/animales.dart';
+import 'package:proyecto_protectora/features/protectora/data/models/animales_model.dart';
 import 'package:proyecto_protectora/features/protectora/presentation/providers/fav_animal_provider.dart';
 
-enum AppMascotaCardVariant {
-  primary,
-  secondary,
-  danger,
-  success,
-  warning,
-  cardBlue,
-  cardGreen,
-  menuButton,
-}
-
-(Color, Color) eleccionColoresVariante(
-  AppPalette palette,
-  AppMascotaCardVariant variant,
-) {
-  return switch (variant) {
-    AppMascotaCardVariant.primary => (palette.primary, palette.onPrimary),
-    AppMascotaCardVariant.secondary => (palette.secondary, palette.onSecondary),
-    AppMascotaCardVariant.danger => (palette.danger, palette.onDanger),
-    AppMascotaCardVariant.success => (palette.success, palette.onSuccess),
-    AppMascotaCardVariant.warning => (palette.warning, palette.onWarning),
-    AppMascotaCardVariant.cardBlue => (palette.cardBlue, palette.onCardBlue),
-    AppMascotaCardVariant.cardGreen => (palette.cardGreen, palette.onCardGreen),
-    AppMascotaCardVariant.menuButton => (
-      palette.menuButton,
-      palette.onMenuButton,
-    ),
-  };
-}
-
+// Card grande para mostrar información detallada de una mascota
 class MascotaFavCard extends ConsumerWidget {
   final Animales animal;
-  final AppMascotaCardVariant variant;
+  final AppVariant variant;
+  // Mostrar botón de adoptar
   final bool showAdoptButton;
+  // Mostrar icono de favorito
   final bool showFavoriteIcon;
-  final VoidCallback? onAdoptPressed;
+  // Acción al pulsar adoptar
+  final VoidCallback? onPressed;
 
   const MascotaFavCard({
     super.key,
     required this.animal,
-    this.variant = AppMascotaCardVariant.menuButton,
-    this.onAdoptPressed,
+    this.variant = AppVariant.menuButton,
+    this.onPressed,
     this.showAdoptButton = false,
     this.showFavoriteIcon = false,
   });
-
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    // Paleta de colores
     final palette = appPaletteOf(context);
+    // Lista de favoritos
     final favAnimals = ref.watch(favAnimalProvider);
+    // Textos traducidos
     final l10n = AppLocalizations.of(context)!;
 
+    // Card principal que envuelve todo el contenido
     return Card(
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(10),
@@ -66,6 +44,7 @@ class MascotaFavCard extends ConsumerWidget {
       ),
       elevation: 4,
       child: Container(
+        // Fondo y bordes internos de la Card
         decoration: BoxDecoration(
           color: palette.menuButton,
           borderRadius: BorderRadius.circular(10),
@@ -74,12 +53,13 @@ class MascotaFavCard extends ConsumerWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            // Imagen
+            // Contenedor de imagen y datos
             SizedBox(
               width: 410,
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
+                  // Imagen principal del animal
                   Center(
                     child: ClipRRect(
                       borderRadius: BorderRadius.circular(25),
@@ -92,7 +72,7 @@ class MascotaFavCard extends ConsumerWidget {
                   ),
                   const SizedBox(height: 15),
 
-                  // Nombre
+                  // Nombre del animal
                   Text(
                     animal.nombre,
                     textAlign: TextAlign.left,
@@ -102,14 +82,12 @@ class MascotaFavCard extends ConsumerWidget {
                   ),
                   const SizedBox(height: 15),
 
-                  // Datos del animal
+                  // Sexo del animal
                   Wrap(
                     children: [
                       Text(
                         '🟠 ${l10n.sexoAnimal}: ',
-                        style: Theme.of(
-                          context,
-                        ).textTheme.titleSmall?.copyWith(),
+                        style: Theme.of(context).textTheme.titleSmall,
                       ),
                       Text(
                         animal.sexo == Sexo.macho ? l10n.macho : l10n.hembra,
@@ -118,13 +96,13 @@ class MascotaFavCard extends ConsumerWidget {
                     ],
                   ),
                   const SizedBox(height: 5),
+
+                  // Raza del animal
                   Wrap(
                     children: [
                       Text(
                         '🟠 ${l10n.razaAnimal}: ',
-                        style: Theme.of(
-                          context,
-                        ).textTheme.titleSmall?.copyWith(),
+                        style: Theme.of(context).textTheme.titleSmall,
                       ),
                       Text(
                         animal.raza,
@@ -133,13 +111,13 @@ class MascotaFavCard extends ConsumerWidget {
                     ],
                   ),
                   const SizedBox(height: 5),
+
+                  // Fecha de nacimiento
                   Wrap(
                     children: [
                       Text(
                         '🟠 ${l10n.fechaNacimiento}: ',
-                        style: Theme.of(
-                          context,
-                        ).textTheme.titleSmall?.copyWith(),
+                        style: Theme.of(context).textTheme.titleSmall,
                       ),
                       Text(
                         DateFormat('dd/MM/yyyy').format(animal.fNacimiento),
@@ -148,13 +126,13 @@ class MascotaFavCard extends ConsumerWidget {
                     ],
                   ),
                   const SizedBox(height: 5),
+
+                  // Estado de esterilización
                   Wrap(
                     children: [
                       Text(
                         '🟠 ${l10n.esterelizadoAnimal}: ',
-                        style: Theme.of(
-                          context,
-                        ).textTheme.titleSmall?.copyWith(),
+                        style: Theme.of(context).textTheme.titleSmall,
                       ),
                       Text(
                         animal.esterilizado ? l10n.si : l10n.no,
@@ -163,13 +141,13 @@ class MascotaFavCard extends ConsumerWidget {
                     ],
                   ),
                   const SizedBox(height: 5),
+
+                  // Número de chip
                   Wrap(
                     children: [
                       Text(
                         '🟠 ${l10n.chipAnimal}: ',
-                        style: Theme.of(
-                          context,
-                        ).textTheme.titleSmall?.copyWith(),
+                        style: Theme.of(context).textTheme.titleSmall,
                       ),
                       Text(
                         animal.chip.toString(),
@@ -178,13 +156,13 @@ class MascotaFavCard extends ConsumerWidget {
                     ],
                   ),
                   const SizedBox(height: 5),
+
+                  // Descripción del animal
                   Wrap(
                     children: [
                       Text(
                         '🟠 ${l10n.descripcionAnimal}: ',
-                        style: Theme.of(
-                          context,
-                        ).textTheme.titleSmall?.copyWith(),
+                        style: Theme.of(context).textTheme.titleSmall,
                       ),
                       Text(
                         animal.descripcion,
@@ -195,22 +173,25 @@ class MascotaFavCard extends ConsumerWidget {
 
                   const SizedBox(height: 15),
 
-                  // Botones al final
+                  // Botones de acción (adoptar y favorito)
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
+                      // Botón de adoptar
                       if (showAdoptButton)
                         AppButtonBorde(
                           label: l10n.adoptar,
-                          onPressed: onAdoptPressed,
+                          onPressed: onPressed,
                           borderColor: appPaletteOf(context).cardGreen,
                         ),
+                      // Icono de favorito
                       if (showFavoriteIcon)
                         IconButton(
                           icon: favAnimals.contains(animal)
                               ? const Icon(Icons.favorite, color: Colors.red)
                               : const Icon(Icons.favorite_border),
                           onPressed: () {
+                            // Notifier que tiene los métodos para añadir o quitar animales de la lista de favoritos.
                             final notifier = ref.read(
                               favAnimalProvider.notifier,
                             );
@@ -233,15 +214,16 @@ class MascotaFavCard extends ConsumerWidget {
   }
 }
 
+// Card pequeña para mostrar datos base de la mascota
 class MascotaMiniCard extends StatelessWidget {
   final String image;
   final String title;
   final String text;
   final VoidCallback? onPressed;
-  final AppMascotaCardVariant variant;
-
-  /// Overrides opcionales por si queremos forzar colores puntuales.
+  final AppVariant variant;
+  // Color de fondo opcional
   final Color? backgroundColorOverride;
+  // Color de texto opcional
   final Color? foregroundColorOverride;
 
   const MascotaMiniCard({
@@ -250,33 +232,32 @@ class MascotaMiniCard extends StatelessWidget {
     required this.title,
     required this.text,
     required this.onPressed,
-    this.variant = AppMascotaCardVariant.menuButton,
+    this.variant = AppVariant.menuButton,
     this.backgroundColorOverride,
     this.foregroundColorOverride,
   });
 
   @override
   Widget build(BuildContext context) {
+    // Paleta de colores de la app
     final palette = appPaletteOf(context);
+    // Colores base según la variante elegida
+    final (baseColor, textColor) = eleccionVariante(palette, variant);
 
-    final (baseColor, textColor) = eleccionColoresVariante(palette, variant);
-
+    // Botón elevado que envuelve toda la card
     return ElevatedButton(
       style: ElevatedButton.styleFrom(
+        // Si no se elige inngun color se usa el baseColor y textColor
         backgroundColor: backgroundColorOverride ?? baseColor,
         foregroundColor: foregroundColorOverride ?? textColor,
-        padding: const EdgeInsets.only(
-          top: 15,
-          bottom: 5,
-          right: 15,
-          left: 15,
-        ), //const EdgeInsets.symmetric(horizontal: 10, vertical: 17),
+        padding: const EdgeInsets.only(top: 15, bottom: 5, right: 15, left: 15),
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
       ),
       onPressed: onPressed,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
+          // Imagen pequeña de la mascota
           Center(
             child: ClipRRect(
               borderRadius: BorderRadius.circular(25),
@@ -288,12 +269,16 @@ class MascotaMiniCard extends StatelessWidget {
             ),
           ),
           const SizedBox(height: 5),
+
+          // Título de la card
           Text(
             title,
             textAlign: TextAlign.left,
             style: Theme.of(context).textTheme.labelLarge,
           ),
           const SizedBox(height: 1),
+
+          // Texto descriptivo de la card
           Text(
             text,
             textAlign: TextAlign.left,

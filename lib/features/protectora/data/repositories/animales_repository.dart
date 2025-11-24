@@ -1,4 +1,4 @@
-import 'package:proyecto_protectora/features/protectora/data/models/animales.dart';
+import 'package:proyecto_protectora/features/protectora/data/models/animales_model.dart';
 import 'package:uuid/uuid.dart';
 
 class AnimalesRepository {
@@ -126,7 +126,7 @@ class AnimalesRepository {
     ),
   ];
 
-  /// Devuelve un solo animal por id, o null si no existe
+  /// Devuelve un solo animal por id
   Future<List<Animales>> fetchAll() async {
     await Future<void>.delayed(const Duration(milliseconds: 250));
     return _animalesList;

@@ -1,5 +1,5 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:proyecto_protectora/features/protectora/data/models/animales.dart';
+import 'package:proyecto_protectora/features/protectora/data/models/animales_model.dart';
 import 'package:proyecto_protectora/features/protectora/data/repositories/animales_repository.dart';
 
 class AnimalesNotifier extends AsyncNotifier<List<Animales>> {
@@ -16,7 +16,7 @@ class AnimalesNotifier extends AsyncNotifier<List<Animales>> {
     state = await AsyncValue.guard(_repo.fetchAll);
   }
 
-  /// Añadir un nuevo animal con tipos correctos
+  // Añadir un nuevo animal
   Future<void> addAnimal({
     required String nombre,
     required Sexo sexo,
@@ -48,7 +48,7 @@ class AnimalesNotifier extends AsyncNotifier<List<Animales>> {
     }
   }
 
-  /// Actualizar un animal existente
+  /// Actualizar un animal
   Future<void> updateAnimal(Animales animal) async {
     try {
       await _repo.updateAnimal(
@@ -78,6 +78,4 @@ class AnimalesNotifier extends AsyncNotifier<List<Animales>> {
       state = AsyncError(e, st);
     }
   }
-
-
 }

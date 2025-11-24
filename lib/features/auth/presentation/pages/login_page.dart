@@ -15,31 +15,39 @@ class LoginPage extends ConsumerStatefulWidget {
 }
 
 class _LoginPageState extends ConsumerState<LoginPage> {
+  // Clave global para validar el formulario
   final _formKey = GlobalKey<FormState>();
 
-  // valores por defecto
+  // Controladores de texto con valores por defecto
   final _userCtrl = TextEditingController(text: 'emilys');
   final _passCtrl = TextEditingController(text: 'emilyspass');
 
+  // Indicador de carga
   bool _loading = false;
 
   @override
   void dispose() {
+    // Liberación de recursos de los controladores
     _userCtrl.dispose();
     _passCtrl.dispose();
     super.dispose();
   }
 
+  // Método para enviar el formulario de login
   Future<void> _submit() async {
     final l10n = AppLocalizations.of(context)!;
+    // Validación del formulario
     if (!_formKey.currentState!.validate()) return;
     setState(() => _loading = true);
     try {
+      // Llamada al controlador de autenticación para iniciar sesión
       await ref
           .read(authControllerProvider.notifier)
           .signIn(username: _userCtrl.text.trim(), password: _passCtrl.text);
 
+      // Obtiene el usuario autenticado
       final usuario = ref.read(authControllerProvider).value;
+      // Si existe usuario, se navega a la pantalla principal
       if (usuario != null && mounted) {
         Navigator.pushReplacement(
           context,
@@ -47,12 +55,14 @@ class _LoginPageState extends ConsumerState<LoginPage> {
         );
       }
     } catch (e) {
+      // En caso de error, se muestra un mensaje en un SnackBar
       if (mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(content: Text('${l10n.errorSesion} ${e.toString()}')),
         );
       }
     } finally {
+      // Se desactiva el estado de carga
       if (mounted) setState(() => _loading = false);
     }
   }
@@ -80,6 +90,7 @@ class _LoginPageState extends ConsumerState<LoginPage> {
                 child: Column(
                   mainAxisSize: MainAxisSize.min,
                   children: [
+                    // Logo adaptado al tema claro/oscuro
                     Image.asset(
                       Theme.of(context).brightness == Brightness.dark
                           ? "assets/images/logoDark.png"
@@ -90,7 +101,7 @@ class _LoginPageState extends ConsumerState<LoginPage> {
 
                     const SizedBox(height: 16),
 
-                    // Título
+                    // Título de bienvenida
                     Text(
                       ' ${l10n.bienvenida} ${l10n.appTitle}',
                       style: Theme.of(
@@ -98,6 +109,8 @@ class _LoginPageState extends ConsumerState<LoginPage> {
                       ).textTheme.titleMedium?.copyWith(),
                     ),
                     const SizedBox(height: 8),
+
+                    // Texto explicativo
                     Text(
                       l10n.usuarioContrasenya,
                       style: Theme.of(context).textTheme.bodySmall,
@@ -105,11 +118,11 @@ class _LoginPageState extends ConsumerState<LoginPage> {
                     ),
                     const SizedBox(height: 24),
 
-                    // Usuario
+                    // Campo de usuario
                     AppInputText(label: l10n.usuario, controller: _userCtrl),
                     const SizedBox(height: 20),
 
-                    // Contraseña
+                    // Campo de contraseña
                     AppInputText(
                       label: l10n.contrasenya,
                       controller: _passCtrl,
@@ -117,11 +130,11 @@ class _LoginPageState extends ConsumerState<LoginPage> {
                     ),
                     const SizedBox(height: 25),
 
-                    // Botón
+                    // Botón de inicio de sesión
                     AppButton(
                       label: l10n.iniciarSesion,
                       onPressed: _loading ? null : _submit,
-                      foregroundColorOverride: palette.background,
+                      txColor: palette.background,
                     ),
                   ],
                 ),

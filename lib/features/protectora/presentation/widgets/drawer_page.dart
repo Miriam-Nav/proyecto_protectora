@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:proyecto_protectora/app/theme/app_palette.dart';
-import 'package:proyecto_protectora/catalog/catalog_pages.dart';
+import 'package:proyecto_protectora/catalog/pages/catalog_pages.dart';
 import 'package:proyecto_protectora/core/l10n/app_localizations.dart';
 import 'package:proyecto_protectora/features/auth/controllers/auth_controller.dart';
 import 'package:proyecto_protectora/features/auth/presentation/pages/login_page.dart';
@@ -15,6 +15,7 @@ class ProtectoraDrawer extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final l10n = AppLocalizations.of(context)!;
     final usuario = ref.watch(authControllerProvider).value;
+
     return Drawer(
       child: Container(
         color: appPaletteOf(context).background,
@@ -22,6 +23,7 @@ class ProtectoraDrawer extends ConsumerWidget {
           child: ListView(
             padding: EdgeInsets.zero,
             children: [
+              // Cabecera del drawer
               Container(
                 height: 100,
                 padding: const EdgeInsets.symmetric(horizontal: 16),
@@ -39,6 +41,7 @@ class ProtectoraDrawer extends ConsumerWidget {
                 child: Row(
                   children: [
                     const SizedBox(width: 10),
+                    // Avatar circular con borde
                     Container(
                       decoration: BoxDecoration(
                         shape: BoxShape.circle,
@@ -46,7 +49,6 @@ class ProtectoraDrawer extends ConsumerWidget {
                           color: appPaletteOf(
                             context,
                           ).background.withAlpha((0.3 * 255).round()),
-
                           width: 2,
                         ),
                       ),
@@ -62,11 +64,13 @@ class ProtectoraDrawer extends ConsumerWidget {
                       ),
                     ),
                     const SizedBox(width: 20),
+                    // Nombre y correo del usuario
                     Expanded(
                       child: Column(
                         mainAxisAlignment: MainAxisAlignment.center,
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
+                          // Nombre
                           Text(
                             usuario?.firstName ?? l10n.invitado,
                             style: Theme.of(context).textTheme.titleLarge
@@ -75,6 +79,7 @@ class ProtectoraDrawer extends ConsumerWidget {
                                 ),
                           ),
                           const SizedBox(height: 4),
+                          // Correo
                           Text(
                             usuario?.email ?? l10n.sinCorreo,
                             style: Theme.of(context).textTheme.bodyMedium
@@ -90,10 +95,12 @@ class ProtectoraDrawer extends ConsumerWidget {
                 ),
               ),
 
+              // Datos de usuario
               ListTile(
                 leading: const Icon(Icons.person),
                 title: Text(l10n.usuario),
                 onTap: () async {
+                  // Cierra el drawer
                   Navigator.pop(context);
                   final usuario = ref.read(authControllerProvider).value;
                   if (usuario != null) {
@@ -104,6 +111,7 @@ class ProtectoraDrawer extends ConsumerWidget {
                       ),
                     );
                   } else {
+                    // Mensaje de usuario no loggeado
                     ScaffoldMessenger.of(
                       context,
                     ).showSnackBar(SnackBar(content: Text(l10n.noLoggin)));
@@ -111,6 +119,7 @@ class ProtectoraDrawer extends ConsumerWidget {
                 },
               ),
 
+              // Preferencias
               ListTile(
                 leading: const Icon(Icons.settings),
                 title: Text(l10n.preferencias),
@@ -123,6 +132,7 @@ class ProtectoraDrawer extends ConsumerWidget {
                 },
               ),
 
+              // Catálogo
               ListTile(
                 leading: const Icon(Icons.dashboard),
                 title: Text(l10n.catalogo),
@@ -135,7 +145,7 @@ class ProtectoraDrawer extends ConsumerWidget {
                 },
               ),
 
-              // Separador con patita
+              // Separador con icono de patita
               Padding(
                 padding: const EdgeInsets.symmetric(
                   horizontal: 24,
@@ -161,6 +171,7 @@ class ProtectoraDrawer extends ConsumerWidget {
                 ),
               ),
 
+              // Cerrar sesión
               ListTile(
                 leading: Icon(
                   Icons.logout,
@@ -173,15 +184,12 @@ class ProtectoraDrawer extends ConsumerWidget {
                     fontWeight: FontWeight.bold,
                   ),
                 ),
-
                 onTap: () async {
                   Navigator.pop(context);
                   await ref.read(authControllerProvider.notifier).signOut();
 
                   // Evita usar context si el widget ya no existe
-                  if (!context.mounted) {
-                    return;
-                  }
+                  if (!context.mounted) return;
 
                   // Después de cerrar sesión va al login
                   Navigator.pushReplacement(

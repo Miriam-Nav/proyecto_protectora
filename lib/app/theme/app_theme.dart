@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:proyecto_protectora/app/theme/app_palette.dart';
 
+// Clase que define los temas de la app
+// tanto para el modo claro como para el modo oscuro.
 class AppTheme {
   static final TextTheme _textTheme = const TextTheme(
     headlineLarge: TextStyle(fontSize: 28, fontWeight: FontWeight.w600),
@@ -18,10 +20,14 @@ class AppTheme {
     labelSmall: TextStyle(fontSize: 11, letterSpacing: 0.2),
   );
 
+  // Tema claro de la app.
   static ThemeData light = ThemeData(
     useMaterial3: true,
     brightness: Brightness.light,
+    // Color de fondo principal
     scaffoldBackgroundColor: appPaletteLight.background,
+
+    // Configuración del AppBar en modo claro
     appBarTheme: AppBarTheme(
       backgroundColor: appPaletteLight.primary,
       // Color del texto y los íconos
@@ -30,14 +36,15 @@ class AppTheme {
       elevation: 0,
 
       // Reaccion del AppBar al scroll
-      // surfaceTintColor: Color.fromARGB(255, 98, 89, 84),
       surfaceTintColor: Colors.transparent,
 
+      // Estilo del título del AppBar
       titleTextStyle: _textTheme.headlineLarge?.copyWith(
         color: appPaletteLight.onPrimary,
       ),
     ),
 
+    // Esquema de colores para modo claro
     colorScheme: ColorScheme.light(
       primary: appPaletteLight.primary,
       onPrimary: appPaletteLight.onPrimary,
@@ -46,20 +53,34 @@ class AppTheme {
       error: appPaletteLight.danger,
       onError: appPaletteLight.onDanger,
     ),
+
+    // Tipografía aplicada en todo el tema
     textTheme: _textTheme,
   );
 
+  // Tema oscuro de la app.
   static ThemeData dark = ThemeData(
     useMaterial3: true,
     brightness: Brightness.dark,
+
+    // Color de fondo principal
     scaffoldBackgroundColor: appPaletteDark.background,
+
+    // Configuración del AppBar en modo oscuro
     appBarTheme: AppBarTheme(
+      // Color de fondo del AppBar
       backgroundColor: appPaletteDark.primary,
+
+      // Reacción del AppBar al scroll
       surfaceTintColor: Colors.transparent,
+
+      // Estilo del título del AppBar
       titleTextStyle: _textTheme.headlineLarge?.copyWith(
         color: appPaletteDark.onMenuButton,
       ),
     ),
+
+    // Esquema de colores para modo oscuro
     colorScheme: ColorScheme.dark(
       primary: appPaletteDark.primary,
       onPrimary: appPaletteDark.onPrimary,
@@ -68,6 +89,8 @@ class AppTheme {
       error: appPaletteDark.danger,
       onError: appPaletteDark.onDanger,
     ),
+
+    // Tipografía aplicada en todo el tema
     textTheme: _textTheme,
   );
 }

@@ -67,9 +67,8 @@ const appPaletteLight = AppPalette(
   onCardGreen: Color.fromARGB(255, 30, 29, 29),
 );
 
-/// Paleta para tema oscuro (ajusta los contrastes)
+/// Paleta para tema oscuro
 const appPaletteDark = AppPalette(
-  //background: Color.fromARGB(255, 20, 20, 21),
   background: Color.fromARGB(255, 28, 21, 38),
   primary: Color.fromARGB(255, 255, 201, 53),
   onPrimary: Colors.white,

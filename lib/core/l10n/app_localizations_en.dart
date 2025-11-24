@@ -110,6 +110,12 @@ class AppLocalizationsEn extends AppLocalizations {
 
   // --- Animal Data Texts ---
   @override
+  String get filtrarPor => "Filter by";
+
+  @override
+  String get limpiarFiltro => "Clear filter";
+
+  @override
   String get nombre => 'Name';
 
   @override

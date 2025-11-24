@@ -109,6 +109,13 @@ class AppLocalizationsEs extends AppLocalizations {
   String get provincia => 'Provincia';
 
   // --- Textos de Datos Animales ---
+
+  @override
+  String get filtrarPor => "Filtrar Por";
+
+  @override
+  String get limpiarFiltro => "Limpiar Filtro";
+
   @override
   String get nombre => 'Nombre';
 

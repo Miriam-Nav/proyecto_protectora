@@ -13,19 +13,23 @@ class DetalleAnimal extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    // Provider que devuelve la lista de animales
     final animalesAsync = ref.watch(animalesProvider);
     final l10n = AppLocalizations.of(context)!;
 
+    // Manejo de estados del provider
     return animalesAsync.when(
       loading: () =>
           const Scaffold(body: Center(child: CircularProgressIndicator())),
       error: (e, _) => Scaffold(body: Center(child: Text('Error: $e'))),
       data: (animales) {
+        // Busca el animal con id que coincide con el seleccionado
         final animal = animales.firstWhere(
           (animales) => animales.idAnimal == seleccionado,
           orElse: () => throw Exception(l10n.animalNoEncontrado),
         );
 
+        // Crea la pantalla con los datos del animal
         return Scaffold(
           appBar: customAppBar(context, '${l10n.conocer} ${animal.nombre}'),
 
@@ -37,9 +41,11 @@ class DetalleAnimal extends ConsumerWidget {
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
                     const SizedBox(height: 15),
+                    // Card con la información del animal
                     MascotaFavCard(
                       animal: animal,
-                      onAdoptPressed: () => Navigator.of(context).push(
+                      // Al pulsar el botón de adoptar navega al formulario
+                      onPressed: () => Navigator.of(context).push(
                         MaterialPageRoute(
                           builder: (_) =>
                               FormularioAdopcion(seleccionado: animal.idAnimal),

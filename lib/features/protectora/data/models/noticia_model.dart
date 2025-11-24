@@ -13,6 +13,7 @@ class Noticia extends Equatable {
     required this.imagen,
   });
 
+  // Crear instancia
   factory Noticia.fromJson(Map<String, dynamic> json) => Noticia(
     idNoticia: json['idNoticia'] as int,
     titulo: json['titulo'] as String,

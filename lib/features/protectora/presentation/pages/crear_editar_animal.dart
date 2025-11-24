@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:proyecto_protectora/app/theme/app_palette.dart';
+import 'package:proyecto_protectora/app/theme/app_variants.dart';
 import 'package:proyecto_protectora/core/l10n/app_localizations.dart';
 import 'package:proyecto_protectora/core/widgets/app_input_text.dart';
 import 'package:proyecto_protectora/core/widgets/app_button.dart';
 import 'package:proyecto_protectora/features/protectora/controllers/animal_controller.dart';
-import 'package:proyecto_protectora/features/protectora/data/models/animales.dart';
+import 'package:proyecto_protectora/features/protectora/data/models/animales_model.dart';
 import 'package:proyecto_protectora/features/protectora/presentation/providers/animal_provider.dart';
 import 'package:proyecto_protectora/features/protectora/presentation/widgets/appbar.dart';
 
@@ -18,7 +19,7 @@ class CrearAnimal extends ConsumerStatefulWidget {
 
 class _CrearAnimalState extends ConsumerState<CrearAnimal> {
   final _formKey = GlobalKey<FormState>();
-
+  // Controlador que gestiona los campos y lógica de CRUD
   late final AnimalController controller;
 
   @override
@@ -36,6 +37,8 @@ class _CrearAnimalState extends ConsumerState<CrearAnimal> {
   @override
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context)!;
+
+    // Provider que devuelve la lista de animales
     final animalesAsync = ref.watch(animalesProvider);
 
     String sexoLabel(Sexo sexo) {
@@ -73,7 +76,7 @@ class _CrearAnimalState extends ConsumerState<CrearAnimal> {
                 if (animales.isEmpty) {
                   return Text(l10n.noAnimalesRegistrados);
                 }
-
+                // Dropdown para seleccionar un animal y editarlo
                 return DropdownButton<Animales>(
                   hint: Text(l10n.selecEdicion),
                   value: controller.seleccionado,
@@ -94,6 +97,8 @@ class _CrearAnimalState extends ConsumerState<CrearAnimal> {
               },
             ),
             const SizedBox(height: 25),
+
+            // Card con el formulario de creación/edición
             Card(
               color: appPaletteOf(context).menuButton,
               elevation: 3,
@@ -109,6 +114,7 @@ class _CrearAnimalState extends ConsumerState<CrearAnimal> {
                     children: [
                       Row(
                         children: [
+                          // Nombre
                           Expanded(
                             child: AppInputText(
                               label: l10n.nombre,
@@ -119,6 +125,7 @@ class _CrearAnimalState extends ConsumerState<CrearAnimal> {
                             ),
                           ),
                           const SizedBox(width: 12),
+                          // Sexo
                           Expanded(
                             child: AppInputSelect<Sexo>(
                               label: l10n.sexoAnimal,
@@ -139,6 +146,7 @@ class _CrearAnimalState extends ConsumerState<CrearAnimal> {
                       const SizedBox(height: 12),
                       Row(
                         children: [
+                          // Raza
                           Expanded(
                             child: AppInputText(
                               label: l10n.razaAnimal,
@@ -149,6 +157,7 @@ class _CrearAnimalState extends ConsumerState<CrearAnimal> {
                             ),
                           ),
                           const SizedBox(width: 12),
+                          // Tipo
                           Expanded(
                             child: AppInputSelect<TipoAnimal>(
                               label: l10n.tipoAnimal,
@@ -230,6 +239,7 @@ class _CrearAnimalState extends ConsumerState<CrearAnimal> {
                       ),
 
                       const SizedBox(height: 12),
+                      // Chip
                       AppInputText(
                         label: l10n.chipAnimal,
                         controller: controller.chipCtrl,
@@ -241,6 +251,7 @@ class _CrearAnimalState extends ConsumerState<CrearAnimal> {
                       ),
 
                       const SizedBox(height: 12),
+                      // Foto
                       AppInputText(
                         label: l10n.fotoAnimal,
                         controller: controller.fotoCtrl,
@@ -252,6 +263,7 @@ class _CrearAnimalState extends ConsumerState<CrearAnimal> {
                         },
                       ),
                       const SizedBox(height: 12),
+                      // Descripción
                       AppInputText(
                         label: l10n.descripcionAnimal,
                         controller: controller.descripcionCtrl,
@@ -266,18 +278,18 @@ class _CrearAnimalState extends ConsumerState<CrearAnimal> {
                         },
                       ),
                       const SizedBox(height: 20),
+                      // Botones
                       Wrap(
                         alignment: WrapAlignment.center,
                         spacing: 12,
                         runSpacing: 12,
                         children: [
+                          // Crear
                           SizedBox(
                             width: 100,
                             child: AppButton(
                               label: l10n.crearAnimal,
-                              foregroundColorOverride: appPaletteOf(
-                                context,
-                              ).onSecondary,
+                              txColor: appPaletteOf(context).onSecondary,
                               onPressed: () {
                                 if (_formKey.currentState!.validate()) {
                                   controller.crear(ref, context);
@@ -286,13 +298,12 @@ class _CrearAnimalState extends ConsumerState<CrearAnimal> {
                             ),
                           ),
                           const SizedBox(width: 12),
+                          // Guardar
                           SizedBox(
                             width: 100,
                             child: AppButton(
                               label: l10n.guardarCambios,
-                              foregroundColorOverride: appPaletteOf(
-                                context,
-                              ).onSecondary,
+                              txColor: appPaletteOf(context).onSecondary,
                               onPressed: () {
                                 if (_formKey.currentState!.validate()) {
                                   controller.guardarCambios(ref, context);
@@ -301,6 +312,7 @@ class _CrearAnimalState extends ConsumerState<CrearAnimal> {
                             ),
                           ),
                           const SizedBox(width: 12),
+                          // Eliminar
                           SizedBox(
                             width: 100,
                             child: AppButton(
@@ -309,7 +321,7 @@ class _CrearAnimalState extends ConsumerState<CrearAnimal> {
                                 await controller.eliminar(ref, context);
                                 setState(() {});
                               },
-                              variant: AppButtonVariant.danger,
+                              variant: AppVariant.danger,
                             ),
                           ),
                         ],

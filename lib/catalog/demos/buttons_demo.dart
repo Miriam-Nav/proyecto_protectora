@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:proyecto_protectora/app/theme/app_palette.dart';
+import 'package:proyecto_protectora/app/theme/app_variants.dart';
 import 'package:proyecto_protectora/core/widgets/app_button.dart';
 import 'package:proyecto_protectora/features/protectora/presentation/widgets/appbar.dart';
 
@@ -17,7 +18,7 @@ class ButtonsDemo extends StatelessWidget {
           const Text('AppButton – Botón de Acción'),
           const SizedBox(height: 8),
           AppRoundedActionButton(
-            leadingIcon: Icons.pets,
+            icono: Icons.pets,
             label: 'Registrar Nuevo Animal',
             onPressed: () {},
           ),
@@ -25,7 +26,7 @@ class ButtonsDemo extends StatelessWidget {
           const Text('AppButton – Botón de Acción con Borde'),
           const SizedBox(height: 8),
           AppRoundedActionButtonBorde(
-            leadingIcon: Icons.favorite_border,
+            icono: Icons.favorite_border,
             label: 'Registrar Nueva Adopción',
             onPressed: () {},
             borderColor: appPaletteOf(context).primary,
@@ -44,7 +45,7 @@ class ButtonsDemo extends StatelessWidget {
           AppButton(
             label: 'Confirmar',
             onPressed: () {},
-            variant: AppButtonVariant.primary,
+            variant: AppVariant.primary,
           ),
 
           const SizedBox(height: 16),
@@ -53,7 +54,7 @@ class ButtonsDemo extends StatelessWidget {
           AppButton(
             label: 'Cancelar',
             onPressed: () {},
-            variant: AppButtonVariant.secondary,
+            variant: AppVariant.secondary,
           ),
           const SizedBox(height: 16),
           const Text('AppButton – Botón de Eliminar'),
@@ -61,7 +62,7 @@ class ButtonsDemo extends StatelessWidget {
           AppButton(
             label: 'Eliminar',
             onPressed: () {},
-            variant: AppButtonVariant.danger,
+            variant: AppVariant.danger,
           ),
 
           const SizedBox(height: 16),
@@ -70,7 +71,7 @@ class ButtonsDemo extends StatelessWidget {
           AppButton(
             label: 'No disponible',
             onPressed: null,
-            variant: AppButtonVariant.primary,
+            variant: AppVariant.primary,
           ),
         ],
       ),

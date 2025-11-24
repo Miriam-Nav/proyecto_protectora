@@ -20,6 +20,7 @@ class _PreferencesPageState extends ConsumerState<PreferencesPage> {
   @override
   void initState() {
     super.initState();
+    // Se leen las preferencias actuales
     final prefs = ref.read(preferencesProvider).value;
     if (prefs != null) {
       _selDarkMode = prefs.darkmode;
@@ -30,17 +31,20 @@ class _PreferencesPageState extends ConsumerState<PreferencesPage> {
   @override
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context)!;
+
     return Scaffold(
       appBar: customAppBar(context, l10n.preferencias),
       body: ListView(
         padding: const EdgeInsets.symmetric(horizontal: 24.0, vertical: 16.0),
         children: [
+          // Sección de apariencia
           Text(l10n.apariencia),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Row(
                 children: [
+                  // Icono según modo oscuro o claro
                   Icon(
                     _selDarkMode ? Icons.dark_mode : Icons.light_mode,
                     color: Theme.of(context).colorScheme.primary,
@@ -52,6 +56,7 @@ class _PreferencesPageState extends ConsumerState<PreferencesPage> {
                   ),
                 ],
               ),
+              // Interruptor para activar/desactivar modo oscuro
               Switch(
                 value: _selDarkMode,
                 onChanged: (val) {
@@ -65,6 +70,7 @@ class _PreferencesPageState extends ConsumerState<PreferencesPage> {
 
           const Divider(height: 32),
 
+          // Selección de idioma
           Text(l10n.selecIdioma),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -79,6 +85,7 @@ class _PreferencesPageState extends ConsumerState<PreferencesPage> {
                   ),
                 ],
               ),
+              // Selector desplegable de idioma
               DropdownButton<String>(
                 value: _selLanguage,
                 underline: const SizedBox(),
@@ -98,6 +105,7 @@ class _PreferencesPageState extends ConsumerState<PreferencesPage> {
         ],
       ),
 
+      // Botón para guardar cambios
       bottomNavigationBar: Padding(
         padding: const EdgeInsets.all(16.0),
         child: SizedBox(
@@ -105,10 +113,11 @@ class _PreferencesPageState extends ConsumerState<PreferencesPage> {
           child: AppButton(
             icon: Icons.save,
             label: l10n.guardarCambios,
-            foregroundColorOverride: appPaletteOf(context).onSecondary,
+            txColor: appPaletteOf(context).onSecondary,
             rounded: 5,
             onPressed: () async {
               final messenger = ScaffoldMessenger.of(context);
+              // Se actualizan las preferencias en el provider
               await ref
                   .read(preferencesProvider.notifier)
                   .updatePreferences(
@@ -117,6 +126,7 @@ class _PreferencesPageState extends ConsumerState<PreferencesPage> {
                       language: Locale(_selLanguage),
                     ),
                   );
+              // Se muestra un mensaje de confirmación
               messenger.showSnackBar(
                 SnackBar(
                   content: Text(

@@ -29,17 +29,18 @@ class ClientPage extends ConsumerWidget {
       ultimasNoticias.add(noticiasFake[i]);
     }
 
+    // Provider que devuelve los últimos animales registrados
     final ultimosAnimales = ref.watch(ultimosAnimalesProvider);
 
     return Scaffold(
       appBar: customAppBar(context, l10n.appTitle, showDrawer: true),
-
       drawer: ProtectoraDrawer(),
 
       body: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 24.0, vertical: 16.0),
         child: ListView(
           children: [
+            // Sección de novedades
             Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
@@ -66,10 +67,13 @@ class ClientPage extends ConsumerWidget {
                     // dispositivos puedan arrastrar la lista.
                     return ScrollConfiguration(
                       behavior: const MaterialScrollBehavior().copyWith(
-                        dragDevices: {...PointerDeviceKind.values},
+                        dragDevices: Set.from(PointerDeviceKind.values),
                       ),
+
                       child: SizedBox(
                         height: 175,
+
+                        // Lista de animales
                         child: ListView.builder(
                           scrollDirection: Axis.horizontal,
                           itemCount: animales.length,
@@ -80,10 +84,12 @@ class ClientPage extends ConsumerWidget {
                               width: 150,
                               child: Container(
                                 margin: const EdgeInsets.only(right: 12),
+                                // Card
                                 child: MascotaMiniCard(
                                   image: animal.foto,
                                   title: animal.nombre,
                                   text: animal.descripcion,
+                                  // Al pulsar se navega al detalle del animal
                                   onPressed: () {
                                     Navigator.of(context).push(
                                       MaterialPageRoute(
@@ -105,13 +111,13 @@ class ClientPage extends ConsumerWidget {
               ],
             ),
             SizedBox(height: 24),
+            // Sección de noticias y eventos
             Text(
               l10n.noticiasEventos,
               style: Theme.of(context).textTheme.headlineLarge,
               textAlign: TextAlign.left,
             ),
             const SizedBox(height: 15),
-            // LISTA
             Column(
               children: ultimasNoticias.isEmpty
                   ? [
@@ -120,6 +126,7 @@ class ClientPage extends ConsumerWidget {
                         child: Text(l10n.noNoticias, textAlign: TextAlign.left),
                       ),
                     ]
+                  // Muestra las últimas noticias
                   : ultimasNoticias.map((noticia) {
                       return Padding(
                         padding: const EdgeInsets.only(bottom: 16.0),

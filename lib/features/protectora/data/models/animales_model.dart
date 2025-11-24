@@ -25,6 +25,7 @@ class Animales extends Equatable {
     required this.foto,
   });
 
+  // Permite crear una copia del objeto modificando solo algunos campos
   Animales copyWith({
     String? idAnimal,
     String? nombre,
@@ -51,6 +52,7 @@ class Animales extends Equatable {
     );
   }
 
+  // Define los campos que se usan para comparar instancias
   @override
   List<Object?> get props => [
     idAnimal,
@@ -66,7 +68,7 @@ class Animales extends Equatable {
   ];
 }
 
-// --- Enums para dar más semántica ---
+// --- Enums para definir los valores ---
 enum Sexo { macho, hembra }
 
 enum TipoAnimal { perro, gato, otro }

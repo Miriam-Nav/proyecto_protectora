@@ -1,6 +1,6 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:proyecto_protectora/features/protectora/controllers/animal_notifier.dart';
-import 'package:proyecto_protectora/features/protectora/data/models/animales.dart';
+import 'package:proyecto_protectora/features/protectora/data/models/animales_model.dart';
 
 // Provider principal
 final animalesProvider =
@@ -14,6 +14,7 @@ final totalAnimalesProvider = Provider<int>((ref) {
   return animales.length;
 });
 
+// Últimos 5 animales
 final ultimosAnimalesProvider = FutureProvider<List<Animales>>((ref) {
   final animales = ref.watch(animalesProvider).value ?? const <Animales>[];
   final total = animales.length;
@@ -23,5 +24,3 @@ final ultimosAnimalesProvider = FutureProvider<List<Animales>>((ref) {
   }
   return animales.sublist(startIndex, total);
 });
-
-

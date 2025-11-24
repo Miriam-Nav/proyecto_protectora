@@ -10,12 +10,16 @@ import 'package:proyecto_protectora/app/theme/app_palette.dart';
 class MenuButtons extends StatefulWidget {
   final User user;
   const MenuButtons({super.key, required this.user});
+
   @override
   MenuButtonsState createState() => MenuButtonsState();
 }
 
 class MenuButtonsState extends State<MenuButtons> {
+  // índice de la pestaña seleccionada
   int _selectedIndex = 0;
+
+  // Lista de páginas
   List<Widget> get widgetOptions => [
     HomePage(user: widget.user),
     ClientPage(),
@@ -23,6 +27,7 @@ class MenuButtonsState extends State<MenuButtons> {
     FavAnimalesPage(),
   ];
 
+  // Actualiza el índice cuando se pulsa un botón en la barra inferior
   void _onItemTapped(int index) {
     setState(() {
       _selectedIndex = index;
@@ -33,21 +38,31 @@ class MenuButtonsState extends State<MenuButtons> {
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context)!;
     final palette = appPaletteOf(context);
+
     return Scaffold(
+      // El body muestra la página correspondiente al índice seleccionado
       body: widgetOptions[_selectedIndex],
+
+      // Barra de navegación inferior con esquinas redondeadas
       bottomNavigationBar: ClipRRect(
         borderRadius: const BorderRadius.only(
           topLeft: Radius.circular(20),
           topRight: Radius.circular(20),
         ),
-
         child: BottomNavigationBar(
+          // Mostrar etiquetas seleccionadas
           showSelectedLabels: true,
+          // Mostrar etiquetas no seleccionadas
           showUnselectedLabels: true,
+          // Tipo fijo (no desplazable)
           type: BottomNavigationBarType.fixed,
+          // Color del ítem seleccionado
           selectedItemColor: palette.primary,
+          // Color de ítems no seleccionados
           unselectedItemColor: palette.onMenuButton,
+          // Fondo de la barra
           backgroundColor: palette.menuButton,
+          // Botones
           items: [
             BottomNavigationBarItem(
               icon: Icon(Icons.home),
@@ -66,7 +81,9 @@ class MenuButtonsState extends State<MenuButtons> {
               label: l10n.favoritos,
             ),
           ],
+          // Índice actual
           currentIndex: _selectedIndex,
+          // Acción al pulsar un ítem
           onTap: _onItemTapped,
         ),
       ),

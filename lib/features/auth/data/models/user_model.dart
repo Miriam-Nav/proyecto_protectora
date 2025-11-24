@@ -21,6 +21,7 @@ class User {
     required this.birthDate,
   });
 
+  // Convierte un Map en una instancia de User
   factory User.fromMap(Map<String, dynamic> map) {
     return User(
       id: map['id'] as int,

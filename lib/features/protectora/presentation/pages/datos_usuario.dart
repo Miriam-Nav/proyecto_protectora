@@ -24,6 +24,7 @@ class DatosUsuario extends StatelessWidget {
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 5),
               child: Card(
+                // Tarjeta con estilo de la paleta de la app
                 color: appPaletteOf(context).menuButton,
                 elevation: 3,
                 shape: RoundedRectangleBorder(
@@ -33,6 +34,7 @@ class DatosUsuario extends StatelessWidget {
                   padding: const EdgeInsets.all(16.0),
                   child: Column(
                     children: [
+                      // Avatar circular con la imagen del usuario
                       Center(
                         child: CircleAvatar(
                           radius: 50,
@@ -40,18 +42,24 @@ class DatosUsuario extends StatelessWidget {
                         ),
                       ),
                       const SizedBox(height: 25),
+
+                      // Nombre de usuario
                       AppInputText(
                         label: l10n.usuario,
                         seleccion: usuario.username,
                         readOnly: true,
                       ),
                       const SizedBox(height: 15),
+
+                      // Nombre
                       AppInputText(
                         label: l10n.nombre,
                         seleccion: usuario.firstName,
                         readOnly: true,
                       ),
                       const SizedBox(height: 15),
+
+                      // Apellidos en dos columnas
                       Row(
                         children: [
                           Expanded(
@@ -72,6 +80,8 @@ class DatosUsuario extends StatelessWidget {
                         ],
                       ),
                       const SizedBox(height: 15),
+
+                      // DNI y teléfono en dos columnas
                       Row(
                         children: [
                           Expanded(
@@ -92,12 +102,16 @@ class DatosUsuario extends StatelessWidget {
                         ],
                       ),
                       const SizedBox(height: 15),
+
+                      // Correo electrónico
                       AppInputText(
                         label: l10n.correo,
                         seleccion: usuario.email,
                         readOnly: true,
                       ),
                       const SizedBox(height: 15),
+
+                      // Fecha de nacimiento
                       AppInputText(
                         label: l10n.fechaNacimiento,
                         seleccion: usuario.birthDate,

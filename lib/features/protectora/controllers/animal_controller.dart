@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:proyecto_protectora/app/theme/app_palette.dart';
+import 'package:proyecto_protectora/app/theme/app_variants.dart';
 import 'package:proyecto_protectora/core/l10n/app_localizations.dart';
 import 'package:proyecto_protectora/core/widgets/app_button.dart';
-import 'package:proyecto_protectora/features/protectora/data/models/animales.dart';
+import 'package:proyecto_protectora/features/protectora/data/models/animales_model.dart';
 import 'package:proyecto_protectora/features/protectora/presentation/providers/animal_provider.dart';
 
 class AnimalController {
@@ -11,7 +12,7 @@ class AnimalController {
   Sexo? sexo;
   final razaCtrl = TextEditingController();
   TipoAnimal? tipo;
-  final fechaCtrl = TextEditingController(); // Solo para mostrar
+  final fechaCtrl = TextEditingController(); // Solo para mostrar la fecha
   DateTime? fechaNacimiento;
   bool esterilizado = false;
   final chipCtrl = TextEditingController();
@@ -20,6 +21,7 @@ class AnimalController {
 
   Animales? seleccionado;
 
+  // Cargar los datos de un animal en los controladores
   void cargarAnimal(Animales animal) {
     nombreCtrl.text = animal.nombre;
     sexo = animal.sexo;
@@ -34,6 +36,7 @@ class AnimalController {
     seleccionado = animal;
   }
 
+  // Limpiar todos los campos 
   void limpiar() {
     seleccionado = null;
     nombreCtrl.clear();
@@ -48,6 +51,7 @@ class AnimalController {
     fotoCtrl.clear();
   }
 
+  // Liberar los recursos de los controladores 
   void dispose() {
     nombreCtrl.dispose();
     razaCtrl.dispose();
@@ -60,6 +64,7 @@ class AnimalController {
   /// Crear un nuevo animal
   Future<void> crear(WidgetRef ref, BuildContext context) async {
     final l10n = AppLocalizations.of(context)!;
+    // Se añade el animal al provider con los datos del formulario
     await ref
         .read(animalesProvider.notifier)
         .addAnimal(
@@ -73,6 +78,7 @@ class AnimalController {
           descripcion: descripcionCtrl.text,
           foto: fotoCtrl.text,
         );
+    // Se muestra un mensaje de confirmación
     if (!context.mounted) return;
     ScaffoldMessenger.of(
       context,
@@ -80,10 +86,12 @@ class AnimalController {
     limpiar();
   }
 
+  // Guardar cambios en un animal ya existente
   Future<void> guardarCambios(WidgetRef ref, BuildContext context) async {
     final l10n = AppLocalizations.of(context)!;
     if (seleccionado == null) return;
 
+    // Se crea una copia del animal con los valores actualizados
     final actualizado = seleccionado!.copyWith(
       nombre: nombreCtrl.text,
       sexo: sexo,
@@ -96,7 +104,9 @@ class AnimalController {
       foto: fotoCtrl.text,
     );
 
+    // Se actualiza el animal en el provider
     await ref.read(animalesProvider.notifier).updateAnimal(actualizado);
+    // Se muestra un mensaje de confirmación
     if (!context.mounted) return;
     ScaffoldMessenger.of(
       context,
@@ -104,11 +114,12 @@ class AnimalController {
     limpiar();
   }
 
-  /// Eliminar animal seleccionado
+  /// Eliminar el animal seleccionado
   Future<void> eliminar(WidgetRef ref, BuildContext context) async {
     final l10n = AppLocalizations.of(context)!;
     if (seleccionado == null) return;
 
+    // Se muestra un diálogo de confirmación
     final confirm = await showDialog<bool>(
       context: context,
       builder: (_) => AlertDialog(
@@ -116,13 +127,15 @@ class AnimalController {
         title: Text(l10n.confirmarEliminacion),
         content: Text(l10n.preguntaEliminacion(seleccionado!.nombre)),
         actions: [
+          // Botón de cancelar
           AppButton(
             onPressed: () => Navigator.of(context).pop(false),
             label: l10n.cancelar,
-            variant: AppButtonVariant.secondary,
+            variant: AppVariant.secondary,
           ),
+          // Botón de eliminar
           AppButton(
-            variant: AppButtonVariant.danger,
+            variant: AppVariant.danger,
             onPressed: () => Navigator.of(context).pop(true),
             label: l10n.eliminar,
           ),
@@ -130,6 +143,7 @@ class AnimalController {
       ),
     );
 
+    // Si se confirma, se elimina el animal
     if (confirm == true) {
       await ref
           .read(animalesProvider.notifier)
@@ -142,6 +156,7 @@ class AnimalController {
     }
   }
 
+  // Validar que el chip no esté duplicado en la lista de animales
   String? validarChip(
     String? chip,
     List<Animales> animales,

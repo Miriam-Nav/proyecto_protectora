@@ -15,8 +15,11 @@ class LocaleSelectorForm extends StatelessWidget {
       child: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
-          Text(l10n.selecIdioma, ),
+          // Título del formulario
+          Text(l10n.selecIdioma),
           const SizedBox(height: 12),
+
+          // Generación dinámica de opciones de idioma
           ...options.map((selLocale) {
             final title = switch (selLocale.languageCode) {
               'es' => 'Español',
@@ -24,10 +27,14 @@ class LocaleSelectorForm extends StatelessWidget {
               'it' => 'Italiano',
               _ => selLocale.toLanguageTag(),
             };
+
+            // Verificación si la opción coincide con el idioma actual
             final selected =
                 currentLocale?.languageCode == selLocale.languageCode;
+
             return ListTile(
               title: Text(title),
+              // Icono de check si está seleccionado
               trailing: selected ? Icon(Icons.check) : null,
               selected: selected,
               shape: RoundedRectangleBorder(

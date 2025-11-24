@@ -5,7 +5,7 @@ import 'package:proyecto_protectora/core/l10n/app_localizations.dart';
 import 'package:proyecto_protectora/core/widgets/app_button.dart';
 import 'package:proyecto_protectora/core/widgets/app_input_text.dart';
 import 'package:proyecto_protectora/features/protectora/data/models/adopcion_model.dart';
-import 'package:proyecto_protectora/features/protectora/data/models/animales.dart';
+import 'package:proyecto_protectora/features/protectora/data/models/animales_model.dart';
 import 'package:proyecto_protectora/features/protectora/presentation/providers/adopcion_provider.dart';
 import 'package:proyecto_protectora/features/protectora/presentation/providers/animal_provider.dart';
 import 'package:proyecto_protectora/features/protectora/presentation/widgets/appbar.dart';
@@ -20,8 +20,9 @@ class FormularioAdopcion extends ConsumerStatefulWidget {
 }
 
 class _FormularioAdopcionState extends ConsumerState<FormularioAdopcion> {
+  // Clave global para validar el formulario
   final _formKey = GlobalKey<FormState>();
-
+  // Controladores de texto para cada campo del formulario
   final _nombreCtrl = TextEditingController();
   final _apellido1Ctrl = TextEditingController();
   final _apellido2Ctrl = TextEditingController();
@@ -34,6 +35,7 @@ class _FormularioAdopcionState extends ConsumerState<FormularioAdopcion> {
   final _provinciaCtrl = TextEditingController();
 
   @override
+  // Liberar memoria de los controladores
   void dispose() {
     _nombreCtrl.dispose();
     _apellido1Ctrl.dispose();
@@ -48,8 +50,10 @@ class _FormularioAdopcionState extends ConsumerState<FormularioAdopcion> {
     super.dispose();
   }
 
+  // Método que guarda la solicitud de adopción
   Future<void> _guardarAdopcion(Animales animal) async {
     final l10n = AppLocalizations.of(context)!;
+    // Se construye un objeto Adopcion
     final nuevaAdopcion = Adopcion(
       idAnimal: animal.idAnimal,
       nombreAnimal: animal.nombre,
@@ -61,8 +65,10 @@ class _FormularioAdopcionState extends ConsumerState<FormularioAdopcion> {
       fechaAdopcion: DateTime.now(),
     );
 
+    // Se añade la adopción al provider
     await ref.read(adopcionesProvider.notifier).addAdopcion(nuevaAdopcion);
 
+    // Si el widget sigue montado, se muestra un aviso y se cierra la pantalla
     if (!mounted) return;
     ScaffoldMessenger.of(
       context,
@@ -73,17 +79,16 @@ class _FormularioAdopcionState extends ConsumerState<FormularioAdopcion> {
 
   @override
   Widget build(BuildContext context) {
+    // Obtener la lista de animales
     final animalesAsync = ref.watch(animalesProvider);
     final l10n = AppLocalizations.of(context)!;
-
-    
-
     return Scaffold(
       appBar: customAppBar(context, l10n.tituloFormulario),
       body: animalesAsync.when(
         loading: () => const Center(child: CircularProgressIndicator()),
         error: (e, _) => Center(child: Text('Error: $e')),
         data: (animales) {
+          // Busca el animal seleccionado por id
           final animal = animales.firstWhere(
             (animal) => animal.idAnimal == widget.seleccionado,
             orElse: () => throw Exception(l10n.animalNoEncontrado),
@@ -96,6 +101,7 @@ class _FormularioAdopcionState extends ConsumerState<FormularioAdopcion> {
             ),
             child: ListView(
               children: [
+                // Imagen del animal
                 Center(
                   child: ClipRRect(
                     borderRadius: BorderRadius.circular(25),
@@ -108,7 +114,7 @@ class _FormularioAdopcionState extends ConsumerState<FormularioAdopcion> {
                 ),
                 const SizedBox(height: 20),
 
-                // Datos del animal
+                // Tarjeta con datos del animal
                 Card(
                   color: appPaletteOf(context).menuButton,
                   elevation: 3,
@@ -119,12 +125,14 @@ class _FormularioAdopcionState extends ConsumerState<FormularioAdopcion> {
                     padding: const EdgeInsets.all(16.0),
                     child: Column(
                       children: [
+                        // Nombre
                         AppInputText(
                           label: l10n.nombre,
                           seleccion: animal.nombre,
                           readOnly: true,
                         ),
                         const SizedBox(height: 12),
+                        // Chip
                         AppInputText(
                           label: l10n.chipAnimal,
                           seleccion: animal.chip ?? "-",
@@ -137,7 +145,7 @@ class _FormularioAdopcionState extends ConsumerState<FormularioAdopcion> {
 
                 const SizedBox(height: 25),
 
-                // Datos del adoptante
+                // Tarjeta con formulario de datos del adoptante
                 Card(
                   color: appPaletteOf(context).menuButton,
                   elevation: 3,
@@ -150,6 +158,7 @@ class _FormularioAdopcionState extends ConsumerState<FormularioAdopcion> {
                       key: _formKey,
                       child: Column(
                         children: [
+                          // Nombre adoptante
                           AppInputText(
                             label: l10n.nombreAdoptante,
                             controller: _nombreCtrl,
@@ -162,6 +171,8 @@ class _FormularioAdopcionState extends ConsumerState<FormularioAdopcion> {
                             },
                           ),
                           const SizedBox(height: 12),
+
+                          // Apellidos en dos columnas
                           Row(
                             children: [
                               Expanded(
@@ -194,6 +205,8 @@ class _FormularioAdopcionState extends ConsumerState<FormularioAdopcion> {
                             ],
                           ),
                           const SizedBox(height: 12),
+
+                          // DNI y teléfono
                           Row(
                             children: [
                               Expanded(
@@ -205,12 +218,10 @@ class _FormularioAdopcionState extends ConsumerState<FormularioAdopcion> {
                                     if (value == null || value.isEmpty) {
                                       return l10n.obligatorioDni;
                                     }
-
                                     final dniRegex = RegExp(r'^[0-9]{8}[A-Z]$');
                                     if (!dniRegex.hasMatch(value)) {
                                       return l10n.formatoDni;
                                     }
-
                                     return null;
                                   },
                                 ),
@@ -236,6 +247,8 @@ class _FormularioAdopcionState extends ConsumerState<FormularioAdopcion> {
                             ],
                           ),
                           const SizedBox(height: 12),
+
+                          // Correo electrónico
                           AppInputText(
                             label: l10n.correo,
                             controller: _emailCtrl,
@@ -254,6 +267,8 @@ class _FormularioAdopcionState extends ConsumerState<FormularioAdopcion> {
                             },
                           ),
                           const SizedBox(height: 12),
+
+                          // Dirección
                           AppInputText(
                             label: l10n.direccion,
                             controller: _direccionCtrl,
@@ -266,6 +281,8 @@ class _FormularioAdopcionState extends ConsumerState<FormularioAdopcion> {
                             },
                           ),
                           const SizedBox(height: 12),
+
+                          // Código postal
                           AppInputText(
                             label: l10n.cp,
                             controller: _cpCtrl,
@@ -282,6 +299,8 @@ class _FormularioAdopcionState extends ConsumerState<FormularioAdopcion> {
                             },
                           ),
                           const SizedBox(height: 12),
+
+                          // Localidad y provincia
                           Row(
                             children: [
                               Expanded(
@@ -314,12 +333,12 @@ class _FormularioAdopcionState extends ConsumerState<FormularioAdopcion> {
                             ],
                           ),
                           const SizedBox(height: 20),
+
+                          // Botón para enviar la solicitud
                           Center(
                             child: AppButton(
                               label: l10n.enviarSolicitud,
-                              foregroundColorOverride: appPaletteOf(
-                                context,
-                              ).onSecondary,
+                              txColor: appPaletteOf(context).onSecondary,
                               onPressed: () {
                                 if (_formKey.currentState!.validate()) {
                                   _guardarAdopcion(animal);

@@ -1,8 +1,7 @@
 import 'package:proyecto_protectora/features/protectora/data/models/adopcion_model.dart';
 
 class AdopcionesRepository {
-  // Lista interna de adopciones (datos falsos por ahora)
-  var _adopcionesList = <Adopcion>[
+  final List<Adopcion> _adopcionesList = [
     Adopcion(
       idAnimal: "1",
       nombreAnimal: "Luna",
@@ -32,13 +31,13 @@ class AdopcionesRepository {
     ),
   ];
 
-  /// Obtener todas las adopciones
+  /// Devuelve todas las adopciones simulando una carga
   Future<List<Adopcion>> fetchAll() async {
     await Future<void>.delayed(const Duration(milliseconds: 250));
-    return _adopcionesList;
+    return List<Adopcion>.from(_adopcionesList);
   }
 
-  /// Obtener una adopción por idAnimal
+  /// Devuelve una adopción concreta por su idAnimal
   Future<Adopcion?> fetchOne(String idAnimal) async {
     await Future<void>.delayed(const Duration(milliseconds: 250));
     return _adopcionesList.firstWhere(
@@ -47,7 +46,7 @@ class AdopcionesRepository {
     );
   }
 
-  /// Añadir una nueva adopción
+  /// Añade una nueva adopción a la lista
   Future<Adopcion> addAdopcion({
     required String idAnimal,
     required String nombreAnimal,
@@ -65,34 +64,36 @@ class AdopcionesRepository {
       usuarioTelefono: usuarioTelefono.trim(),
       fechaAdopcion: DateTime.now(),
     );
-    _adopcionesList = [..._adopcionesList, nueva];
+    // Se añade la nueva adopción
+    _adopcionesList.add(nueva);
     return nueva;
   }
 
-  /// Actualizar datos de una adopción
+  /// Actualiza los datos de una adopción existente
   Future<void> updateAdopcion(
     String idAnimal, {
     String? usuarioNombre,
     String? usuarioEmail,
     String? usuarioTelefono,
   }) async {
-    _adopcionesList = _adopcionesList.map((adopcion) {
-      if (adopcion.idAnimal == idAnimal) {
-        return Adopcion(
-          idAnimal: adopcion.idAnimal,
-          nombreAnimal: adopcion.nombreAnimal,
-          chip: adopcion.chip,
-          usuarioNombre: usuarioNombre ?? adopcion.usuarioNombre,
-          usuarioEmail: usuarioEmail ?? adopcion.usuarioEmail,
-          usuarioTelefono: usuarioTelefono ?? adopcion.usuarioTelefono,
-          fechaAdopcion: adopcion.fechaAdopcion,
+    for (var i = 0; i < _adopcionesList.length; i++) {
+      if (_adopcionesList[i].idAnimal == idAnimal) {
+        _adopcionesList[i] = Adopcion(
+          idAnimal: _adopcionesList[i].idAnimal,
+          nombreAnimal: _adopcionesList[i].nombreAnimal,
+          chip: _adopcionesList[i].chip,
+          usuarioNombre: usuarioNombre ?? _adopcionesList[i].usuarioNombre,
+          usuarioEmail: usuarioEmail ?? _adopcionesList[i].usuarioEmail,
+          usuarioTelefono:
+              usuarioTelefono ?? _adopcionesList[i].usuarioTelefono,
+          fechaAdopcion: _adopcionesList[i].fechaAdopcion,
         );
+        break;
       }
-      return adopcion;
-    }).toList();
+    }
   }
 
-  /// Eliminar una adopción
+  /// Elimina una adopción de la lista por idAnimal
   Future<void> removeAdopcion(String idAnimal) async {
     _adopcionesList.removeWhere((a) => a.idAnimal == idAnimal);
   }
