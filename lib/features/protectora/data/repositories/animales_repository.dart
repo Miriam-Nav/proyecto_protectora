@@ -14,7 +14,7 @@ class AnimalesRepository {
       esterilizado: true,
       chip: "123456789",
       descripcion: "Muy cariñosa y juguetona.",
-      foto: "https://cataas.com/cat?random=1",
+      foto: "https://place.dog/300/200?random=1",
     ),
     Animales(
       idAnimal: "A002",
@@ -26,7 +26,7 @@ class AnimalesRepository {
       esterilizado: false,
       chip: "987654321",
       descripcion: "Protector y obediente.",
-      foto: "https://cataas.com/cat?random=2",
+      foto: "https://place.dog/300/200?random=2",
     ),
     Animales(
       idAnimal: "A003",
@@ -50,7 +50,7 @@ class AnimalesRepository {
       esterilizado: true,
       chip: "556677889",
       descripcion: "Simpático y glotón.",
-      foto: "https://cataas.com/cat?random=4",
+      foto: "https://place.dog/300/200?random=4",
     ),
     Animales(
       idAnimal: "A005",
@@ -74,7 +74,7 @@ class AnimalesRepository {
       esterilizado: false,
       chip: "445566778",
       descripcion: "Activo y muy sociable.",
-      foto: "https://cataas.com/cat?random=6",
+      foto: "https://place.dog/300/200?random=6",
     ),
     Animales(
       idAnimal: "A007",
@@ -86,7 +86,7 @@ class AnimalesRepository {
       esterilizado: true,
       chip: "223344556",
       descripcion: "Cariñosa y paciente.",
-      foto: "https://cataas.com/cat?random=7",
+      foto: "https://place.dog/300/200?random=7",
     ),
     Animales(
       idAnimal: "A008",
@@ -110,7 +110,7 @@ class AnimalesRepository {
       esterilizado: false,
       chip: "334455667",
       descripcion: "Curioso y energético.",
-      foto: "https://cataas.com/cat?random=9",
+      foto: "https://place.dog/300/200?random=9",
     ),
     Animales(
       idAnimal: "A010",

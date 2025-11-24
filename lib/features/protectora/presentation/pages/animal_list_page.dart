@@ -34,7 +34,7 @@ class _AnimalListPageState extends ConsumerState<AnimalListPage> {
             // --- Barra de filtros arriba ---
             Wrap(
               // espacio horizontal
-              spacing: 12.0,
+              spacing: 60.0,
               // espacio vertical si se desborda a otra línea
               runSpacing: 8.0,
               // alineación horizontal
