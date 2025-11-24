@@ -4,8 +4,10 @@ import 'package:proyecto_protectora/app/theme/app_palette.dart';
 import 'package:proyecto_protectora/core/l10n/app_localizations.dart';
 import 'package:proyecto_protectora/core/widgets/app_button.dart';
 import 'package:proyecto_protectora/core/widgets/app_input_text.dart';
+import 'package:proyecto_protectora/features/auth/controllers/auth_controller.dart';
 import 'package:proyecto_protectora/features/protectora/data/models/adopcion_model.dart';
 import 'package:proyecto_protectora/features/protectora/data/models/animales_model.dart';
+import 'package:proyecto_protectora/features/protectora/presentation/pages/datos_usuario.dart';
 import 'package:proyecto_protectora/features/protectora/presentation/providers/adopcion_provider.dart';
 import 'package:proyecto_protectora/features/protectora/presentation/providers/animal_provider.dart';
 import 'package:proyecto_protectora/features/protectora/presentation/widgets/appbar.dart';
@@ -13,7 +15,11 @@ import 'package:proyecto_protectora/features/protectora/presentation/widgets/app
 class FormularioAdopcion extends ConsumerStatefulWidget {
   final String seleccionado;
 
-  const FormularioAdopcion({super.key, required this.seleccionado});
+  const FormularioAdopcion({
+    super.key,
+    WidgetRef? ref,
+    required this.seleccionado,
+  });
 
   @override
   ConsumerState<FormularioAdopcion> createState() => _FormularioAdopcionState();
@@ -33,6 +39,7 @@ class _FormularioAdopcionState extends ConsumerState<FormularioAdopcion> {
   final _cpCtrl = TextEditingController();
   final _localidadCtrl = TextEditingController();
   final _provinciaCtrl = TextEditingController();
+  // late final usuario = ref.watch(authControllerProvider).value;
 
   @override
   // Liberar memoria de los controladores
@@ -49,6 +56,21 @@ class _FormularioAdopcionState extends ConsumerState<FormularioAdopcion> {
     _provinciaCtrl.dispose();
     super.dispose();
   }
+
+  late final usuario = ref.read(authControllerProvider).value;
+  // if (usuario != null) {
+  //   Navigator.push(
+  //     context,
+  //     MaterialPageRoute(
+
+  //     ),
+  //   );
+  // } else {
+  //   // Mensaje de usuario no loggeado
+  //   ScaffoldMessenger.of(
+  //     context,
+  //   ).showSnackBar(SnackBar(content: Text(l10n.noLoggin)));
+  // }
 
   // Método que guarda la solicitud de adopción
   Future<void> _guardarAdopcion(Animales animal) async {
@@ -161,7 +183,8 @@ class _FormularioAdopcionState extends ConsumerState<FormularioAdopcion> {
                           // Nombre adoptante
                           AppInputText(
                             label: l10n.nombreAdoptante,
-                            controller: _nombreCtrl,
+                            seleccion: usuario?.username,
+                            // controller: _nombreCtrl,
                             color: appPaletteOf(context).cardGreen,
                             validator: (value) {
                               if (value == null || value.isEmpty) {
@@ -178,7 +201,8 @@ class _FormularioAdopcionState extends ConsumerState<FormularioAdopcion> {
                               Expanded(
                                 child: AppInputText(
                                   label: l10n.apellido1,
-                                  controller: _apellido1Ctrl,
+                                  seleccion: usuario?.maidenName,
+                                  // controller: _apellido1Ctrl,
                                   color: appPaletteOf(context).cardGreen,
                                   validator: (value) {
                                     if (value == null || value.isEmpty) {
@@ -192,7 +216,8 @@ class _FormularioAdopcionState extends ConsumerState<FormularioAdopcion> {
                               Expanded(
                                 child: AppInputText(
                                   label: l10n.apellido2,
-                                  controller: _apellido2Ctrl,
+                                  seleccion: usuario?.lastName,
+                                  // controller: _apellido2Ctrl,
                                   color: appPaletteOf(context).cardGreen,
                                   validator: (value) {
                                     if (value == null || value.isEmpty) {
@@ -230,7 +255,8 @@ class _FormularioAdopcionState extends ConsumerState<FormularioAdopcion> {
                               Expanded(
                                 child: AppInputText(
                                   label: l10n.telefono,
-                                  controller: _telefonoCtrl,
+                                  seleccion: usuario?.phone,
+                                  // controller: _telefonoCtrl,
                                   color: appPaletteOf(context).cardGreen,
                                   validator: (value) {
                                     if (value == null || value.isEmpty) {
@@ -251,7 +277,8 @@ class _FormularioAdopcionState extends ConsumerState<FormularioAdopcion> {
                           // Correo electrónico
                           AppInputText(
                             label: l10n.correo,
-                            controller: _emailCtrl,
+                            seleccion: usuario?.email,
+                            // controller: _emailCtrl,
                             color: appPaletteOf(context).cardGreen,
                             validator: (value) {
                               if (value == null || value.isEmpty) {
