@@ -77,7 +77,7 @@ flutter pub get
 # 3. Ejecutar la aplicación
 flutter run
 
-```markdown
+```
 
 ### 📸 Capturas (opcional)
 
