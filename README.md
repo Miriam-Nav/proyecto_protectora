@@ -77,10 +77,12 @@ flutter pub get
 # 3. Ejecutar la aplicación
 flutter run
 
-📸 Capturas (opcional)
+---
+
+### 📸 Capturas (opcional)
 
 
-🤝 Contribución
+### 🤝 Contribución
 Haz un fork del proyecto
 
 Crea una rama (feature/nueva-funcionalidad)
@@ -89,7 +91,7 @@ Haz commit de tus cambios
 
 Abre un Pull Request
 
-📜 Licencia
+### 📜 Licencia
 Este proyecto está bajo la licencia MIT. Consulta el archivo LICENSE para más detalles.
 
 <div align="center">
