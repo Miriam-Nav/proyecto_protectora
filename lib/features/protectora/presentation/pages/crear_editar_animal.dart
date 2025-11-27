@@ -6,6 +6,7 @@ import 'package:proyecto_protectora/core/l10n/app_localizations.dart';
 import 'package:proyecto_protectora/core/widgets/app_input_text.dart';
 import 'package:proyecto_protectora/core/widgets/app_button.dart';
 import 'package:proyecto_protectora/features/protectora/controllers/animal_controller.dart';
+import 'package:proyecto_protectora/features/protectora/controllers/animal_form_controller.dart';
 import 'package:proyecto_protectora/features/protectora/data/models/animales_model.dart';
 import 'package:proyecto_protectora/features/protectora/presentation/providers/animal_provider.dart';
 import 'package:proyecto_protectora/features/protectora/presentation/widgets/appbar.dart';
@@ -19,18 +20,22 @@ class CrearAnimal extends ConsumerStatefulWidget {
 
 class _CrearAnimalState extends ConsumerState<CrearAnimal> {
   final _formKey = GlobalKey<FormState>();
+
   // Controlador que gestiona los campos y lógica de CRUD
   late final AnimalController controller;
+  late final AnimalFormControllers animalFormController;
 
   @override
   void initState() {
     super.initState();
     controller = AnimalController();
+    animalFormController = AnimalFormControllers();
   }
 
   @override
   void dispose() {
     controller.dispose();
+    animalFormController.dispose();
     super.dispose();
   }
 
@@ -117,17 +122,24 @@ class _CrearAnimalState extends ConsumerState<CrearAnimal> {
                           // Nombre
                           Expanded(
                             child: AppInputText(
+                              focusNode: animalFormController.nombreFocus,
                               label: l10n.nombre,
                               controller: controller.nombreCtrl,
-                              validator: (v) => v == null || v.isEmpty
-                                  ? l10n.nombreObligatorio
-                                  : null,
+                              validator: (value) {
+                                if (value == null || value.isEmpty) {
+                                  animalFormController.nombreFocus
+                                      .requestFocus();
+                                  return l10n.nombreObligatorio;
+                                }
+                                return null;
+                              },
                             ),
                           ),
                           const SizedBox(width: 12),
                           // Sexo
                           Expanded(
                             child: AppInputSelect<Sexo>(
+                              focusNode: animalFormController.sexoFocus,
                               label: l10n.sexoAnimal,
                               value: controller.sexo,
                               items: Sexo.values,
@@ -137,8 +149,13 @@ class _CrearAnimalState extends ConsumerState<CrearAnimal> {
                                   controller.sexo = value;
                                 }
                               },
-                              validator: (value) =>
-                                  value == null ? l10n.selecSexo : null,
+                              validator: (value) {
+                                if (value == null) {
+                                  animalFormController.sexoFocus.requestFocus();
+                                  return l10n.selecSexo;
+                                }
+                                return null;
+                              },
                             ),
                           ),
                         ],
@@ -149,17 +166,24 @@ class _CrearAnimalState extends ConsumerState<CrearAnimal> {
                           // Raza
                           Expanded(
                             child: AppInputText(
+                              focusNode: animalFormController.razaFocus,
                               label: l10n.razaAnimal,
                               controller: controller.razaCtrl,
-                              validator: (v) => v == null || v.isEmpty
-                                  ? l10n.razaOblig
-                                  : null,
+
+                              validator: (value) {
+                                if (value == null || value.isEmpty) {
+                                  animalFormController.razaFocus.requestFocus();
+                                  return l10n.razaOblig;
+                                }
+                                return null;
+                              },
                             ),
                           ),
                           const SizedBox(width: 12),
                           // Tipo
                           Expanded(
                             child: AppInputSelect<TipoAnimal>(
+                              focusNode: animalFormController.tipoFocus,
                               label: l10n.tipoAnimal,
                               value: controller.tipo,
                               items: TipoAnimal.values,
@@ -169,8 +193,13 @@ class _CrearAnimalState extends ConsumerState<CrearAnimal> {
                                   controller.tipo = value;
                                 }
                               },
-                              validator: (value) =>
-                                  value == null ? l10n.tipoOblig : null,
+                              validator: (value) {
+                                if (value == null) {
+                                  animalFormController.tipoFocus.requestFocus();
+                                  return l10n.tipoOblig;
+                                }
+                                return null;
+                              },
                             ),
                           ),
                         ],
@@ -217,9 +246,15 @@ class _CrearAnimalState extends ConsumerState<CrearAnimal> {
                                       .first;
                                 }
                               },
-                              validator: (v) => v == null || v.isEmpty
-                                  ? l10n.fechaOblig
-                                  : null,
+
+                              validator: (value) {
+                                if (value == null || value.isEmpty) {
+                                  animalFormController.fechaFocus
+                                      .requestFocus();
+                                  return l10n.fechaOblig;
+                                }
+                                return null;
+                              },
                             ),
                           ),
 
@@ -241,22 +276,33 @@ class _CrearAnimalState extends ConsumerState<CrearAnimal> {
                       const SizedBox(height: 12),
                       // Chip
                       AppInputText(
+                        focusNode: animalFormController.chipFocus,
                         label: l10n.chipAnimal,
                         controller: controller.chipCtrl,
                         validator: (value) {
                           final animales =
                               ref.watch(animalesProvider).value ?? [];
-                          return controller.validarChip(value, animales, l10n);
+                          final error = controller.validarChip(
+                            value,
+                            animales,
+                            l10n,
+                          );
+                          if (error != null) {
+                            animalFormController.chipFocus.requestFocus();
+                          }
+                          return error;
                         },
                       ),
 
                       const SizedBox(height: 12),
                       // Foto
                       AppInputText(
+                        focusNode: animalFormController.fotoFocus,
                         label: l10n.fotoAnimal,
                         controller: controller.fotoCtrl,
                         validator: (value) {
                           if (value == null || value.isEmpty) {
+                            animalFormController.fotoFocus.requestFocus();
                             return l10n.fotoOblig;
                           }
                           return null;
@@ -265,13 +311,18 @@ class _CrearAnimalState extends ConsumerState<CrearAnimal> {
                       const SizedBox(height: 12),
                       // Descripción
                       AppInputText(
+                        focusNode: animalFormController.descripcionFocus,
                         label: l10n.descripcionAnimal,
                         controller: controller.descripcionCtrl,
                         validator: (value) {
                           if (value == null || value.isEmpty) {
+                            animalFormController.descripcionFocus
+                                .requestFocus();
                             return l10n.descOblig;
                           }
                           if (value.length > 50) {
+                            animalFormController.descripcionFocus
+                                .requestFocus();
                             return l10n.descLong;
                           }
                           return null;

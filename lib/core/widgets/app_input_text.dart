@@ -20,6 +20,8 @@ class AppInputText extends StatelessWidget {
   // Color opcional para el borde
   final Color? color;
 
+  final FocusNode? focusNode;
+
   const AppInputText({
     super.key,
     this.leadingIcon,
@@ -30,6 +32,7 @@ class AppInputText extends StatelessWidget {
     this.readOnly = false,
     this.obscureText = false,
     this.color,
+    this.focusNode,
   });
 
   @override
@@ -58,6 +61,9 @@ class AppInputText extends StatelessWidget {
       style: Theme.of(
         context,
       ).textTheme.labelLarge?.copyWith(color: appPaletteOf(context).secondary),
+
+      // Foco cuando hay error
+      focusNode: focusNode,
 
       // Decoración del campo
       decoration: InputDecoration(
@@ -101,6 +107,8 @@ class AppInputSelect<T> extends StatelessWidget {
   // Color opcional para el borde
   final Color? color;
 
+  final FocusNode? focusNode;
+
   const AppInputSelect({
     super.key,
     required this.label,
@@ -110,6 +118,7 @@ class AppInputSelect<T> extends StatelessWidget {
     required this.onChanged,
     this.validator,
     this.color,
+    this.focusNode,
   });
 
   @override
@@ -127,6 +136,7 @@ class AppInputSelect<T> extends StatelessWidget {
       }).toList(),
       onChanged: onChanged,
       validator: validator,
+      focusNode: focusNode,
       // Decoración del campo
       decoration: InputDecoration(
         labelText: label,

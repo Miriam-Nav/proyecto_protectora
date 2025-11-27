@@ -1,5 +1,5 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:proyecto_protectora/features/protectora/controllers/adopcion_notifier.dart';
+import 'package:proyecto_protectora/features/protectora/notifiers/adopcion_notifier.dart';
 import 'package:proyecto_protectora/features/protectora/data/models/adopcion_model.dart';
 
 // Provider principal de adopciones

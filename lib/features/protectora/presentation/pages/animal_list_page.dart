@@ -4,6 +4,7 @@ import 'package:proyecto_protectora/app/theme/app_palette.dart';
 import 'package:proyecto_protectora/core/l10n/app_localizations.dart';
 import 'package:proyecto_protectora/core/widgets/app_animal_card.dart';
 import 'package:proyecto_protectora/core/widgets/app_button.dart';
+import 'package:proyecto_protectora/features/protectora/presentation/providers/animal_filter_provider.dart';
 import 'package:proyecto_protectora/features/protectora/presentation/providers/animal_provider.dart';
 import 'package:proyecto_protectora/features/protectora/presentation/widgets/appbar.dart';
 import 'package:proyecto_protectora/features/protectora/presentation/widgets/drawer_page.dart';
@@ -17,12 +18,13 @@ class AnimalListPage extends ConsumerStatefulWidget {
 }
 
 class _AnimalListPageState extends ConsumerState<AnimalListPage> {
-  String? filtroSeleccionado;
-
   @override
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context)!;
     final animales = ref.watch(animalesProvider);
+
+    // Lee el filtro desde Riverpod
+    final filtroSeleccionado = ref.watch(filtroProvider);
 
     return Scaffold(
       appBar: customAppBar(context, l10n.animales, showDrawer: true),
@@ -58,7 +60,7 @@ class _AnimalListPageState extends ConsumerState<AnimalListPage> {
                   onChanged: (value) {
                     // setState actualiza el estado del widget con el nuevo valor
                     setState(() {
-                      filtroSeleccionado = value;
+                      ref.read(filtroProvider.notifier).setFiltro(value);
                     });
                   },
                 ),
@@ -67,7 +69,7 @@ class _AnimalListPageState extends ConsumerState<AnimalListPage> {
                 AppButton(
                   onPressed: () {
                     setState(() {
-                      filtroSeleccionado = null;
+                      ref.read(filtroProvider.notifier).clearFiltro();
                     });
                   },
                   label: l10n.limpiarFiltro,

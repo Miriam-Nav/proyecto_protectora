@@ -1,5 +1,5 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:proyecto_protectora/features/protectora/controllers/animal_notifier.dart';
+import 'package:proyecto_protectora/features/protectora/notifiers/animal_notifier.dart';
 import 'package:proyecto_protectora/features/protectora/data/models/animales_model.dart';
 
 // Provider principal

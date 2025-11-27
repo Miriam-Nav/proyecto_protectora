@@ -5,9 +5,9 @@ import 'package:proyecto_protectora/core/l10n/app_localizations.dart';
 import 'package:proyecto_protectora/core/widgets/app_button.dart';
 import 'package:proyecto_protectora/core/widgets/app_input_text.dart';
 import 'package:proyecto_protectora/features/auth/controllers/auth_controller.dart';
+import 'package:proyecto_protectora/features/protectora/controllers/form_adopci%C3%B3n_controller.dart';
 import 'package:proyecto_protectora/features/protectora/data/models/adopcion_model.dart';
 import 'package:proyecto_protectora/features/protectora/data/models/animales_model.dart';
-import 'package:proyecto_protectora/features/protectora/presentation/pages/datos_usuario.dart';
 import 'package:proyecto_protectora/features/protectora/presentation/providers/adopcion_provider.dart';
 import 'package:proyecto_protectora/features/protectora/presentation/providers/animal_provider.dart';
 import 'package:proyecto_protectora/features/protectora/presentation/widgets/appbar.dart';
@@ -28,49 +28,15 @@ class FormularioAdopcion extends ConsumerStatefulWidget {
 class _FormularioAdopcionState extends ConsumerState<FormularioAdopcion> {
   // Clave global para validar el formulario
   final _formKey = GlobalKey<FormState>();
-  // Controladores de texto para cada campo del formulario
-  final _nombreCtrl = TextEditingController();
-  final _apellido1Ctrl = TextEditingController();
-  final _apellido2Ctrl = TextEditingController();
-  final _dniCtrl = TextEditingController();
-  final _telefonoCtrl = TextEditingController();
-  final _emailCtrl = TextEditingController();
-  final _direccionCtrl = TextEditingController();
-  final _cpCtrl = TextEditingController();
-  final _localidadCtrl = TextEditingController();
-  final _provinciaCtrl = TextEditingController();
-  // late final usuario = ref.watch(authControllerProvider).value;
 
+  late final formControllers = FormControllers();
   @override
-  // Liberar memoria de los controladores
   void dispose() {
-    _nombreCtrl.dispose();
-    _apellido1Ctrl.dispose();
-    _apellido2Ctrl.dispose();
-    _dniCtrl.dispose();
-    _telefonoCtrl.dispose();
-    _emailCtrl.dispose();
-    _direccionCtrl.dispose();
-    _cpCtrl.dispose();
-    _localidadCtrl.dispose();
-    _provinciaCtrl.dispose();
+    formControllers.dispose();
     super.dispose();
   }
 
   late final usuario = ref.read(authControllerProvider).value;
-  // if (usuario != null) {
-  //   Navigator.push(
-  //     context,
-  //     MaterialPageRoute(
-
-  //     ),
-  //   );
-  // } else {
-  //   // Mensaje de usuario no loggeado
-  //   ScaffoldMessenger.of(
-  //     context,
-  //   ).showSnackBar(SnackBar(content: Text(l10n.noLoggin)));
-  // }
 
   // Método que guarda la solicitud de adopción
   Future<void> _guardarAdopcion(Animales animal) async {
@@ -81,9 +47,9 @@ class _FormularioAdopcionState extends ConsumerState<FormularioAdopcion> {
       nombreAnimal: animal.nombre,
       chip: animal.chip,
       usuarioNombre:
-          "${_nombreCtrl.text} ${_apellido1Ctrl.text} ${_apellido2Ctrl.text}",
-      usuarioEmail: _emailCtrl.text,
-      usuarioTelefono: _telefonoCtrl.text,
+          "${formControllers.nombre.text} ${formControllers.apellido1.text} ${formControllers.apellido2.text}",
+      usuarioEmail: formControllers.email.text,
+      usuarioTelefono: formControllers.telefono.text,
       fechaAdopcion: DateTime.now(),
     );
 
@@ -182,12 +148,13 @@ class _FormularioAdopcionState extends ConsumerState<FormularioAdopcion> {
                         children: [
                           // Nombre adoptante
                           AppInputText(
+                            focusNode: formControllers.nombreFocus,
                             label: l10n.nombreAdoptante,
                             seleccion: usuario?.username,
-                            // controller: _nombreCtrl,
                             color: appPaletteOf(context).cardGreen,
                             validator: (value) {
                               if (value == null || value.isEmpty) {
+                                formControllers.nombreFocus.requestFocus();
                                 return l10n.nombreObligatorio;
                               }
                               return null;
@@ -200,12 +167,14 @@ class _FormularioAdopcionState extends ConsumerState<FormularioAdopcion> {
                             children: [
                               Expanded(
                                 child: AppInputText(
+                                  focusNode: formControllers.apellido1Focus,
                                   label: l10n.apellido1,
                                   seleccion: usuario?.maidenName,
-                                  // controller: _apellido1Ctrl,
                                   color: appPaletteOf(context).cardGreen,
                                   validator: (value) {
                                     if (value == null || value.isEmpty) {
+                                      formControllers.apellido1Focus
+                                          .requestFocus();
                                       return l10n.obligatorioApellido1;
                                     }
                                     return null;
@@ -215,12 +184,14 @@ class _FormularioAdopcionState extends ConsumerState<FormularioAdopcion> {
                               const SizedBox(width: 12),
                               Expanded(
                                 child: AppInputText(
+                                  focusNode: formControllers.apellido2Focus,
                                   label: l10n.apellido2,
                                   seleccion: usuario?.lastName,
-                                  // controller: _apellido2Ctrl,
                                   color: appPaletteOf(context).cardGreen,
                                   validator: (value) {
                                     if (value == null || value.isEmpty) {
+                                      formControllers.apellido2Focus
+                                          .requestFocus();
                                       return l10n.obligatorioApellido2;
                                     }
                                     return null;
@@ -236,15 +207,18 @@ class _FormularioAdopcionState extends ConsumerState<FormularioAdopcion> {
                             children: [
                               Expanded(
                                 child: AppInputText(
+                                  focusNode: formControllers.dniFocus,
                                   label: l10n.dni,
-                                  controller: _dniCtrl,
+                                  controller: formControllers.dni,
                                   color: appPaletteOf(context).cardGreen,
                                   validator: (value) {
                                     if (value == null || value.isEmpty) {
+                                      formControllers.dniFocus.requestFocus();
                                       return l10n.obligatorioDni;
                                     }
                                     final dniRegex = RegExp(r'^[0-9]{8}[A-Z]$');
                                     if (!dniRegex.hasMatch(value)) {
+                                      formControllers.dniFocus.requestFocus();
                                       return l10n.formatoDni;
                                     }
                                     return null;
@@ -254,16 +228,20 @@ class _FormularioAdopcionState extends ConsumerState<FormularioAdopcion> {
                               const SizedBox(width: 12),
                               Expanded(
                                 child: AppInputText(
+                                  focusNode: formControllers.telefonoFocus,
                                   label: l10n.telefono,
-                                  seleccion: usuario?.phone,
-                                  // controller: _telefonoCtrl,
+                                  controller: formControllers.telefono,
                                   color: appPaletteOf(context).cardGreen,
                                   validator: (value) {
                                     if (value == null || value.isEmpty) {
+                                      formControllers.telefonoFocus
+                                          .requestFocus();
                                       return l10n.obligatorioTelefono;
                                     }
                                     final numero = int.tryParse(value);
                                     if (numero == null) {
+                                      formControllers.telefonoFocus
+                                          .requestFocus();
                                       return l10n.formatoNum;
                                     }
                                     return null;
@@ -276,18 +254,20 @@ class _FormularioAdopcionState extends ConsumerState<FormularioAdopcion> {
 
                           // Correo electrónico
                           AppInputText(
+                            focusNode: formControllers.emailFocus,
                             label: l10n.correo,
                             seleccion: usuario?.email,
-                            // controller: _emailCtrl,
                             color: appPaletteOf(context).cardGreen,
                             validator: (value) {
                               if (value == null || value.isEmpty) {
+                                formControllers.emailFocus.requestFocus();
                                 return l10n.obligatorioCorreo;
                               }
                               final emailRegex = RegExp(
                                 r'^[^@]+@[^@]+\.[^@]+$',
                               );
                               if (!emailRegex.hasMatch(value)) {
+                                formControllers.emailFocus.requestFocus();
                                 return l10n.formatoCorreo;
                               }
                               return null;
@@ -297,11 +277,13 @@ class _FormularioAdopcionState extends ConsumerState<FormularioAdopcion> {
 
                           // Dirección
                           AppInputText(
+                            focusNode: formControllers.direccionFocus,
                             label: l10n.direccion,
-                            controller: _direccionCtrl,
+                            controller: formControllers.direccion,
                             color: appPaletteOf(context).cardGreen,
                             validator: (value) {
                               if (value == null || value.isEmpty) {
+                                formControllers.direccionFocus.requestFocus();
                                 return l10n.obligatorioDireccion;
                               }
                               return null;
@@ -311,15 +293,18 @@ class _FormularioAdopcionState extends ConsumerState<FormularioAdopcion> {
 
                           // Código postal
                           AppInputText(
+                            focusNode: formControllers.cpFocus,
                             label: l10n.cp,
-                            controller: _cpCtrl,
+                            controller: formControllers.cp,
                             color: appPaletteOf(context).cardGreen,
                             validator: (value) {
                               if (value == null || value.isEmpty) {
+                                formControllers.cpFocus.requestFocus();
                                 return l10n.obligatorioCp;
                               }
                               final numero = int.tryParse(value);
                               if (numero == null) {
+                                formControllers.cpFocus.requestFocus();
                                 return l10n.formatoNum;
                               }
                               return null;
@@ -332,11 +317,14 @@ class _FormularioAdopcionState extends ConsumerState<FormularioAdopcion> {
                             children: [
                               Expanded(
                                 child: AppInputText(
+                                  focusNode: formControllers.localidadFocus,
                                   label: l10n.localidad,
-                                  controller: _localidadCtrl,
+                                  controller: formControllers.localidad,
                                   color: appPaletteOf(context).cardGreen,
                                   validator: (value) {
                                     if (value == null || value.isEmpty) {
+                                      formControllers.localidadFocus
+                                          .requestFocus();
                                       return l10n.obligLocalidad;
                                     }
                                     return null;
@@ -346,11 +334,15 @@ class _FormularioAdopcionState extends ConsumerState<FormularioAdopcion> {
                               const SizedBox(width: 12),
                               Expanded(
                                 child: AppInputText(
+                                  focusNode: formControllers.provinciaFocus,
                                   label: l10n.provincia,
-                                  controller: _provinciaCtrl,
+                                  controller: formControllers.provincia,
                                   color: appPaletteOf(context).cardGreen,
                                   validator: (value) {
                                     if (value == null || value.isEmpty) {
+                                      formControllers.provinciaFocus
+                                          .requestFocus();
+
                                       return l10n.obligProvincia;
                                     }
                                     return null;
