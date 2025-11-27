@@ -8,19 +8,20 @@
 
 </div>
 
+<img width="1436" height="803" alt="image" src="https://github.com/user-attachments/assets/84598a74-09a9-4e67-bc8c-a7037e1d32ce" />
+
+
 ## 📋 Descripción
 
-**Protectora App** es una aplicación móvil multiplataforma desarrollada en **Flutter** para la gestión integral de una protectora de animales.  
-Permite administrar adopciones, fichas de animales, voluntarios y donaciones, ofreciendo una experiencia moderna y accesible tanto para el personal como para los usuarios interesados en colaborar o adoptar.
+**Protectora App** es una aplicación de Flutter para la gestión de animales en una protectora, incluyendo registro, edición, adopciones y validaciones con feedback claro. Utiliza Riverpod para el manejo de estado y una arquitectura modular por feature.
 
 ### Funcionalidades principales
 
-🐶 **Gestión de animales** – Registro de fichas con fotos, estado de salud y disponibilidad  
-📅 **Adopciones y citas** – Sistema de citas para adopciones y visitas  
-👤 **Perfil de usuario** – Datos personales y favoritos  
-🔔 **Notificaciones** – Recordatorios de citas y actualizaciones de estado  
-🌍 **Multiidioma** – Español, Italiano e Inglés  
-🎨 **UI moderna** – Diseño minimalista y consistente con Material Design  
+- Registro, edición y eliminación de animales (CRUD).
+- Solicitudes de adopción con validación de datos.
+- Persistencia de preferencias y sesión en local.
+- Navegación entre pantallas con feedback claro al usuario.
+- Internacionalización y theming coherente.
 
 ---
 
@@ -28,30 +29,27 @@ Permite administrar adopciones, fichas de animales, voluntarios y donaciones, of
 
 - **Flutter** – Framework multiplataforma  
 - **Dart** – Lenguaje optimizado para UI  
-- **Riverpod** – Gestión de estado reactiva  
-- **GoRouter** – Navegación declarativa  
-- **Dio** – Cliente HTTP para comunicación con el backend  
-- **Flutter Secure Storage** – Almacenamiento seguro de credenciales  
+- **Riverpod** – Gestión de estado global  
 - **Shared Preferences** – Persistencia local de preferencias  
-- **Cached Network Image** – Caché de imágenes de animales  
+- **Intl / flutter_localizations** → internacionalización (ES/EN/IT).
+- **FocusNode** → Control de foco en validación.
 
 ---
 
 ## 🏗️ Arquitectura
 
-El proyecto sigue principios de **Clean Architecture** para garantizar mantenibilidad y escalabilidad:
+El proyecto sigue una arquitectura modular por features, donde cada feature encapsula su propia lógica, datos y presentación.
 
-lib/ 
-├── main.dart # Entry point 
-├── app/ # Configuración global (router, tema) 
-├── core/ # Recursos compartidos (constantes, errores, utils) 
-├── features/ 
-│ ├── animals/ # Gestión de animales 
-│ ├── adoptions/ # Flujo de adopciones 
-│ ├── donations/ # Donaciones y pagos 
-│ ├── notifications/ # Sistema de notificaciones 
-│ └── profile/ # Perfil de usuario 
-└── catalog/ # Catálogo de componentes UI reutilizables
+lib/
+├── app/                  # Tema, variantes, rutas
+├── core/                 # Widgets base, l10n, helpers
+├── features/
+│   ├── protectora/
+│   │   ├── data/         # Modelos y repositorios
+│   │   ├── presentation/
+│   │   │   ├── pages/    # Pantallas (crear_editar_animal.dart, formulario_adopcion.dart)
+│   │   │   ├── widgets/  # Componentes visuales (appbar.dart, drawer_page.dart)
+│   │   └── controllers/  # Controllers y Providers
 
 ---
 
@@ -79,17 +77,10 @@ flutter run
 
 ```
 
-### 📸 Capturas (opcional)
+### 📸 Capturas
 
 
-### 🤝 Contribución
-Haz un fork del proyecto
 
-Crea una rama (feature/nueva-funcionalidad)
-
-Haz commit de tus cambios
-
-Abre un Pull Request
 
 ### 📜 Licencia
 Este proyecto está bajo la licencia MIT. Consulta el archivo LICENSE para más detalles.
