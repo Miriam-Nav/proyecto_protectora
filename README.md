@@ -62,7 +62,7 @@ lib/
 ```
 
 
-
+---
 
 ## 🚀 Instalación y Arranque
 
@@ -89,14 +89,14 @@ flutter run
 
 ```
 
-
+---
 
 ### 📸 Capturas
 <div align="center">
 <img width="394" height="449" alt="image" src="https://github.com/user-attachments/assets/15d719b0-d9b0-40da-853d-b19975b0423a" />    <img width="394" height="449" alt="image" src="https://github.com/user-attachments/assets/afb417f4-225c-4835-980e-653a6ac6e84a" />
 </div>
 
-
+---
 
 ### 📜 Licencia
 Este proyecto está bajo la licencia MIT. Consulta el archivo LICENSE para más detalles.
