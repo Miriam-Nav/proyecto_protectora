@@ -5,7 +5,7 @@ import 'package:proyecto_protectora/core/l10n/app_localizations.dart';
 import 'package:proyecto_protectora/core/widgets/app_button.dart';
 import 'package:proyecto_protectora/core/widgets/app_input_text.dart';
 import 'package:proyecto_protectora/features/auth/controllers/auth_controller.dart';
-import 'package:proyecto_protectora/features/protectora/controllers/form_adopci%C3%B3n_controller.dart';
+import 'package:proyecto_protectora/features/protectora/controllers/form_adopcion_controller.dart';
 import 'package:proyecto_protectora/features/protectora/data/models/adopcion_model.dart';
 import 'package:proyecto_protectora/features/protectora/data/models/animales_model.dart';
 import 'package:proyecto_protectora/features/protectora/presentation/providers/adopcion_provider.dart';
@@ -150,7 +150,7 @@ class _FormularioAdopcionState extends ConsumerState<FormularioAdopcion> {
                           AppInputText(
                             focusNode: formControllers.nombreFocus,
                             label: l10n.nombreAdoptante,
-                            seleccion: usuario?.username,
+                            seleccion: usuario?.nombre,
                             color: appPaletteOf(context).cardGreen,
                             validator: (value) {
                               if (value == null || value.isEmpty) {
@@ -169,7 +169,7 @@ class _FormularioAdopcionState extends ConsumerState<FormularioAdopcion> {
                                 child: AppInputText(
                                   focusNode: formControllers.apellido1Focus,
                                   label: l10n.apellido1,
-                                  seleccion: usuario?.maidenName,
+                                  // seleccion: usuario?.maidenName,
                                   color: appPaletteOf(context).cardGreen,
                                   validator: (value) {
                                     if (value == null || value.isEmpty) {
@@ -186,7 +186,7 @@ class _FormularioAdopcionState extends ConsumerState<FormularioAdopcion> {
                                 child: AppInputText(
                                   focusNode: formControllers.apellido2Focus,
                                   label: l10n.apellido2,
-                                  seleccion: usuario?.lastName,
+                                  // seleccion: usuario?.lastName,
                                   color: appPaletteOf(context).cardGreen,
                                   validator: (value) {
                                     if (value == null || value.isEmpty) {

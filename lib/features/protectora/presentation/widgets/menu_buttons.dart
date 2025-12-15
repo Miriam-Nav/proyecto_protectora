@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:proyecto_protectora/core/l10n/app_localizations.dart';
-import 'package:proyecto_protectora/features/auth/data/models/user_model.dart';
-import 'package:proyecto_protectora/features/protectora/presentation/pages/animal_list_page.dart';
-import 'package:proyecto_protectora/features/protectora/presentation/pages/animalfav_page.dart';
-import 'package:proyecto_protectora/features/protectora/presentation/pages/client_page.dart';
-import 'package:proyecto_protectora/features/protectora/presentation/pages/home_page.dart';
+import 'package:proyecto_protectora/features/auth/data/models/usuario_model.dart';
+import 'package:proyecto_protectora/features/protectora/presentation/pages/animal_lista_pag.dart';
+import 'package:proyecto_protectora/features/protectora/presentation/pages/animalfav_pag.dart';
+import 'package:proyecto_protectora/features/protectora/presentation/pages/cliente_pag.dart';
+import 'package:proyecto_protectora/features/protectora/presentation/pages/inicio_pag.dart';
 import 'package:proyecto_protectora/app/theme/app_palette.dart';
 
 class MenuButtons extends StatefulWidget {
-  final User user;
+  final Usuario user;
   const MenuButtons({super.key, required this.user});
 
   @override
@@ -21,10 +21,10 @@ class MenuButtonsState extends State<MenuButtons> {
 
   // Lista de páginas
   List<Widget> get widgetOptions => [
-    HomePage(user: widget.user),
-    ClientPage(),
-    AnimalListPage(),
-    FavAnimalesPage(),
+    InicioPag(user: widget.user),
+    ClientePag(),
+    AnimalListaPag(),
+    FavAnimalesPag(),
   ];
 
   // Actualiza el índice cuando se pulsa un botón en la barra inferior

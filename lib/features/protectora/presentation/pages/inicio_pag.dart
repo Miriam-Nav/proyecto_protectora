@@ -6,16 +6,16 @@ import 'package:proyecto_protectora/app/theme/app_variants.dart';
 import 'package:proyecto_protectora/core/l10n/app_localizations.dart';
 import 'package:proyecto_protectora/core/widgets/app_button.dart';
 import 'package:proyecto_protectora/core/widgets/app_card.dart';
-import 'package:proyecto_protectora/features/auth/data/models/user_model.dart';
+import 'package:proyecto_protectora/features/auth/data/models/usuario_model.dart';
 import 'package:proyecto_protectora/features/protectora/presentation/providers/adopcion_provider.dart';
 import 'package:proyecto_protectora/features/protectora/presentation/widgets/appbar.dart';
 import 'package:proyecto_protectora/features/protectora/presentation/widgets/drawer_page.dart';
-import 'package:proyecto_protectora/features/protectora/presentation/pages/crear_editar_animal.dart';
+import 'package:proyecto_protectora/features/protectora/presentation/pages/gestion_animal.dart';
 
-class HomePage extends ConsumerWidget {
-  final User user;
+class InicioPag extends ConsumerWidget {
+  final Usuario user;
 
-  const HomePage({super.key, required this.user});
+  const InicioPag({super.key, required this.user});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -33,7 +33,7 @@ class HomePage extends ConsumerWidget {
 
             // Saludo al usuario
             Text(
-              l10n.hello(user.username),
+              l10n.hello(user.nombre),
               style: Theme.of(context).textTheme.headlineLarge?.copyWith(
                 color: appPaletteOf(context).secondary,
               ),
@@ -65,7 +65,7 @@ class HomePage extends ConsumerWidget {
                   label: l10n.gestionarAnimales,
                   onPressed: () => Navigator.of(
                     context,
-                  ).push(MaterialPageRoute(builder: (_) => CrearAnimal())),
+                  ).push(MaterialPageRoute(builder: (_) => GestionAnimal())),
                   borderColor: appPaletteOf(context).primary,
                 ),
               ],

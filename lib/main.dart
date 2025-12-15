@@ -4,7 +4,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:proyecto_protectora/core/l10n/app_localizations.dart';
 import 'package:proyecto_protectora/core/widgets/auth_gate.dart';
 import 'package:proyecto_protectora/features/protectora/presentation/widgets/menu_buttons.dart';
-import 'package:proyecto_protectora/features/preferences/controllers/preferences_controller.dart';
+import 'package:proyecto_protectora/features/preferences/controllers/preferencias_controller.dart';
 import 'package:proyecto_protectora/app/theme/app_theme.dart';
 
 void main() async {
@@ -27,8 +27,8 @@ class MainApp extends ConsumerWidget {
     // Si las preferencias ya cargaron correctamente se actualiza
     prefsAsync.when(
       data: (prefs) {
-        selectedLocale = prefs.language;
-        modoOscuro = prefs.darkmode;
+        selectedLocale = prefs.idioma;
+        modoOscuro = prefs.modoOscuro;
       },
 
       loading: () {

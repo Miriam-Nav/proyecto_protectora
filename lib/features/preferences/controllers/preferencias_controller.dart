@@ -1,7 +1,7 @@
 import 'dart:ui';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:proyecto_protectora/features/preferences/data/models/preferences.dart';
-import 'package:proyecto_protectora/features/preferences/data/repositories/preferences_repository.dart';
+import 'package:proyecto_protectora/features/preferences/data/models/preferencias.dart';
+import 'package:proyecto_protectora/features/preferences/data/repositories/preferencias_repository.dart';
 
 final preferencesProvider =
     AsyncNotifierProvider<PreferencesNotifier, Preferences>(() {

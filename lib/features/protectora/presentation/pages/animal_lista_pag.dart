@@ -10,14 +10,14 @@ import 'package:proyecto_protectora/features/protectora/presentation/widgets/app
 import 'package:proyecto_protectora/features/protectora/presentation/widgets/drawer_page.dart';
 import 'package:proyecto_protectora/features/protectora/presentation/pages/formulario_adopcion.dart';
 
-class AnimalListPage extends ConsumerStatefulWidget {
-  const AnimalListPage({super.key});
+class AnimalListaPag extends ConsumerStatefulWidget {
+  const AnimalListaPag({super.key});
 
   @override
-  ConsumerState<AnimalListPage> createState() => _AnimalListPageState();
+  ConsumerState<AnimalListaPag> createState() => _AnimalListaPagState();
 }
 
-class _AnimalListPageState extends ConsumerState<AnimalListPage> {
+class _AnimalListaPagState extends ConsumerState<AnimalListaPag> {
   @override
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context)!;

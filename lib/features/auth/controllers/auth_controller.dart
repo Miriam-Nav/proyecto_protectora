@@ -1,14 +1,15 @@
+import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:proyecto_protectora/features/auth/data/models/user_model.dart';
+import 'package:proyecto_protectora/features/auth/data/models/usuario_model.dart';
 import 'package:proyecto_protectora/features/auth/data/repositories/auth_repository.dart';
 
 // Controlador de autenticación que maneja el estado del usuario logueado
-class AuthController extends AsyncNotifier<User?> {
+class AuthController extends AsyncNotifier<Usuario?> {
   // Repositorio de autenticación
   final AuthRepository _repo = AuthRepository();
 
   @override
-  Future<User?> build() async {
+  Future<Usuario?> build() async {
     try {
       // Intenta leer el token guardado
       final token = await _repo.readToken();
@@ -27,15 +28,13 @@ class AuthController extends AsyncNotifier<User?> {
   }
 
   // Método para iniciar sesión
-  Future<void> signIn({
-    required String username,
-    required String password,
-  }) async {
+  Future<void> signIn({required String email, required String pass}) async {
     // Estado inicial: cargando
+
     state = const AsyncLoading();
     try {
       // Intenta loguear con usuario y contraseña
-      await _repo.login(username: username, password: password);
+      await _repo.login(email: email, password: pass);
 
       // Si funciona, obtiene los datos del usuario y actualiza el estado
       final user = await _repo.getLoggedUserData();
@@ -56,7 +55,7 @@ class AuthController extends AsyncNotifier<User?> {
   }
 
   // Método para recargar el perfil del usuario
-  Future<User> reloadProfile() async {
+  Future<Usuario> reloadProfile() async {
     final user = await _repo.getLoggedUserData();
     state = AsyncData(user); // Actualiza el estado con el nuevo perfil
     return user;
@@ -64,6 +63,8 @@ class AuthController extends AsyncNotifier<User?> {
 }
 
 // Provider que expone el AuthController a toda la app
-final authControllerProvider = AsyncNotifierProvider<AuthController, User?>(() {
-  return AuthController();
-});
+final authControllerProvider = AsyncNotifierProvider<AuthController, Usuario?>(
+  () {
+    return AuthController();
+  },
+);

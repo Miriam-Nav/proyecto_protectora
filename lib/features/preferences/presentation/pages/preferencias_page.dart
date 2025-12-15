@@ -2,20 +2,20 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:proyecto_protectora/core/l10n/app_localizations.dart';
 import 'package:proyecto_protectora/core/widgets/app_button.dart';
-import 'package:proyecto_protectora/features/preferences/controllers/preferences_controller.dart';
-import 'package:proyecto_protectora/features/preferences/data/models/preferences.dart';
+import 'package:proyecto_protectora/features/preferences/controllers/preferencias_controller.dart';
+import 'package:proyecto_protectora/features/preferences/data/models/preferencias.dart';
 import 'package:proyecto_protectora/features/protectora/presentation/widgets/appbar.dart';
 import 'package:proyecto_protectora/app/theme/app_palette.dart';
 
-class PreferencesPage extends ConsumerStatefulWidget {
-  const PreferencesPage({super.key});
+class PreferenciasPag extends ConsumerStatefulWidget {
+  const PreferenciasPag({super.key});
   @override
-  ConsumerState<PreferencesPage> createState() => _PreferencesPageState();
+  ConsumerState<PreferenciasPag> createState() => _PreferencesPageState();
 }
 
-class _PreferencesPageState extends ConsumerState<PreferencesPage> {
-  late bool _selDarkMode;
-  late String _selLanguage;
+class _PreferencesPageState extends ConsumerState<PreferenciasPag> {
+  late bool _selModoOsuro;
+  late String _selIdioma;
 
   @override
   void initState() {
@@ -23,8 +23,8 @@ class _PreferencesPageState extends ConsumerState<PreferencesPage> {
     // Se leen las preferencias actuales
     final prefs = ref.read(preferencesProvider).value;
     if (prefs != null) {
-      _selDarkMode = prefs.darkmode;
-      _selLanguage = prefs.language.languageCode;
+      _selModoOsuro = prefs.modoOscuro;
+      _selIdioma = prefs.idioma.languageCode;
     }
   }
 
@@ -46,7 +46,7 @@ class _PreferencesPageState extends ConsumerState<PreferencesPage> {
                 children: [
                   // Icono según modo oscuro o claro
                   Icon(
-                    _selDarkMode ? Icons.dark_mode : Icons.light_mode,
+                    _selModoOsuro ? Icons.dark_mode : Icons.light_mode,
                     color: Theme.of(context).colorScheme.primary,
                   ),
                   const SizedBox(width: 12),
@@ -58,10 +58,10 @@ class _PreferencesPageState extends ConsumerState<PreferencesPage> {
               ),
               // Interruptor para activar/desactivar modo oscuro
               Switch(
-                value: _selDarkMode,
+                value: _selModoOsuro,
                 onChanged: (val) {
                   setState(() {
-                    _selDarkMode = val;
+                    _selModoOsuro = val;
                   });
                 },
               ),
@@ -87,11 +87,11 @@ class _PreferencesPageState extends ConsumerState<PreferencesPage> {
               ),
               // Selector desplegable de idioma
               DropdownButton<String>(
-                value: _selLanguage,
+                value: _selIdioma,
                 underline: const SizedBox(),
                 onChanged: (String? value) {
                   setState(() {
-                    _selLanguage = value!;
+                    _selIdioma = value!;
                   });
                 },
                 items: const [
@@ -122,15 +122,15 @@ class _PreferencesPageState extends ConsumerState<PreferencesPage> {
                   .read(preferencesProvider.notifier)
                   .updatePreferences(
                     Preferences(
-                      darkmode: _selDarkMode,
-                      language: Locale(_selLanguage),
+                      modoOscuro: _selModoOsuro,
+                      idioma: Locale(_selIdioma),
                     ),
                   );
               // Se muestra un mensaje de confirmación
               messenger.showSnackBar(
                 SnackBar(
                   content: Text(
-                    '${l10n.guardado}: DarkMode = $_selDarkMode, ${l10n.idioma} = $_selLanguage',
+                    '${l10n.guardado}: DarkMode = $_selModoOsuro, ${l10n.idioma} = $_selIdioma',
                   ),
                 ),
               );

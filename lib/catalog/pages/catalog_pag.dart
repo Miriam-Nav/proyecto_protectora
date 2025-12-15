@@ -5,8 +5,8 @@ import 'package:proyecto_protectora/catalog/demos/input_text_demo.dart';
 import 'package:proyecto_protectora/features/protectora/presentation/widgets/appbar.dart';
 
 // Pantalla que muestra un catálogo de componentes de la app.
-class CatalogPage extends StatelessWidget {
-  const CatalogPage({super.key});
+class CatalogPag extends StatelessWidget {
+  const CatalogPag({super.key});
 
   @override
   Widget build(BuildContext context) {

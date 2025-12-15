@@ -11,14 +11,14 @@ import 'package:proyecto_protectora/features/protectora/data/models/animales_mod
 import 'package:proyecto_protectora/features/protectora/presentation/providers/animal_provider.dart';
 import 'package:proyecto_protectora/features/protectora/presentation/widgets/appbar.dart';
 
-class CrearAnimal extends ConsumerStatefulWidget {
-  const CrearAnimal({super.key});
+class GestionAnimal extends ConsumerStatefulWidget {
+  const GestionAnimal({super.key});
 
   @override
-  ConsumerState<CrearAnimal> createState() => _CrearAnimalState();
+  ConsumerState<GestionAnimal> createState() => _CrearAnimalState();
 }
 
-class _CrearAnimalState extends ConsumerState<CrearAnimal> {
+class _CrearAnimalState extends ConsumerState<GestionAnimal> {
   final _formKey = GlobalKey<FormState>();
 
   // Controlador que gestiona los campos y lógica de CRUD

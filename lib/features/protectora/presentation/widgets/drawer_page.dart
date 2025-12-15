@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:proyecto_protectora/app/theme/app_palette.dart';
-import 'package:proyecto_protectora/catalog/pages/catalog_pages.dart';
+import 'package:proyecto_protectora/catalog/pages/catalog_pag.dart';
 import 'package:proyecto_protectora/core/l10n/app_localizations.dart';
 import 'package:proyecto_protectora/features/auth/controllers/auth_controller.dart';
-import 'package:proyecto_protectora/features/auth/presentation/pages/login_page.dart';
-import 'package:proyecto_protectora/features/preferences/presentation/pages/preferences_page.dart';
+import 'package:proyecto_protectora/features/auth/presentation/pages/login_pag.dart';
+import 'package:proyecto_protectora/features/preferences/presentation/pages/preferencias_page.dart';
 import 'package:proyecto_protectora/features/protectora/presentation/pages/datos_usuario.dart';
 
 class ProtectoraDrawer extends ConsumerWidget {
@@ -56,7 +56,8 @@ class ProtectoraDrawer extends ConsumerWidget {
                         radius: 32,
                         backgroundColor: appPaletteOf(context).background,
                         child: Image.network(
-                          usuario?.image ?? l10n.usuario,
+                          // usuario?.image ?? l10n.usuario,
+                          l10n.usuario,
                           width: 50,
                           height: 50,
                           fit: BoxFit.contain,
@@ -72,7 +73,8 @@ class ProtectoraDrawer extends ConsumerWidget {
                         children: [
                           // Nombre
                           Text(
-                            usuario?.firstName ?? l10n.invitado,
+                            usuario?.nombre ?? l10n.invitado,
+                            // usuario?.firstName ?? l10n.invitado,
                             style: Theme.of(context).textTheme.titleLarge
                                 ?.copyWith(
                                   color: appPaletteOf(context).onPrimary,
@@ -127,7 +129,7 @@ class ProtectoraDrawer extends ConsumerWidget {
                   Navigator.pop(context);
                   Navigator.push(
                     context,
-                    MaterialPageRoute(builder: (ref) => PreferencesPage()),
+                    MaterialPageRoute(builder: (ref) => PreferenciasPag()),
                   );
                 },
               ),
@@ -140,7 +142,7 @@ class ProtectoraDrawer extends ConsumerWidget {
                   Navigator.pop(context);
                   Navigator.push(
                     context,
-                    MaterialPageRoute(builder: (ref) => CatalogPage()),
+                    MaterialPageRoute(builder: (ref) => CatalogPag()),
                   );
                 },
               ),

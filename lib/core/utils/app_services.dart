@@ -25,8 +25,8 @@ class AppServices {
         baseUrl: baseUrl,
 
         // Tiempo máximo de conexión y recepción
-        connectTimeout: const Duration(seconds: 20),
-        receiveTimeout: const Duration(seconds: 20),
+        connectTimeout: const Duration(seconds: 6000),
+        receiveTimeout: const Duration(seconds: 6000),
 
         // Cabeceras comunes para todas las peticiones
         headers: const {

@@ -11,8 +11,8 @@ import 'package:proyecto_protectora/features/protectora/presentation/widgets/dra
 import 'package:proyecto_protectora/features/protectora/data/fakes/noticias_datafake.dart';
 import 'package:proyecto_protectora/features/protectora/presentation/pages/detalle_animal.dart';
 
-class ClientPage extends ConsumerWidget {
-  const ClientPage({super.key});
+class ClientePag extends ConsumerWidget {
+  const ClientePag({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {

@@ -8,8 +8,8 @@ import 'package:proyecto_protectora/features/protectora/presentation/providers/f
 import 'package:proyecto_protectora/features/protectora/presentation/widgets/appbar.dart';
 import 'package:proyecto_protectora/features/protectora/presentation/widgets/drawer_page.dart';
 
-class FavAnimalesPage extends ConsumerWidget {
-  const FavAnimalesPage({super.key});
+class FavAnimalesPag extends ConsumerWidget {
+  const FavAnimalesPag({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {

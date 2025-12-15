@@ -1,15 +1,15 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:proyecto_protectora/features/auth/data/models/user_model.dart';
+import 'package:proyecto_protectora/features/auth/data/models/usuario_model.dart';
 
-class UserNotifier extends Notifier<User?> {
+class UsuarioNotifier extends Notifier<Usuario?> {
   @override
-  User? build() {
+  Usuario? build() {
     // Estado inicial: sin usuario
     return null;
   }
 
   /// Guardar usuario al hacer login
-  void setUser(User user) {
+  void setUser(Usuario user) {
     state = user;
   }
 
@@ -20,4 +20,4 @@ class UserNotifier extends Notifier<User?> {
 }
 
 /// Provider global del usuario
-final userProvider = NotifierProvider<UserNotifier, User?>(UserNotifier.new);
+final usuarioProvider = NotifierProvider<UsuarioNotifier, Usuario?>(UsuarioNotifier.new);

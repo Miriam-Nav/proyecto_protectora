@@ -19,8 +19,8 @@ class _LoginPageState extends ConsumerState<LoginPage> {
   final _formKey = GlobalKey<FormState>();
 
   // Controladores de texto con valores por defecto
-  final _userCtrl = TextEditingController(text: 'emilys');
-  final _passCtrl = TextEditingController(text: 'emilyspass');
+  final _emailCtrl = TextEditingController(text: 'miriam@example.com');
+  final _passCtrl = TextEditingController(text: '1234');
 
   // Indicador de carga
   bool _loading = false;
@@ -28,7 +28,7 @@ class _LoginPageState extends ConsumerState<LoginPage> {
   @override
   void dispose() {
     // Liberación de recursos de los controladores
-    _userCtrl.dispose();
+    _emailCtrl.dispose();
     _passCtrl.dispose();
     super.dispose();
   }
@@ -43,17 +43,19 @@ class _LoginPageState extends ConsumerState<LoginPage> {
       // Llamada al controlador de autenticación para iniciar sesión
       await ref
           .read(authControllerProvider.notifier)
-          .signIn(username: _userCtrl.text.trim(), password: _passCtrl.text);
+          .signIn(email: _emailCtrl.text.trim(), pass: _passCtrl.text);
 
       // Obtiene el usuario autenticado
       final usuario = ref.read(authControllerProvider).value;
+
       // Si existe usuario, se navega a la pantalla principal
+
       if (usuario != null && mounted) {
         Navigator.pushReplacement(
           context,
           MaterialPageRoute(builder: (context) => MenuButtons(user: usuario)),
         );
-      }
+      } 
     } catch (e) {
       // En caso de error, se muestra un mensaje en un SnackBar
       if (mounted) {
@@ -119,7 +121,7 @@ class _LoginPageState extends ConsumerState<LoginPage> {
                     const SizedBox(height: 24),
 
                     // Campo de usuario
-                    AppInputText(label: l10n.usuario, controller: _userCtrl),
+                    AppInputText(label: l10n.correo, controller: _emailCtrl),
                     const SizedBox(height: 20),
 
                     // Campo de contraseña
